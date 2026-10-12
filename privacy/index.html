@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Informativa privacy | Telaio - Ecommerce Automations</title>
+  <meta name="description" content="Come trattiamo i dati di chi visita il sito e prenota il check-up del negozio: quali dati, perché, per quanto tempo e come esercitare i tuoi diritti.">
+  <meta name="theme-color" content="#090C08">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://telaioconsulting.github.io/ecommerce-automations/privacy/">
+
+  <meta property="og:title" content="Informativa privacy | Telaio - Ecommerce Automations">
+  <meta property="og:description" content="Quali dati trattiamo, perché, per quanto tempo e come esercitare i tuoi diritti.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://telaioconsulting.github.io/ecommerce-automations/privacy/">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Telaio - Ecommerce Automations">
+  <meta property="og:image" content="https://telaioconsulting.github.io/ecommerce-automations/assets/og-telaio.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Informativa privacy | Telaio - Ecommerce Automations">
+  <meta name="twitter:description" content="Quali dati trattiamo, perché e come esercitare i tuoi diritti.">
+  <meta name="twitter:image" content="https://telaioconsulting.github.io/ecommerce-automations/assets/og-telaio.png">
+
+  <link rel="icon" type="image/png" href="../assets/telaio-logo-512.png">
+  <link rel="preload" href="../assets/fonts/bricolage-grotesque-500-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/ibm-plex-sans-400-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- cambio pagina col filo (motion.css): la richiesta al browser sta in cima, prima di ogni script,
+       altrimenti la pagina nuova può controllarla prima che arrivino i fogli di stile e annullare il passaggio -->
+  <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; types: p-filo; } }</style>
+  <script>
+    (function (r) {
+      r.classList.add("js");
+      // cambio pagina col filo (motion.css): «pagereveal» dice, prima del primo disegno, se la pagina arriva con la transizione
+      addEventListener("pagereveal", function (e) { r.classList.add(e.viewTransition ? "p-filo-arrivo" : "p-rivelata"); });
+      // tema chiaro salvato: subito, prima del primo disegno (niente passaggio dal buio al chiaro)
+      try { if (localStorage.getItem("telaio-theme") === "light") { r.setAttribute("data-theme", "light"); document.querySelector('meta[name="theme-color"]').content = "#F4F5F8"; } } catch (e) {}
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) r.classList.add("motion");
+      // Se gli script non partono, si torna alla pagina statica (tutto visibile).
+      setTimeout(function () {
+        if (!window.__telaio) r.classList.remove("js");
+        if (!window.__motion) r.classList.remove("motion");
+      }, 4000);
+    })(document.documentElement);
+  </script>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../motion.css">
+  <link rel="stylesheet" href="../site.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://telaioconsulting.github.io/ecommerce-automations/" },
+      { "@type": "ListItem", "position": 2, "name": "Informativa privacy", "item": "https://telaioconsulting.github.io/ecommerce-automations/privacy/" }
+    ]
+  }
+  </script>
+</head>
+<body data-page-type="privacy">
+  <a class="skip" href="#top">Vai al contenuto</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="mk" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round">
+        <path d="M24 10 V32 M24 48 V54"></path>
+        <path d="M40 10 V16 M40 32 V54"></path>
+        <path d="M10 24 H16 M32 24 H54"></path>
+        <path d="M10 40 H32 M48 40 H54"></path>
+      </g>
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="p-progress" aria-hidden="true"></div>
+
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="../" aria-label="Telaio Ecommerce Automations, home">
+        <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+        <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Navigazione principale">
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/">Spedizioni</a>
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/">Domande frequenti</a>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Passa al tema chiaro">◐</button>
+        <a class="btn btn-primary btn-sm" href="../check-up/" data-cta="checkup" data-placement="nav">Prenota il check-up del tuo negozio</a>
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="nav">≡</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="p-hero is-page is-compact">
+      <canvas class="p-weave" id="weave" aria-hidden="true"></canvas>
+      <div class="p-hero-veil" aria-hidden="true"></div>
+      <div class="wrap p-hero-in">
+        <nav class="crumbs" data-hero-item aria-label="Percorso"><a href="../">Home</a> <span aria-hidden="true">›</span> <span aria-current="page">Informativa privacy</span></nav>
+        <h1 class="p-h1">Informativa privacy</h1>
+        <p class="p-hero-lede" data-hero-item>Qui ti spieghiamo quali dati trattiamo quando visiti il sito o prenoti il check-up del tuo negozio, perché lo facciamo e quali sono i tuoi diritti.</p>
+      </div>
+    </section>
+
+    <section class="wrap p-legal">
+      <div class="legal">
+        <p>Questa informativa riguarda il sito Telaio - Ecommerce Automations, all'indirizzo telaioconsulting.github.io/ecommerce-automations, e il check-up che prenoti da qui. Telaio - Ecommerce Automations è un servizio di Telaio. Per il sito principale di Telaio vale <a href="https://telaioconsulting.github.io/privacy/">la sua informativa</a>.</p>
+
+        <h2>1. Chi è il titolare</h2>
+        <p>Il titolare del trattamento è Pasquale Silvestre, per il progetto Telaio. Per qualsiasi domanda puoi scrivere a <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>.</p>
+
+        <h2>2. Quali dati trattiamo</h2>
+        <ul>
+          <li><strong>Navigazione.</strong> Il servizio che ospita il sito, GitHub Pages, registra l'indirizzo IP di chi visita il sito per motivi di sicurezza. Lo spiega la <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection" target="_blank" rel="noopener">documentazione di GitHub</a>.</li>
+          <li><strong>Prenotazione del check-up.</strong> Nome, cognome, email e le risposte al modulo, raccolti con la pagina di prenotazione di Google Calendar.</li>
+          <li><strong>Email.</strong> I dati che ci mandi quando ci scrivi.</li>
+        </ul>
+        <p>Il sito non usa cookie di profilazione né strumenti di statistica. Salva nel tuo browser solo la scelta del tema chiaro o scuro: trovi i dettagli nella <a href="../cookie/">pagina dei cookie</a>.</p>
+
+        <h2>3. Perché li trattiamo e su quale base</h2>
+        <ul>
+          <li>Per organizzare, preparare e svolgere la call, e per rispondere alle tue email: sono misure precontrattuali che chiedi tu (art. 6, paragrafo 1, lettera b del GDPR).</li>
+          <li>Per la sicurezza del sito: legittimo interesse (art. 6, paragrafo 1, lettera f del GDPR).</li>
+        </ul>
+
+        <h2>4. Chi li tratta per nostro conto</h2>
+        <p>Ci appoggiamo a due servizi esterni, che trattano i dati per nostro conto: Google, per il calendario di prenotazione e la videochiamata, e GitHub, che ospita il sito. Possono trattare dati anche fuori dall'Unione europea, con le tutele previste dal GDPR.</p>
+
+        <h2>5. Per quanto tempo</h2>
+        <p>Conserviamo i dati solo per il tempo che serve agli scopi descritti qui sopra.</p>
+
+        <h2>6. I tuoi diritti</h2>
+        <p>Puoi chiederci in qualsiasi momento di accedere ai tuoi dati, di correggerli o cancellarli, di limitarne l'uso, di opporti al trattamento o di riceverli in un formato che puoi portare altrove. Basta scrivere a <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>.</p>
+        <p>Se pensi che i tuoi dati siano trattati in modo non corretto, puoi presentare reclamo al <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">Garante per la protezione dei dati personali</a>.</p>
+
+        <h2>7. Decisioni automatizzate</h2>
+        <p>Non prendiamo decisioni basate solo su trattamenti automatizzati.</p>
+
+        <p class="updated">Ultimo aggiornamento: 12 ottobre 2026</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="mobile-bar"><a class="btn btn-primary btn-block" href="../check-up/" data-cta="checkup" data-placement="mobile_bar">Prenota il check-up del tuo negozio</a></div>
+
+  <footer class="p-footer">
+    <div class="wrap foot-in foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">
+          <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+          <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+        </div>
+        <span class="foot-tag">L'AI prepara. Tu decidi.</span>
+        <span>Automazioni per negozi Shopify: clienti, spedizioni, magazzino e conti.</span>
+        <a class="foot-endorse" href="https://telaioconsulting.github.io/">Un servizio Telaio</a>
+      </div>
+      <nav class="foot-col" aria-label="Pagine">
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/">Spedizioni</a>
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/">Domande frequenti</a>
+        <a href="../chi-siamo/">Chi c'è dietro</a>
+      </nav>
+      <div class="foot-col">
+        <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>
+        <a href="../privacy/" aria-current="page">Informativa privacy</a>
+        <a href="../cookie/">Cookie</a>
+        <span>© 2026 Telaio</span>
+      </div>
+    </div>
+    <div class="p-bigword" aria-hidden="true"><span>T</span><span>e</span><span>l</span><span>a</span><span>i</span><span>o</span></div>
+  </footer>
+
+  <!-- Librerie di animazione, ospitate nel sito (vedi assets/vendor/README.md) -->
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <script src="../assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="../assets/vendor/SplitText.min.js"></script>
+  <script src="../assets/vendor/lenis.min.js"></script>
+  <script src="../script.js"></script>
+  <script src="../motion.js"></script>
+</body>
+</html>

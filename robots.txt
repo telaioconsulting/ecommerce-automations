@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://telaioconsulting.github.io/ecommerce-automations/sitemap.xml

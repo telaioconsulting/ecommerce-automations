@@ -1,0 +1,423 @@
+/* ============================================================
+   TELAIO CONSULTING - Sito vetrina
+   Identità dal Brand Book "Telaio" (concept: Trama / ordito+trama).
+   Sistema dark-first. Blu brand unico: #1307ED.
+   Font: Bricolage Grotesque (display) · IBM Plex Sans (testo) · IBM Plex Mono (utility)
+   ============================================================ */
+
+/* ---- Font ospitati nel sito (WOFF2, latin + latin-ext, solo i pesi usati).
+        Licenza SIL Open Font License: vedi assets/fonts/OFL-*.txt ---- */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 500 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-500-700-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 500 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/bricolage-grotesque-500-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/ibm-plex-mono-400-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/ibm-plex-mono-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/ibm-plex-mono-500-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/ibm-plex-mono-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/ibm-plex-mono-600-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/ibm-plex-mono-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 400 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/ibm-plex-sans-400-600-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 400 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("assets/fonts/ibm-plex-sans-400-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---- Token: tema SCURO (predefinito) ---- */
+:root {
+  color-scheme: dark;
+  --ground:      #090C08;   /* fondo pagina - near-black       */
+  --surface:     #10130D;   /* superficie / card               */
+  --panel:       #171B12;   /* pannello                        */
+  --line:        #282C22;   /* bordo sottile                   */
+  --line-strong: #3A3F32;   /* bordo strutturale               */
+  --muted:       #9BA093;   /* testo secondario                */
+  --ink:         #F5F7F1;   /* testo principale                */
+  --brand:       #1307ED;   /* blu brand: fondi, pulsanti, linee (non testo lungo) */
+  --brand-soft:  #16193A;   /* tint blu profondo (riempimenti) */
+  --brand-lift:  #3f36f5;   /* blu hover leggermente più chiaro*/
+  --weft:        #8E9DFF;   /* blu chiaro - etichette e link   */
+
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:    "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --f-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --step--1: 0.82rem;
+  --step-0:  1rem;
+  --step-1:  1.2rem;
+  --step-2:  1.5rem;
+  --step-3:  clamp(1.6rem, 2.4vw, 2rem);
+  --step-4:  clamp(2rem, 4vw, 3.1rem);
+  --step-5:  clamp(3rem, 9.2vw, 7rem);
+
+  /* angoli del brand book (telaio-tokens.css): 3 e 6 px, la pillola solo dove serve */
+  --r-sm: 3px; --r-md: 6px; --r-lg: 6px; --r-pill: 999px;
+  --tracking-label: .14em;
+  --shadow-lg: 0 2px 6px rgba(0,0,0,.5), 0 30px 60px -24px rgba(0,0,0,.85);
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --maxw: 1120px;
+  --read: 62ch;
+}
+
+/* ---- Token: tema CHIARO (attivato dal pulsante) ---- */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --ground:      #F4F5F8;
+  --surface:     #FFFFFF;
+  --panel:       #EAECF1;
+  --line:        #DCDFE7;
+  --line-strong: #BDC2CE;
+  --muted:       #4A5160;   /* più scuro che nel tema scuro: sul fondo chiaro i testi piccoli si leggevano poco (7,3:1) */
+  --ink:         #090C08;
+  --brand:       #1307ED;
+  --brand-soft:  #E1E4FF;
+  --brand-lift:  #0f06c4;
+  --weft:        #2E3EA8;
+  --shadow-lg: 0 2px 6px rgba(9,12,8,.08), 0 26px 54px -24px rgba(9,12,8,.28);
+}
+
+/* ---- Reset essenziale ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+img { max-width: 100%; display: block; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  transition: background .35s ease, color .35s ease;
+}
+/* dove c'è la dissolvenza di pagina (startViewTransition in script.js) basta quella */
+@supports (view-transition-name: none) { body { transition: none; } }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+
+h1, h2, h3 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+  margin: 0;
+}
+p { margin: 0; }
+a { color: var(--brand); text-underline-offset: 3px; }
+strong, b { font-weight: 600; color: var(--ink); }
+
+/* bordo di focus in blu chiaro (--weft): il blu del marchio sul fondo scuro non arrivava al contrasto minimo */
+:focus-visible { outline: 2.5px solid var(--weft); outline-offset: 2px; border-radius: 2px; }
+html { -webkit-tap-highlight-color: transparent; }
+a, button, summary { touch-action: manipulation; }
+
+/* Link «Vai al contenuto»: invisibile finché non lo raggiunge il tasto Tab */
+.skip {
+  position: absolute; left: 12px; top: -80px; z-index: 400;
+  padding: 12px 16px; border-radius: var(--r-sm);
+  background: var(--ink); color: var(--ground); font-weight: 600; text-decoration: none;
+}
+.skip:focus { top: 12px; }
+
+/* ---- Utility ---- */
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-family: var(--f-mono); font-size: var(--step--1); font-weight: 500;
+  letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--weft);
+}
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--brand); flex: none; }
+.lede { font-size: var(--step-1); color: var(--muted); line-height: 1.55; }
+.mk { color: var(--brand); flex: none; }
+
+/* Grana finissima globale (solo dark) */
+.grain {
+  position: fixed; inset: 0; z-index: 200; pointer-events: none; opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 150px 150px;
+}
+:root[data-theme="light"] .grain { display: none; }
+
+/* Senza JavaScript: niente comandi che non funzionerebbero
+   (le pagine restano raggiungibili dai link del piè di pagina).
+   La classe .js la mette sull'<html> uno script nell'<head>
+   e la toglie se script.js non parte. */
+html:not(.js) .menu-btn, html:not(.js) #themeBtn, html:not(.js) .mobile-bar { display: none !important; }
+.no-js-only { display: none; }
+html:not(.js) .no-js-only { display: block; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.top {
+  position: sticky; top: 0; z-index: 60;
+  background: color-mix(in srgb, var(--ground) 84%, transparent);
+  backdrop-filter: saturate(1.3) blur(10px);
+  -webkit-backdrop-filter: saturate(1.3) blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+/* tema chiaro: i testi piccoli in mono, grigi su fondo chiaro, erano troppo sottili; un peso in più */
+:root[data-theme="light"] :is(.p-meta, .p-trust, .p-scroll, .p-src, .p-hrow, .p-col span, .crumbs, .lang-link,
+  .p-cases-count, .p-final-sub, .p-tl-seg span, .arrow-link, .p-founder .role) { font-weight: 500; }
+/* tema chiaro: la testata quasi piena, sopra il blocco blu non diventa più viola */
+:root[data-theme="light"] .top { background: color-mix(in srgb, var(--ground) 95%, transparent); }
+.top-in { display: flex; align-items: center; gap: 18px; height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none; color: var(--ink); }
+.brand .mk { width: 26px; height: 26px; }
+.brand .wm { font-family: var(--f-display); font-weight: 700; font-size: 1.2rem; letter-spacing: -.03em; }
+
+.nav { margin-left: auto; display: flex; gap: 2px; }
+.nav a {
+  position: relative;
+  font-size: var(--step--1); color: var(--muted); text-decoration: none;
+  padding: 8px 12px; border-radius: var(--r-sm); white-space: nowrap;
+  transition: color .15s, background .15s;
+}
+.nav a:hover { color: var(--ink); background: var(--panel); }
+/* pagina corrente */
+.nav a[aria-current="page"] { color: var(--ink); }
+.nav a[aria-current="page"]::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: 2px; height: 2px;
+  background: var(--brand); border-radius: 2px;
+}
+
+.top-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  width: 44px; height: 44px; display: inline-grid; place-items: center;
+  background: var(--surface); color: var(--muted);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  cursor: pointer; font-size: 18px; line-height: 1;
+  transition: color .15s, border-color .15s, scale .12s ease-out;
+}
+.icon-btn:hover { color: var(--ink); border-color: var(--line-strong); }
+.menu-btn { display: none; }
+/* Icone del tema e del menu disegnate a tratto (come le icone del marchio) invece dei caratteri ◐ ☾ ≡,
+   che arrivavano da un font di sistema. Il carattere resta nel pulsante ma non si vede. */
+#themeBtn, #menuBtn { font-size: 0; }
+#themeBtn::before, #menuBtn::before {
+  content: ""; width: 20px; height: 20px; background: currentColor;
+  -webkit-mask: var(--i-icon) center / contain no-repeat; mask: var(--i-icon) center / contain no-repeat;
+}
+#themeBtn { --i-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Cpath d='M12 4a8 8 0 0 1 0 16z' fill='%23000'/%3E%3C/svg%3E"); }
+:root[data-theme="light"] #themeBtn { --i-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19.5 14.6A8 8 0 1 1 9.4 4.5a6.5 6.5 0 0 0 10.1 10.1z'/%3E%3C/svg%3E"); }
+#menuBtn { --i-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M4 7h16M4 12h16M4 17h16'/%3E%3C/svg%3E"); }
+#menuBtn[aria-expanded="true"] { --i-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E"); }
+
+/* Selettore lingua */
+.lang { display: inline-flex; align-items: center; gap: 2px; font-family: var(--f-mono); font-size: 12px; }
+.lang-link {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px;
+  padding: 6px 8px; color: var(--muted); text-decoration: none; border-radius: var(--r-sm); letter-spacing: .06em;
+}
+.lang-link:hover { color: var(--ink); background: var(--panel); }
+.lang-link.is-active { color: var(--ink); font-weight: 600; }
+
+/* ============================================================
+   BOTTONI (un solo stile: il pulsante principale)
+   ============================================================ */
+.btn {
+  font-family: var(--f-body); font-weight: 600; font-size: var(--step-0);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 22px; border-radius: var(--r-sm); border: 1.5px solid transparent;
+  text-decoration: none; cursor: pointer; line-height: 1;
+  transition: transform .15s ease, background .18s ease, box-shadow .2s ease, scale .12s ease-out;
+  -webkit-user-select: none; user-select: none;
+}
+/* risposta al tocco: il pulsante si abbassa appena (scale, non transform: GSAP usa transform sui pulsanti magnetici) */
+.btn:active, .icon-btn:active { scale: .97; }
+.btn-sm { padding: 9px 15px; font-size: var(--step--1); white-space: nowrap; }
+.btn-primary { background: var(--brand); color: #fff; position: relative; overflow: hidden; }
+.btn-primary::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; transform: translateX(-130%);
+  background: linear-gradient(105deg, transparent 32%, rgba(255,255,255,.38) 50%, transparent 68%);
+}
+@media (hover: hover) {
+  .btn-primary:hover::after { transform: translateX(130%); transition: transform .7s ease; }
+  .btn-primary:hover { background: var(--brand-lift); transform: translateY(-1px); box-shadow: 0 10px 30px -10px rgba(19,7,237,.8); }
+}
+.btn-block { width: 100%; }
+
+/* Briciole */
+.crumbs { font-family: var(--f-mono); font-size: var(--step--1); color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding-top: 10px; }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.crumbs a:hover { color: var(--ink); }
+.crumbs [aria-current="page"] { color: var(--ink); }
+
+/* ============================================================
+   SEZIONI
+   ============================================================ */
+/* Riquadro "in evidenza" */
+.callout { border: 1px solid color-mix(in srgb, var(--brand) 40%, var(--line)); background: color-mix(in srgb, var(--brand) 7%, var(--surface)); padding: 18px 22px; border-radius: var(--r-md); color: var(--ink); line-height: 1.55; }
+
+/* Elenchi con il marcatore "nodo" */
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 64ch; }
+.ticks li { position: relative; padding-left: 28px; color: var(--muted); line-height: 1.5; }
+.ticks li::before { content: ""; position: absolute; left: 0; top: .72em; width: 10px; height: 10px; background: var(--brand); border-radius: 2px; transform: translateY(-50%) rotate(45deg); }
+
+/* Prenotazione */
+.booking-box { border: 1px solid var(--line-strong); border-radius: var(--r-lg); background: var(--surface); padding: clamp(22px,4vw,36px); }
+.booking-box p { color: var(--muted); line-height: 1.55; }
+.booking-box .micro { font-family: var(--f-mono); font-size: var(--step--1); margin-top: 14px; }
+.booking-box a { color: var(--weft); }
+.booking-frame { width: 100%; border: 0; border-radius: var(--r-md); min-height: 640px; background: var(--panel); display: block; }
+.booking-meta { margin-top: 16px; font-size: var(--step--1); color: var(--muted); }
+.booking-meta a { color: var(--weft); }
+
+/* Domande a fisarmonica */
+.qa { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); margin-bottom: 12px; overflow: hidden; }
+.qa > summary { cursor: pointer; list-style: none; padding: 18px 22px; font-family: var(--f-display); font-weight: 600; font-size: var(--step-1); letter-spacing: -.01em; color: var(--ink); display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.qa > summary::-webkit-details-marker { display: none; }
+.qa > summary::after { content: "+"; font-family: var(--f-mono); color: var(--weft); font-size: 1.4rem; line-height: 1; flex: none; }
+.qa[open] > summary::after { content: "\2013"; }
+.qa .a { padding: 0 22px 20px; color: var(--muted); line-height: 1.6; max-width: 72ch; }
+
+/* Testo delle pagine legali */
+.legal { max-width: 74ch; }
+.legal h2 { font-size: var(--step-2); margin: 36px 0 10px; letter-spacing: -.01em; }
+.legal p, .legal li { color: var(--muted); line-height: 1.65; }
+.legal p { margin-bottom: 12px; }
+.legal ul { padding-left: 20px; display: grid; gap: 8px; margin: 0 0 14px; }
+.legal a { color: var(--weft); }
+.legal .updated { margin-top: 32px; font-family: var(--f-mono); font-size: var(--step--1); }
+
+/* Link testuale con freccia */
+.arrow-link { display: inline-block; margin-top: 8px; color: var(--weft); font-family: var(--f-mono); font-size: var(--step--1); text-decoration: none; letter-spacing: .03em; }
+.arrow-link:hover { color: var(--ink); }
+
+/* ============================================================
+   BARRA FISSA SU TELEFONO
+   ============================================================ */
+.mobile-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; display: none;
+  padding: 10px clamp(14px,4vw,20px); padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--ground) 90%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  /* nascosta anche al tasto Tab e ai lettori di schermo, non solo spostata fuori dallo schermo */
+  transform: translateY(130%); visibility: hidden; transition: transform .3s var(--ease), visibility 0s .3s;
+}
+.mobile-bar.show { transform: none; visibility: visible; transition: transform .3s var(--ease); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer { border-top: 1px solid var(--line); padding: 48px 0; background: var(--surface); }
+.foot-in { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 28px; align-items: start; }
+.foot-brand { display: flex; align-items: center; gap: 10px; }
+.foot-brand .mk { width: 28px; height: 28px; }
+.foot-brand .wm { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; letter-spacing: -.03em; color: var(--ink); }
+.foot-col { display: flex; flex-direction: column; gap: 7px; font-size: var(--step--1); color: var(--muted); }
+.foot-col a { color: var(--muted); text-decoration: none; }
+.foot-col a:hover { color: var(--ink); }
+.foot-tag { font-family: var(--f-display); font-weight: 600; color: var(--ink); font-size: var(--step-1); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+/* Menu a scomparsa: sotto i 1120 px le voci della testata non entrano più in una riga */
+@media (max-width: 1120px) {
+  .menu-btn { display: inline-grid; }
+  .top-actions { margin-left: auto; }
+  .nav {
+    position: absolute; top: 64px; left: 0; right: 0;
+    flex-direction: column; gap: 0; margin: 0;
+    background: var(--ground); border-bottom: 1px solid var(--line);
+    padding: 8px clamp(20px, 5vw, 48px) 16px;
+    display: none;
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 8px; border-bottom: 1px solid var(--line); border-radius: 0; }
+  .nav a[aria-current="page"]::after { left: 8px; right: auto; width: 24px; bottom: 6px; }
+}
+/* Telefono: il pulsante principale passa nella barra fissa */
+@media (max-width: 760px) {
+  .top-actions .btn-primary { display: none; }
+  .mobile-bar { display: block; }
+  body { padding-bottom: 76px; }
+  .foot-in { grid-template-columns: 1fr; }
+}
+/* Aree toccabili di almeno 44 px su telefono e schermi touch */
+@media (max-width: 760px), (pointer: coarse) {
+  .nav a, .arrow-link, .crumbs a, .foot-col a { display: inline-flex; align-items: center; min-height: 44px; }
+  .btn-sm { min-height: 44px; }
+  .crumbs a { min-width: 44px; }
+  .foot-col { gap: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  body, .mobile-bar { transition: none; }
+  .btn, .btn:hover { transition: none; transform: none; }
+}

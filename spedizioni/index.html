@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Automatizza le bolle del corriere | Telaio - Ecommerce Automations</title>
+  <meta name="description" content="Se il tuo corriere si può collegare, gli ordini Shopify arrivano sul suo portale senza copiare indirizzi. Etichette pronte, e il cliente avvisato solo dopo il ritiro.">
+  <meta name="theme-color" content="#090C08">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://telaioconsulting.github.io/ecommerce-automations/spedizioni/">
+
+  <meta property="og:title" content="Automatizza le bolle del corriere">
+  <meta property="og:description" content="Se il tuo corriere si può collegare, gli ordini Shopify arrivano sul suo portale senza copiare indirizzi. Etichette pronte, e il cliente avvisato solo dopo il ritiro.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://telaioconsulting.github.io/ecommerce-automations/spedizioni/">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Telaio - Ecommerce Automations">
+  <meta property="og:image" content="https://telaioconsulting.github.io/ecommerce-automations/assets/og-telaio.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Automatizza le bolle del corriere">
+  <meta name="twitter:description" content="Se il tuo corriere si può collegare, gli ordini Shopify arrivano sul suo portale senza copiare indirizzi. Etichette pronte, e il cliente avvisato solo dopo il ritiro.">
+  <meta name="twitter:image" content="https://telaioconsulting.github.io/ecommerce-automations/assets/og-telaio.png">
+
+  <link rel="icon" type="image/png" href="../assets/telaio-logo-512.png">
+  <link rel="preload" href="../assets/fonts/bricolage-grotesque-500-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/ibm-plex-sans-400-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- cambio pagina col filo (motion.css): la richiesta al browser sta in cima, prima di ogni script,
+       altrimenti la pagina nuova può controllarla prima che arrivino i fogli di stile e annullare il passaggio -->
+  <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; types: p-filo; } }</style>
+  <script>
+    (function (r) {
+      r.classList.add("js");
+      // cambio pagina col filo (motion.css): «pagereveal» dice, prima del primo disegno, se la pagina arriva con la transizione
+      addEventListener("pagereveal", function (e) { r.classList.add(e.viewTransition ? "p-filo-arrivo" : "p-rivelata"); });
+      // tema chiaro salvato: subito, prima del primo disegno (niente passaggio dal buio al chiaro)
+      try { if (localStorage.getItem("telaio-theme") === "light") { r.setAttribute("data-theme", "light"); document.querySelector('meta[name="theme-color"]').content = "#F4F5F8"; } } catch (e) {}
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) r.classList.add("motion");
+      // Se gli script non partono, si torna alla pagina statica (tutto visibile).
+      setTimeout(function () {
+        if (!window.__telaio) r.classList.remove("js");
+        if (!window.__motion) r.classList.remove("motion");
+      }, 4000);
+    })(document.documentElement);
+  </script>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../motion.css">
+  <link rel="stylesheet" href="../site.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://telaioconsulting.github.io/ecommerce-automations/spedizioni/#service",
+        "name": "Spedizioni: automatizza le bolle del corriere",
+        "url": "https://telaioconsulting.github.io/ecommerce-automations/spedizioni/",
+        "serviceType": "Automazione delle spedizioni per negozi Shopify",
+        "description": "Per i negozi su Shopify, con un corriere che si può collegare: gli ordini da spedire arrivano sul portale del corriere senza copiare indirizzi; bolle ed etichette sono pronte da stampare; l'ordine risulta spedito, e il cliente riceve l'avviso con il tracciamento, solo quando il corriere ha davvero ritirato il pacco. Gli ordini da ritirare in negozio restano fuori. Si può prendere da solo, senza gli altri servizi.",
+        "provider": { "@id": "https://telaioconsulting.github.io/#organization" },
+        "brand": { "@id": "https://telaioconsulting.github.io/#organization" },
+        "isRelatedTo": { "@id": "https://telaioconsulting.github.io/ecommerce-automations/#service" },
+        "areaServed": "IT",
+        "availableLanguage": "it"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://telaioconsulting.github.io/ecommerce-automations/" },
+          { "@type": "ListItem", "position": 2, "name": "Spedizioni", "item": "https://telaioconsulting.github.io/ecommerce-automations/spedizioni/" }
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://telaioconsulting.github.io/#organization",
+        "name": "Telaio",
+        "alternateName": "Telaio Consulting",
+        "url": "https://telaioconsulting.github.io/",
+        "logo": "https://telaioconsulting.github.io/ecommerce-automations/assets/telaio-logo-512.png",
+        "email": "info@telaioconsulting.com"
+      }
+    ]
+  }
+  </script>
+</head>
+<body data-page-type="spedizioni">
+  <a class="skip" href="#top">Vai al contenuto</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="mk" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round">
+        <path d="M24 10 V32 M24 48 V54"></path>
+        <path d="M40 10 V16 M40 32 V54"></path>
+        <path d="M10 24 H16 M32 24 H54"></path>
+        <path d="M10 40 H32 M48 40 H54"></path>
+      </g>
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="p-progress" aria-hidden="true"></div>
+
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="../" aria-label="Telaio Ecommerce Automations, home">
+        <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+        <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Navigazione principale">
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/" aria-current="page">Spedizioni</a>
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/">Domande frequenti</a>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Passa al tema chiaro">◐</button>
+        <a class="btn btn-primary btn-sm" href="../check-up/" data-cta="checkup" data-placement="nav">Prenota il check-up del tuo negozio</a>
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="nav">≡</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <section class="p-hero is-page">
+      <canvas class="p-weave" id="weave" aria-hidden="true"></canvas>
+      <div class="p-hero-veil" aria-hidden="true"></div>
+      <div class="wrap p-hero-in">
+        <nav class="crumbs" aria-label="Percorso" data-hero-item><a href="../">Home</a> <span aria-hidden="true">›</span> <span aria-current="page">Spedizioni</span></nav>
+        <h1 class="p-h1">Automatizza le bolle del corriere.</h1>
+        <p class="p-hero-lede" data-hero-item>Se il corriere del tuo negozio Shopify si può collegare, gli ordini da spedire arrivano sul suo portale senza che tu copi un indirizzo. Bolle ed etichette le trovi pronte da stampare. E il cliente riceve l'avviso solo quando il corriere ha davvero ritirato il pacco.</p>
+        <div class="p-hero-cta" data-hero-item>
+          <a class="btn btn-primary p-btn-xl" data-magnetic href="../check-up/" data-cta="checkup" data-placement="hero">Prenota il check-up del tuo negozio <span class="p-arr" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Le spedizioni, oggi -->
+    <section class="p-sec p-ai" style="padding-top:clamp(48px,7vw,96px)">
+      <div class="wrap">
+        <header class="p-head" style="margin-bottom:clamp(24px,3vw,36px)">
+          <h2 class="p-h2" data-split>Le spedizioni, oggi</h2>
+        </header>
+        <p class="p-statement" data-scrub>Inserisci ancora a mano i dati dei clienti sul portale del corriere? Nome, indirizzo, telefono: un ordine alla volta.</p>
+        <ul class="ticks" data-reveal>
+          <li>Copi da Shopify e incolli sul portale. Basta un numero civico sbagliato, e il pacco rischia di non arrivare.</li>
+          <li>Spesso l'ordine risulta spedito appena crei l'etichetta, anche se il pacco è ancora sul tuo banco.</li>
+          <li>Il cliente apre il tracciamento, non vede niente e ti scrive: «dov'è il mio ordine?»</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Cosa cambia -->
+    <section class="p-sec p-method">
+      <div class="wrap p-method-grid">
+        <div class="p-method-side">
+          <h2 class="p-h2" data-split>Cosa cambia</h2>
+          <div class="p-counter" aria-hidden="true">
+            <span class="p-counter-win"><span class="p-counter-reel"><i>01</i><i>02</i><i>03</i></span></span>
+            <span class="p-counter-tot">/03</span>
+          </div>
+        </div>
+        <div class="p-steps">
+          <svg class="p-thread" aria-hidden="true"><path class="bg"/><path class="fg"/></svg>
+          <ol class="p-steps-list">
+            <li class="p-step"><span class="p-step-node" aria-hidden="true"></span><span class="p-step-n">Passo 1</span><h3>Gli ordini arrivano al corriere</h3><p>Gli ordini da spedire passano da Shopify al portale del tuo corriere. Nome, indirizzo e telefono del cliente arrivano da Shopify.</p></li>
+            <li class="p-step"><span class="p-step-node" aria-hidden="true"></span><span class="p-step-n">Passo 2</span><h3>Bolle ed etichette pronte</h3><p>Le trovi pronte da stampare. A te resta il pacco: lo prepari, attacchi l'etichetta e lo affidi al corriere.</p></li>
+            <li class="p-step"><span class="p-step-node" aria-hidden="true"></span><span class="p-step-n">Passo 3</span><h3>Spedito, quando è vero</h3><p>L'ordine risulta spedito, e il cliente riceve l'avviso con il tracciamento, solo quando il corriere ha davvero ritirato il pacco. Prima no. Il link porta al suo pacco.</p></li>
+          </ol>
+        </div>
+      </div>
+      <div class="wrap p-method-foot">
+        <p class="lede" data-reveal style="max-width:56ch">Se usi anche il servizio per i clienti, lo stato del pacco entra nelle bozze: consegnato, in giacenza, non ancora affidato al corriere. A «dov'è il mio ordine?» la bozza è già pronta. La controlli e la mandi tu.</p>
+        <p data-reveal><a class="arrow-link" href="../clienti/">Il servizio per i clienti →</a></p>
+      </div>
+    </section>
+
+    <!-- Regole fisse -->
+    <section class="p-sec p-ai">
+      <div class="wrap">
+        <header class="p-head" style="margin-bottom:clamp(24px,3vw,36px)">
+          <h2 class="p-h2" data-split>Regole fisse, senza AI</h2>
+        </header>
+        <p class="p-statement" data-scrub>Qui l'AI non lavora. Le spedizioni seguono regole fisse, e quando il sistema non è sicuro, si ferma.</p>
+        <ul class="ticks" data-reveal>
+          <li>Se il corriere manda un aggiornamento che il sistema non conosce, non parte nessun avviso al cliente: lo guarda una persona.</li>
+          <li>Un controllo confronta il corriere con Shopify e ti segnala i pacchi ritirati che non risultano ancora spediti.</li>
+          <li>Gli ordini da ritirare in negozio restano fuori: li gestisci tu, come oggi.</li>
+        </ul>
+        <p class="lede p-origin-note" data-reveal>Il servizio è nato nel negozio di moda di uno dei fondatori di Telaio, che vende su Shopify e in negozio. La regola «spedito solo dopo il ritiro» viene da lì.</p>
+        <p data-reveal style="margin-top:18px"><a class="arrow-link" href="../chi-siamo/">Chi c'è dietro →</a></p>
+      </div>
+    </section>
+
+    <!-- Cosa ti serve, cosa non fa -->
+    <section class="p-sec">
+      <div class="wrap p-lists">
+        <div class="p-list yes" data-reveal>
+          <h2>Cosa ti serve</h2>
+          <ul>
+            <li>un negozio su Shopify;</li>
+            <li>un corriere che si può collegare. Non tutti si possono collegare, e non tutti allo stesso modo: il tuo lo guardiamo insieme nel check-up;</li>
+            <li>le mani per preparare i pacchi: quelle restano le tue.</li>
+          </ul>
+        </div>
+        <div class="p-list no" data-reveal>
+          <h2>Cosa non fa</h2>
+          <ul>
+            <li>non gestisce gli ordini da ritirare in negozio;</li>
+            <li>non avvisa il cliente prima che il corriere abbia il pacco.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Domande frequenti -->
+    <section id="faq" class="p-sec">
+      <div class="wrap p-split">
+        <div class="p-split-side">
+          <h2 class="p-h2" data-split>Domande frequenti</h2>
+          <p data-reveal><a class="arrow-link" href="../domande-frequenti/">Tutte le domande →</a></p>
+          <p data-reveal><a class="arrow-link" href="../come-funziona/">Come funziona →</a></p>
+        </div>
+        <div>
+          <details class="qa" data-reveal data-question-id="spedizioni-corriere"><summary>Il mio corriere si può collegare?</summary><div class="a"><p>Dipende dal corriere e da come lavori con lui. Non tutti si possono collegare, e non tutti allo stesso modo. Lo guardiamo insieme nel check-up, prima di iniziare: se il tuo non si può, te lo diciamo subito.</p></div></details>
+          <details class="qa" data-reveal data-question-id="spedizioni-standalone"><summary>Devo prendere anche il servizio per i clienti?</summary><div class="a"><p>No. Le spedizioni sono un servizio a sé, e puoi partire solo da queste. Se poi aggiungi il servizio per i clienti, lo stato del pacco entra nelle bozze.</p></div></details>
+          <details class="qa" data-reveal data-question-id="spedizioni-ritiro-mancato"><summary>E se il corriere non passa a ritirare?</summary><div class="a"><p>L'ordine resta da spedire, e il cliente non riceve nessun avviso. Risulta spedito solo quando il corriere ha davvero ritirato il pacco.</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chiusura -->
+    <section class="p-final">
+      <div class="p-final-glow" aria-hidden="true"></div>
+      <div class="wrap">
+        <h2 class="p-final-h" data-split>Quanto tempo passi a copiare indirizzi? Partiamo dal tuo corriere: lo guardiamo nel check-up.</h2>
+        <a class="p-orb" data-magnetic href="../check-up/" data-cta="checkup" data-placement="final" aria-label="Prenota il check-up del tuo negozio">
+          <svg class="p-orb-ring" viewBox="0 0 200 200" aria-hidden="true">
+            <defs><path id="orbPath" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+            <text><textPath href="#orbPath">Prenota il check-up del tuo negozio · Gratuito · </textPath></text>
+          </svg>
+          <span class="p-orb-arr" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <div class="mobile-bar"><a class="btn btn-primary btn-block" href="../check-up/" data-cta="checkup" data-placement="mobile_bar">Prenota il check-up del tuo negozio</a></div>
+
+  <footer class="p-footer">
+    <div class="wrap foot-in foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">
+          <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+          <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+        </div>
+        <span class="foot-tag">L'AI prepara. Tu decidi.</span>
+        <span>Automazioni per negozi Shopify: clienti, spedizioni, magazzino e conti.</span>
+        <a class="foot-endorse" href="https://telaioconsulting.github.io/">Un servizio Telaio</a>
+      </div>
+      <nav class="foot-col" aria-label="Pagine">
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/">Spedizioni</a>
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/">Domande frequenti</a>
+        <a href="../chi-siamo/">Chi c'è dietro</a>
+      </nav>
+      <div class="foot-col">
+        <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>
+        <a href="../privacy/">Informativa privacy</a>
+        <a href="../cookie/">Cookie</a>
+        <span>© 2026 Telaio</span>
+      </div>
+    </div>
+    <div class="p-bigword" aria-hidden="true"><span>T</span><span>e</span><span>l</span><span>a</span><span>i</span><span>o</span></div>
+  </footer>
+
+  <!-- Librerie di animazione, ospitate nel sito (vedi assets/vendor/README.md) -->
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <script src="../assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="../assets/vendor/SplitText.min.js"></script>
+  <script src="../assets/vendor/lenis.min.js"></script>
+  <script src="../script.js"></script>
+  <script src="../motion.js"></script>
+</body>
+</html>

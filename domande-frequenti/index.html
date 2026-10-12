@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Domande frequenti | Telaio - Ecommerce Automations</title>
+  <meta name="description" content="Shopify, un servizio alla volta, cosa fa l'AI, dove stanno i tuoi dati, le app che usi già: le risposte alle domande più frequenti.">
+  <meta name="theme-color" content="#090C08">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://telaioconsulting.github.io/ecommerce-automations/domande-frequenti/">
+
+  <meta property="og:title" content="Domande frequenti sulle automazioni per Shopify">
+  <meta property="og:description" content="Shopify, un servizio alla volta, cosa fa l'AI, dove stanno i tuoi dati, le app che usi già: le risposte alle domande più frequenti.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://telaioconsulting.github.io/ecommerce-automations/domande-frequenti/">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Telaio - Ecommerce Automations">
+  <meta property="og:image" content="https://telaioconsulting.github.io/ecommerce-automations/assets/og-telaio.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Domande frequenti sulle automazioni per Shopify">
+  <meta name="twitter:description" content="Shopify, un servizio alla volta, cosa fa l'AI, dove stanno i tuoi dati, le app che usi già: le risposte alle domande più frequenti.">
+  <meta name="twitter:image" content="https://telaioconsulting.github.io/ecommerce-automations/assets/og-telaio.png">
+
+  <link rel="icon" type="image/png" href="../assets/telaio-logo-512.png">
+  <link rel="preload" href="../assets/fonts/bricolage-grotesque-500-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/ibm-plex-sans-400-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- cambio pagina col filo (motion.css): la richiesta al browser sta in cima, prima di ogni script,
+       altrimenti la pagina nuova può controllarla prima che arrivino i fogli di stile e annullare il passaggio -->
+  <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; types: p-filo; } }</style>
+  <script>
+    (function (r) {
+      r.classList.add("js");
+      // cambio pagina col filo (motion.css): «pagereveal» dice, prima del primo disegno, se la pagina arriva con la transizione
+      addEventListener("pagereveal", function (e) { r.classList.add(e.viewTransition ? "p-filo-arrivo" : "p-rivelata"); });
+      // tema chiaro salvato: subito, prima del primo disegno (niente passaggio dal buio al chiaro)
+      try { if (localStorage.getItem("telaio-theme") === "light") { r.setAttribute("data-theme", "light"); document.querySelector('meta[name="theme-color"]').content = "#F4F5F8"; } } catch (e) {}
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) r.classList.add("motion");
+      // Se gli script non partono, si torna alla pagina statica (tutto visibile).
+      setTimeout(function () {
+        if (!window.__telaio) r.classList.remove("js");
+        if (!window.__motion) r.classList.remove("motion");
+      }, 4000);
+    })(document.documentElement);
+  </script>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../motion.css">
+  <link rel="stylesheet" href="../site.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "FAQPage",
+        "@id": "https://telaioconsulting.github.io/ecommerce-automations/domande-frequenti/#faq",
+        "url": "https://telaioconsulting.github.io/ecommerce-automations/domande-frequenti/",
+        "name": "Domande frequenti",
+        "inLanguage": "it",
+        "isPartOf": { "@id": "https://telaioconsulting.github.io/ecommerce-automations/#website" },
+        "about": { "@id": "https://telaioconsulting.github.io/ecommerce-automations/#service" },
+        "mainEntity": [
+          { "@type": "Question", "name": "Serve avere Shopify?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. I servizi funzionano solo con Shopify: se il tuo negozio è su un'altra piattaforma, non fanno per te. Vanno bene anche se vendi solo online. Ognuno dei quattro servizi funziona anche senza un negozio fisico. La cassa entra in gioco solo se ce l'hai." } },
+          { "@type": "Question", "name": "Posso partire da un servizio solo?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Sono quattro servizi separati: clienti, spedizioni, magazzino e conti. Puoi partire da uno solo, quello che ti fa perdere più tempo, e aggiungere gli altri dopo, se ti servono. Se li usi insieme, si passano i dati: con le spedizioni, per esempio, lo stato del pacco entra nelle bozze per i clienti." } },
+          { "@type": "Question", "name": "Cosa fa l'AI, e cosa no?", "acceptedAnswer": { "@type": "Answer", "text": "L'AI lavora solo in due punti: le bozze per i clienti e la lettura degli ordini ai fornitori. I calcoli di magazzino, i conti e le spedizioni seguono regole fisse, senza AI. Quello che manca nei dati, la bozza lo segna «da verificare». Non lo inventa. L'AI può sbagliare. Per questo non risponde mai da sola. Il sistema controlla numeri, date e link di ogni bozza prima che tu la legga. Gli ordini ai fornitori letti dall'AI li controlli tu, prima che il magazzino cambi. Decidi sempre tu." } },
+          { "@type": "Question", "name": "Le risposte ai clienti partono da sole?", "acceptedAnswer": { "@type": "Answer", "text": "No. L'AI prepara la bozza con i dati veri: l'ordine, lo stato della spedizione quando c'è, se il prodotto c'è. Poi la correggi e la mandi tu. Nessuna risposta parte da sola: la manda una persona, con un clic e una conferma. Se cerchi un'AI che risponda ai clienti da sola, questo servizio non fa per te." } },
+          { "@type": "Question", "name": "Dove stanno i miei dati?", "acceptedAnswer": { "@type": "Answer", "text": "Nei tuoi account, intestati al tuo negozio. È lì che costruiamo ogni servizio, compreso quello di AI che legge i messaggi e gli ordini ai fornitori." } },
+          { "@type": "Question", "name": "Ho già delle app. Devo cambiarle?", "acceptedAnswer": { "@type": "Answer", "text": "Non per forza. Si parte da quello che usi: Shopify, la casella email, il corriere, la cassa. Se un'app fa già bene il suo lavoro, resta. Le fatture elettroniche continui a farle come oggi: questi servizi non le emettono. E non prendono il posto del tuo commercialista: il mese lo chiudete insieme, con i totali già pronti." } },
+          { "@type": "Question", "name": "E se la mia casella, il mio corriere o la mia cassa non si possono collegare?", "acceptedAnswer": { "@type": "Answer", "text": "Può succedere. Non tutti si possono collegare, e non tutti allo stesso modo. Per questo li guardiamo insieme nel check-up, prima di qualsiasi proposta. Se uno non si collega, te lo diciamo, e ti diciamo quali servizi restano utili senza. Senza la cassa, per esempio, il magazzino scala comunque le vendite del sito, e nei conti entrano comunque le vendite online." } },
+          { "@type": "Question", "name": "Quanto costa?", "acceptedAnswer": { "@type": "Answer", "text": "Dipende da quali servizi scegli e da cosa usi già. Dopo il check-up, se vuoi, ricevi una proposta scritta con costi e limiti. Così sai a cosa vai incontro prima di iniziare. Il check-up è gratuito." } },
+          { "@type": "Question", "name": "Il check-up è gratuito?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, è gratuito. Parli con uno dei fondatori di Telaio. Guardiamo insieme quale lavoro ti fa perdere più tempo, e se la tua casella, il tuo corriere e la tua cassa si possono collegare. Se un servizio non fa per te, te lo diciamo." } },
+          { "@type": "Question", "name": "Chi c'è dietro questi servizi?", "acceptedAnswer": { "@type": "Answer", "text": "Telaio, un team di consulenza per le piccole e medie imprese: strategia d'impresa e intelligenza artificiale. Questi servizi sono nati nel negozio di moda di uno dei fondatori di Telaio, che vende su Shopify e in negozio. Per questo possiamo dirti cosa fanno, e anche cosa non fanno." } }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://telaioconsulting.github.io/ecommerce-automations/" },
+          { "@type": "ListItem", "position": 2, "name": "Domande frequenti", "item": "https://telaioconsulting.github.io/ecommerce-automations/domande-frequenti/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body data-page-type="faq">
+  <a class="skip" href="#top">Vai al contenuto</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="mk" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round">
+        <path d="M24 10 V32 M24 48 V54"></path>
+        <path d="M40 10 V16 M40 32 V54"></path>
+        <path d="M10 24 H16 M32 24 H54"></path>
+        <path d="M10 40 H32 M48 40 H54"></path>
+      </g>
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="p-progress" aria-hidden="true"></div>
+
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="../" aria-label="Telaio Ecommerce Automations, home">
+        <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+        <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Navigazione principale">
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/">Spedizioni</a>
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/" aria-current="page">Domande frequenti</a>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Passa al tema chiaro">◐</button>
+        <a class="btn btn-primary btn-sm" href="../check-up/" data-cta="checkup" data-placement="nav">Prenota il check-up del tuo negozio</a>
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="nav">≡</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <section class="p-hero is-page is-compact">
+      <canvas class="p-weave" id="weave" aria-hidden="true"></canvas>
+      <div class="p-hero-veil" aria-hidden="true"></div>
+      <div class="wrap p-hero-in">
+        <nav class="crumbs" aria-label="Percorso" data-hero-item><a href="../">Home</a> <span aria-hidden="true">›</span> <span aria-current="page">Domande frequenti</span></nav>
+        <h1 class="p-h1">Domande frequenti</h1>
+        <p class="p-hero-lede" data-hero-item>Le risposte alle domande che ci fanno più spesso sui servizi per il tuo negozio Shopify. Prima la risposta, poi i dettagli.</p>
+      </div>
+    </section>
+
+    <!-- Domande -->
+    <section id="faq" class="p-sec" style="padding-top:clamp(40px,6vw,80px)">
+      <div class="wrap p-split">
+        <div class="p-split-side p-faq-side" data-reveal>
+          <p class="lede" style="margin:0 0 28px">Non trovi la tua domanda? Scrivici a <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>, oppure parliamone nel check-up.</p>
+          <a class="btn btn-primary p-btn-xl" data-magnetic href="../check-up/" data-cta="checkup" data-placement="faq">Prenota il check-up del tuo negozio <span class="p-arr" aria-hidden="true">→</span></a>
+        </div>
+        <div class="p-faq-list">
+          <details class="qa" data-reveal id="shopify" data-question-id="ecommerce-shopify"><summary>Serve avere Shopify?</summary><div class="a"><p>Sì. I servizi funzionano solo con Shopify: se il tuo negozio è su un'altra piattaforma, non fanno per te.</p><p>Vanno bene anche se vendi solo online. Ognuno dei quattro servizi funziona anche senza un negozio fisico. La cassa entra in gioco solo se ce l'hai.</p></div></details>
+          <details class="qa" data-reveal id="un-servizio" data-question-id="ecommerce-standalone"><summary>Posso partire da un servizio solo?</summary><div class="a"><p>Sì. Sono quattro servizi separati: <a href="../clienti/">clienti</a>, <a href="../spedizioni/">spedizioni</a>, <a href="../magazzino/">magazzino</a> e <a href="../conti/">conti</a>. Puoi partire da uno solo, quello che ti fa perdere più tempo, e aggiungere gli altri dopo, se ti servono.</p><p>Se li usi insieme, si passano i dati: con le spedizioni, per esempio, lo stato del pacco entra nelle bozze per i clienti.</p></div></details>
+          <details class="qa" data-reveal id="ai" data-question-id="ecommerce-ai-role"><summary>Cosa fa l'AI, e cosa no?</summary><div class="a"><p>L'AI lavora solo in due punti: le bozze per i clienti e la lettura degli ordini ai fornitori. I calcoli di magazzino, i conti e le spedizioni seguono regole fisse, senza AI.</p><p>Quello che manca nei dati, la bozza lo segna «da verificare». Non lo inventa. L'AI può sbagliare. Per questo non risponde mai da sola. Il sistema controlla numeri, date e link di ogni bozza prima che tu la legga. Gli ordini ai fornitori letti dall'AI li controlli tu, prima che il magazzino cambi. Decidi sempre tu.</p><p><a class="arrow-link" href="../come-funziona/">Come funziona →</a></p></div></details>
+          <details class="qa" data-reveal id="risposte" data-question-id="ecommerce-replies"><summary>Le risposte ai clienti partono da sole?</summary><div class="a"><p>No. L'AI prepara la bozza con i dati veri: l'ordine, lo stato della spedizione quando c'è, se il prodotto c'è. Poi la correggi e la mandi tu. Nessuna risposta parte da sola: la manda una persona, con un clic e una conferma.</p><p>Se cerchi un'AI che risponda ai clienti da sola, questo servizio non fa per te.</p></div></details>
+          <details class="qa" data-reveal id="dati" data-question-id="ecommerce-data"><summary>Dove stanno i miei dati?</summary><div class="a"><p>Nei tuoi account, intestati al tuo negozio. È lì che costruiamo ogni servizio, compreso quello di AI che legge i messaggi e gli ordini ai fornitori.</p></div></details>
+          <details class="qa" data-reveal id="app" data-question-id="ecommerce-tools"><summary>Ho già delle app. Devo cambiarle?</summary><div class="a"><p>Non per forza. Si parte da quello che usi: Shopify, la casella email, il corriere, la cassa. Se un'app fa già bene il suo lavoro, resta.</p><p>Le fatture elettroniche continui a farle come oggi: questi servizi non le emettono. E non prendono il posto del tuo commercialista: il mese lo chiudete insieme, con i totali già pronti.</p></div></details>
+          <details class="qa" data-reveal id="collegamenti" data-question-id="ecommerce-connect"><summary>E se la mia casella, il mio corriere o la mia cassa non si possono collegare?</summary><div class="a"><p>Può succedere. Non tutti si possono collegare, e non tutti allo stesso modo. Per questo li guardiamo insieme nel check-up, prima di qualsiasi proposta. Se uno non si collega, te lo diciamo, e ti diciamo quali servizi restano utili senza.</p><p>Senza la cassa, per esempio, il magazzino scala comunque le vendite del sito, e nei conti entrano comunque le vendite online.</p></div></details>
+          <details class="qa" data-reveal id="costi" data-question-id="ecommerce-cost"><summary>Quanto costa?</summary><div class="a"><p>Dipende da quali servizi scegli e da cosa usi già. Dopo il check-up, se vuoi, ricevi una proposta scritta con costi e limiti. Così sai a cosa vai incontro prima di iniziare. Il check-up è gratuito.</p></div></details>
+          <details class="qa" data-reveal id="check-up" data-question-id="ecommerce-checkup"><summary>Il check-up è gratuito?</summary><div class="a"><p>Sì, è gratuito. Parli con uno dei fondatori di Telaio. Guardiamo insieme quale lavoro ti fa perdere più tempo, e se la tua casella, il tuo corriere e la tua cassa si possono collegare. Se un servizio non fa per te, te lo diciamo.</p></div></details>
+          <details class="qa" data-reveal id="chi" data-question-id="ecommerce-who"><summary>Chi c'è dietro questi servizi?</summary><div class="a"><p>Telaio, un team di consulenza per le piccole e medie imprese: strategia d'impresa e intelligenza artificiale.</p><p>Questi servizi sono nati nel negozio di moda di uno dei fondatori di Telaio, che vende su Shopify e in negozio. Per questo possiamo dirti cosa fanno, e anche cosa non fanno.</p><p><a class="arrow-link" href="../chi-siamo/">Chi c'è dietro →</a></p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chiusura -->
+    <section class="p-final">
+      <div class="p-final-glow" aria-hidden="true"></div>
+      <div class="wrap">
+        <h2 class="p-final-h" data-split>Quale lavoro ti fa perdere più tempo? Partiamo da quello: parliamone nel check-up.</h2>
+        <a class="p-orb" data-magnetic href="../check-up/" data-cta="checkup" data-placement="final" aria-label="Prenota il check-up del tuo negozio">
+          <svg class="p-orb-ring" viewBox="0 0 200 200" aria-hidden="true">
+            <defs><path id="orbPath" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+            <text><textPath href="#orbPath">Prenota il check-up del tuo negozio · Gratuito · </textPath></text>
+          </svg>
+          <span class="p-orb-arr" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <div class="mobile-bar"><a class="btn btn-primary btn-block" href="../check-up/" data-cta="checkup" data-placement="mobile_bar">Prenota il check-up del tuo negozio</a></div>
+
+  <footer class="p-footer">
+    <div class="wrap foot-in foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">
+          <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+          <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+        </div>
+        <span class="foot-tag">L'AI prepara. Tu decidi.</span>
+        <span>Automazioni per negozi Shopify: clienti, spedizioni, magazzino e conti.</span>
+        <a class="foot-endorse" href="https://telaioconsulting.github.io/">Un servizio Telaio</a>
+      </div>
+      <nav class="foot-col" aria-label="Pagine">
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/">Spedizioni</a>
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/">Domande frequenti</a>
+        <a href="../chi-siamo/">Chi c'è dietro</a>
+      </nav>
+      <div class="foot-col">
+        <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>
+        <a href="../privacy/">Informativa privacy</a>
+        <a href="../cookie/">Cookie</a>
+        <span>© 2026 Telaio</span>
+      </div>
+    </div>
+    <div class="p-bigword" aria-hidden="true"><span>T</span><span>e</span><span>l</span><span>a</span><span>i</span><span>o</span></div>
+  </footer>
+
+  <!-- Librerie di animazione, ospitate nel sito (vedi assets/vendor/README.md) -->
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <script src="../assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="../assets/vendor/SplitText.min.js"></script>
+  <script src="../assets/vendor/lenis.min.js"></script>
+  <script src="../script.js"></script>
+  <script src="../motion.js"></script>
+</body>
+</html>

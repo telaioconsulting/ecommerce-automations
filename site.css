@@ -1,0 +1,76 @@
+/* ============================================================
+   Telaio - Ecommerce Automations: i tocchi propri di questo sito.
+   Si carica dopo style.css e motion.css, che restano quelli di Telaio.
+   ============================================================ */
+
+/* ---- Marchio in testata: Telaio + l'etichetta del servizio ---- */
+.brand-lockup { display: inline-flex; flex-direction: column; line-height: 1; gap: 4px; }
+.brand-sub {
+  font-family: var(--f-mono); font-weight: 500; font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--weft); white-space: nowrap;
+}
+.foot-brand .brand-lockup .wm { font-size: 1.15rem; }
+
+/* ---- Testata: più voci e un pulsante più lungo di quelli di Telaio ----
+   La testata è un poco più larga del contenuto, e il menu passa a scomparsa prima. */
+.top > .wrap { max-width: 1220px; }
+@media (max-width: 1280px) {
+  .menu-btn { display: inline-grid; }
+  .top-actions { margin-left: auto; }
+  .nav {
+    position: absolute; top: 64px; left: 0; right: 0;
+    flex-direction: column; gap: 0; margin: 0;
+    background: var(--ground); border-bottom: 1px solid var(--line);
+    padding: 8px clamp(20px, 5vw, 48px) 16px;
+    display: none;
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 8px; border-bottom: 1px solid var(--line); border-radius: 0; }
+  .nav a[aria-current="page"]::after { left: 8px; right: auto; width: 24px; bottom: 6px; }
+  .nav a:hover { background: var(--panel); }
+  .nav a:not([aria-current])::before, .nav a:not([aria-current])::after { content: none; }
+}
+@media (max-width: 380px) { .brand-sub { font-size: 9px; letter-spacing: .1em; } }
+
+/* ---- Hero ---- */
+.p-hero-in > .p-hero-cta { margin-top: clamp(28px, 4vh, 44px); }
+
+/* ---- I quattro servizi ---- */
+.p-pain {
+  margin-top: 20px; max-width: 30ch; padding-left: 14px; border-left: 2px solid var(--brand);
+  font-family: var(--f-display); font-weight: 500; color: var(--ink);
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.42;
+}
+.p-group-cards { grid-template-columns: 1fr; }
+.p-case .p-more { margin-top: 18px; }
+
+/* lancetta dell'orologio e ritardo della busta nei disegni */
+.i-hand { transform-box: view-box; transform-origin: 126px 26px; animation: i-tick 4.8s steps(12) infinite; }
+@keyframes i-tick { to { transform: rotate(360deg); } }
+.i9-late { animation-delay: .25s; }
+@media (prefers-reduced-motion: reduce) { .i-hand { animation: none; } }
+
+/* ---- L'AI prepara. Tu decidi. ---- */
+.p-ai .ticks { margin-top: clamp(32px, 4vw, 48px); gap: 18px; max-width: 70ch; }
+.p-ai .ticks li { font-size: var(--step-1); color: var(--ink); }
+
+/* ---- Da dove viene, per chi è ---- */
+.p-origin-note { margin-top: 24px; max-width: 56ch; }
+.p-list-note { margin-top: 22px; padding-left: 8px; color: var(--ink); font-size: var(--step-0); line-height: 1.55; }
+
+/* ---- Piè di pagina ---- */
+.foot-endorse { color: var(--ink); }
+
+/* ---- Pagina non trovata ---- */
+.p-404-links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: clamp(28px, 4vh, 44px); }
+.p-404-links .arrow-link { margin-top: 0; }
+
+@media (max-width: 899px) { .p-pain { max-width: 44ch; } }
+@media (max-width: 560px) {
+  .p-hero.is-page .p-h1 { font-size: clamp(1.9rem, 8.4vw, 2.3rem); }
+  .p-hero-lede { font-size: 1.05rem; }
+  .p-case { padding: 22px; }
+}
+
+/* ---- Link dentro il testo: blu chiaro, leggibile sul fondo scuro ---- */
+.d a, .lede a, .qa .a a { color: var(--weft); }

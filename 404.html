@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; types: p-filo; } }</style>
+  <!-- Questa pagina risponde a qualsiasi indirizzo che non esiste, a qualsiasi profondità:
+       i percorsi relativi partono dalla cartella del sito, che si ricava dall'indirizzo.
+       Anche fogli di stile, font e script si scrivono da qui, con la cartella davanti. -->
+  <script>
+    (function () {
+      var cartella = /^\/ecommerce-automations(\/|$)/.test(location.pathname) ? "/ecommerce-automations/" : "/";
+      window.__cartella = cartella;
+      document.write('<base href="' + cartella + '">' +
+        '<link rel="icon" type="image/png" href="' + cartella + 'assets/telaio-logo-512.png">' +
+        '<link rel="preload" href="' + cartella + 'assets/fonts/bricolage-grotesque-500-700-latin.woff2" as="font" type="font/woff2" crossorigin>' +
+        '<link rel="preload" href="' + cartella + 'assets/fonts/ibm-plex-sans-400-600-latin.woff2" as="font" type="font/woff2" crossorigin>' +
+        '<link rel="stylesheet" href="' + cartella + 'style.css">' +
+        '<link rel="stylesheet" href="' + cartella + 'motion.css">' +
+        '<link rel="stylesheet" href="' + cartella + 'site.css">');
+    })();
+  </script>
+  <title>Pagina non trovata | Telaio - Ecommerce Automations</title>
+  <meta name="description" content="Questa pagina non c'è. Torna alla home o prenota il check-up del tuo negozio.">
+  <meta name="theme-color" content="#090C08">
+  <meta name="robots" content="noindex">
+  <noscript>
+    <link rel="icon" type="image/png" href="assets/telaio-logo-512.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="motion.css">
+    <link rel="stylesheet" href="site.css">
+  </noscript>
+  <script>
+    (function (r) {
+      r.classList.add("js");
+      addEventListener("pagereveal", function (e) { r.classList.add(e.viewTransition ? "p-filo-arrivo" : "p-rivelata"); });
+      try { if (localStorage.getItem("telaio-theme") === "light") { r.setAttribute("data-theme", "light"); document.querySelector('meta[name="theme-color"]').content = "#F4F5F8"; } } catch (e) {}
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) r.classList.add("motion");
+      setTimeout(function () {
+        if (!window.__telaio) r.classList.remove("js");
+        if (!window.__motion) r.classList.remove("motion");
+      }, 4000);
+    })(document.documentElement);
+  </script>
+</head>
+<body data-page-type="not-found">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="p-progress" aria-hidden="true"></div>
+
+    <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="./" aria-label="Telaio Ecommerce Automations, home">
+        <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"><path d="M24 10 V32 M24 48 V54"></path><path d="M40 10 V16 M40 32 V54"></path><path d="M10 24 H16 M32 24 H54"></path><path d="M10 40 H32 M48 40 H54"></path></g></svg>
+        <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Navigazione principale">
+        <a href="clienti/">Clienti</a>
+        <a href="spedizioni/">Spedizioni</a>
+        <a href="magazzino/">Magazzino</a>
+        <a href="conti/">Conti</a>
+        <a href="come-funziona/">Come funziona</a>
+        <a href="domande-frequenti/">Domande frequenti</a>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Passa al tema chiaro">◐</button>
+        <a class="btn btn-primary btn-sm" href="check-up/" data-cta="checkup" data-placement="nav">Prenota il check-up del tuo negozio</a>
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="nav">≡</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="p-hero is-page">
+      <canvas class="p-weave" id="weave" aria-hidden="true"></canvas>
+      <div class="p-hero-veil" aria-hidden="true"></div>
+      <div class="wrap p-hero-in">
+        <p class="p-kicker" data-hero-item><span class="p-dot" aria-hidden="true"></span>Pagina non trovata</p>
+        <h1 class="p-h1">Questa pagina non c'è.</h1>
+        <p class="p-hero-lede" data-hero-item>Forse il link è vecchio, o nell'indirizzo c'è un errore di battitura. Riparti dalla home, oppure parliamo del tuo negozio nel check-up.</p>
+        <div class="p-404-links" data-hero-item>
+          <a class="btn btn-primary p-btn-xl" data-magnetic href="check-up/" data-cta="checkup" data-placement="not_found">Prenota il check-up del tuo negozio <span class="p-arr" aria-hidden="true">→</span></a>
+          <a class="arrow-link" href="./">Torna alla home →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="mobile-bar"><a class="btn btn-primary btn-block" href="check-up/" data-cta="checkup" data-placement="mobile_bar">Prenota il check-up del tuo negozio</a></div>
+
+    <footer class="p-footer">
+    <div class="wrap foot-in foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">
+          <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"><path d="M24 10 V32 M24 48 V54"></path><path d="M40 10 V16 M40 32 V54"></path><path d="M10 24 H16 M32 24 H54"></path><path d="M10 40 H32 M48 40 H54"></path></g></svg>
+          <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+        </div>
+        <span class="foot-tag">L'AI prepara. Tu decidi.</span>
+        <span>Automazioni per negozi Shopify: clienti, spedizioni, magazzino e conti.</span>
+        <a class="foot-endorse" href="https://telaioconsulting.github.io/">Un servizio Telaio</a>
+      </div>
+      <nav class="foot-col" aria-label="Pagine">
+        <a href="clienti/">Clienti</a>
+        <a href="spedizioni/">Spedizioni</a>
+        <a href="magazzino/">Magazzino</a>
+        <a href="conti/">Conti</a>
+        <a href="come-funziona/">Come funziona</a>
+        <a href="domande-frequenti/">Domande frequenti</a>
+        <a href="chi-siamo/">Chi c'è dietro</a>
+      </nav>
+      <div class="foot-col">
+        <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>
+        <a href="privacy/">Informativa privacy</a>
+        <a href="cookie/">Cookie</a>
+        <span>© 2026 Telaio</span>
+      </div>
+    </div>
+    <div class="p-bigword" aria-hidden="true"><span>T</span><span>e</span><span>l</span><span>a</span><span>i</span><span>o</span></div>
+  </footer>
+
+  <script>
+    (function (c) {
+      ["assets/vendor/gsap.min.js", "assets/vendor/ScrollTrigger.min.js", "assets/vendor/SplitText.min.js",
+       "assets/vendor/lenis.min.js", "script.js", "motion.js"].forEach(function (f) {
+        document.write('<script src="' + c + f + '"><\/script>');
+      });
+    })(window.__cartella || "./");
+  </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cookie e preferenze | Telaio - Ecommerce Automations</title>
+  <meta name="description" content="Quali cookie e strumenti usa il sito Telaio - Ecommerce Automations, a cosa servono e come cambiare le tue scelte in qualsiasi momento.">
+  <meta name="theme-color" content="#090C08">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://telaioconsulting.github.io/ecommerce-automations/cookie/">
+
+  <meta property="og:title" content="Cookie e preferenze | Telaio - Ecommerce Automations">
+  <meta property="og:description" content="Quali cookie e strumenti usa il sito, a cosa servono e come cambiare le tue scelte.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://telaioconsulting.github.io/ecommerce-automations/cookie/">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Telaio - Ecommerce Automations">
+  <meta property="og:image" content="https://telaioconsulting.github.io/ecommerce-automations/assets/og-telaio.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cookie e preferenze | Telaio - Ecommerce Automations">
+  <meta name="twitter:description" content="Quali cookie e strumenti usa il sito e come cambiare le tue scelte.">
+  <meta name="twitter:image" content="https://telaioconsulting.github.io/ecommerce-automations/assets/og-telaio.png">
+
+  <link rel="icon" type="image/png" href="../assets/telaio-logo-512.png">
+  <link rel="preload" href="../assets/fonts/bricolage-grotesque-500-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/ibm-plex-sans-400-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- cambio pagina col filo (motion.css): la richiesta al browser sta in cima, prima di ogni script,
+       altrimenti la pagina nuova può controllarla prima che arrivino i fogli di stile e annullare il passaggio -->
+  <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; types: p-filo; } }</style>
+  <script>
+    (function (r) {
+      r.classList.add("js");
+      // cambio pagina col filo (motion.css): «pagereveal» dice, prima del primo disegno, se la pagina arriva con la transizione
+      addEventListener("pagereveal", function (e) { r.classList.add(e.viewTransition ? "p-filo-arrivo" : "p-rivelata"); });
+      // tema chiaro salvato: subito, prima del primo disegno (niente passaggio dal buio al chiaro)
+      try { if (localStorage.getItem("telaio-theme") === "light") { r.setAttribute("data-theme", "light"); document.querySelector('meta[name="theme-color"]').content = "#F4F5F8"; } } catch (e) {}
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) r.classList.add("motion");
+      // Se gli script non partono, si torna alla pagina statica (tutto visibile).
+      setTimeout(function () {
+        if (!window.__telaio) r.classList.remove("js");
+        if (!window.__motion) r.classList.remove("motion");
+      }, 4000);
+    })(document.documentElement);
+  </script>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../motion.css">
+  <link rel="stylesheet" href="../site.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://telaioconsulting.github.io/ecommerce-automations/" },
+      { "@type": "ListItem", "position": 2, "name": "Cookie", "item": "https://telaioconsulting.github.io/ecommerce-automations/cookie/" }
+    ]
+  }
+  </script>
+</head>
+<body data-page-type="cookie">
+  <a class="skip" href="#top">Vai al contenuto</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="mk" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round">
+        <path d="M24 10 V32 M24 48 V54"></path>
+        <path d="M40 10 V16 M40 32 V54"></path>
+        <path d="M10 24 H16 M32 24 H54"></path>
+        <path d="M10 40 H32 M48 40 H54"></path>
+      </g>
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="p-progress" aria-hidden="true"></div>
+
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="../" aria-label="Telaio Ecommerce Automations, home">
+        <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+        <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Navigazione principale">
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/">Spedizioni</a>
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/">Domande frequenti</a>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Passa al tema chiaro">◐</button>
+        <a class="btn btn-primary btn-sm" href="../check-up/" data-cta="checkup" data-placement="nav">Prenota il check-up del tuo negozio</a>
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="nav">≡</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="p-hero is-page is-compact">
+      <canvas class="p-weave" id="weave" aria-hidden="true"></canvas>
+      <div class="p-hero-veil" aria-hidden="true"></div>
+      <div class="wrap p-hero-in">
+        <nav class="crumbs" data-hero-item aria-label="Percorso"><a href="../">Home</a> <span aria-hidden="true">›</span> <span aria-current="page">Cookie</span></nav>
+        <h1 class="p-h1">Cookie e preferenze</h1>
+        <p class="p-hero-lede" data-hero-item>Qui trovi quali cookie e strumenti usa il sito, a cosa servono e come cambiare le tue scelte.</p>
+      </div>
+    </section>
+
+    <section class="wrap p-legal">
+      <div class="legal">
+        <h2>Cosa usa il sito oggi</h2>
+        <p>Oggi il sito non usa cookie di profilazione né strumenti di statistica. Non crea cookie suoi. Nel tuo browser usa solo le due informazioni tecniche descritte qui sotto. Servono al funzionamento del sito, e per questo non serve il consenso.</p>
+
+        <h2>La scelta del tema</h2>
+        <p>Se scegli il tema chiaro o scuro, il sito salva questa scelta nel tuo browser, così la ritrovi la volta dopo. È uno strumento tecnico: non serve il consenso. Puoi cancellarla quando vuoi dalle impostazioni del browser, nella parte dedicata ai dati dei siti.</p>
+        <p>Nel browser la trovi con il nome «telaio-theme». Resta salvata finché non la cancelli. Se la cancelli, il sito torna al tema scuro e funziona come prima.</p>
+
+        <h2>L'animazione di apertura di Telaio</h2>
+        <p>Quando passi da una pagina all'altra, il sito legge un'altra informazione tecnica, «telaio-intro». La salva la home del sito di Telaio, se l'hai aperta, per mostrarti la sua animazione di apertura una volta sola. Questo sito non la crea e non la cambia: la legge soltanto, per scegliere il passaggio giusto se da qui vai alla home di Telaio. Il browser la cancella da solo quando chiudi la scheda.</p>
+
+        <h2>Caratteri e animazioni</h2>
+        <p>I caratteri e le librerie per le animazioni sono ospitati nel sito stesso. Aprendo le pagine non carichi nulla da altri servizi: tutto arriva da GitHub Pages, che ospita il sito. Cosa registra lo trovi nell'<a href="../privacy/">informativa privacy</a>.</p>
+
+        <h2>Il calendario di prenotazione</h2>
+        <p>Il calendario per prenotare il check-up è di Google e si carica solo se lo apri. Da quel momento Google può usare i propri cookie. Come li usa lo trovi nell'<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">informativa privacy di Google</a>.</p>
+
+        <h2>I link verso altri siti</h2>
+        <p>Alcuni link portano fuori da questo sito, per esempio al sito di Telaio. Quando li apri, valgono le regole di quei siti. Per il sito di Telaio trovi tutto nella <a href="https://telaioconsulting.github.io/cookie/">sua pagina sui cookie</a>.</p>
+
+        <h2>Cosa cambierà</h2>
+        <p>Questa pagina cambierà quando il sito adotterà strumenti di misura. In quel caso ti chiederemo il consenso.</p>
+
+        <p class="updated">Ultimo aggiornamento: 12 ottobre 2026</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="mobile-bar"><a class="btn btn-primary btn-block" href="../check-up/" data-cta="checkup" data-placement="mobile_bar">Prenota il check-up del tuo negozio</a></div>
+
+  <footer class="p-footer">
+    <div class="wrap foot-in foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">
+          <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+          <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+        </div>
+        <span class="foot-tag">L'AI prepara. Tu decidi.</span>
+        <span>Automazioni per negozi Shopify: clienti, spedizioni, magazzino e conti.</span>
+        <a class="foot-endorse" href="https://telaioconsulting.github.io/">Un servizio Telaio</a>
+      </div>
+      <nav class="foot-col" aria-label="Pagine">
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/">Spedizioni</a>
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/">Domande frequenti</a>
+        <a href="../chi-siamo/">Chi c'è dietro</a>
+      </nav>
+      <div class="foot-col">
+        <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>
+        <a href="../privacy/">Informativa privacy</a>
+        <a href="../cookie/" aria-current="page">Cookie</a>
+        <span>© 2026 Telaio</span>
+      </div>
+    </div>
+    <div class="p-bigword" aria-hidden="true"><span>T</span><span>e</span><span>l</span><span>a</span><span>i</span><span>o</span></div>
+  </footer>
+
+  <!-- Librerie di animazione, ospitate nel sito (vedi assets/vendor/README.md) -->
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <script src="../assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="../assets/vendor/SplitText.min.js"></script>
+  <script src="../assets/vendor/lenis.min.js"></script>
+  <script src="../script.js"></script>
+  <script src="../motion.js"></script>
+</body>
+</html>
