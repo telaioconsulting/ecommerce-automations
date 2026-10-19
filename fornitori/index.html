@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Segui gli ordini ai fornitori fino all'arrivo | Telaio - Ecommerce Automations</title>
+  <meta name="description" content="Ordini ai fornitori e merce in arrivo in un posto solo, anche a pezzi, con la lista per riordinare pronta. Su richiesta, l'ordine si registra da una foto.">
+  <meta name="theme-color" content="#090C08">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://telaioconsulting.com/ecommerce-automations/fornitori/">
+
+  <meta property="og:title" content="Segui gli ordini ai fornitori fino all'arrivo">
+  <meta property="og:description" content="Ordini ai fornitori e merce in arrivo in un posto solo, anche a pezzi, con la lista per riordinare pronta. Su richiesta, l'ordine si registra da una foto.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://telaioconsulting.com/ecommerce-automations/fornitori/">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Telaio - Ecommerce Automations">
+  <meta property="og:image" content="https://telaioconsulting.com/ecommerce-automations/assets/og-telaio.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Segui gli ordini ai fornitori fino all'arrivo">
+  <meta name="twitter:description" content="Ordini ai fornitori e merce in arrivo in un posto solo, anche a pezzi, con la lista per riordinare pronta. Su richiesta, l'ordine si registra da una foto.">
+  <meta name="twitter:image" content="https://telaioconsulting.com/ecommerce-automations/assets/og-telaio.png">
+
+  <link rel="icon" type="image/png" href="../assets/telaio-logo-512.png">
+  <link rel="preload" href="../assets/fonts/bricolage-grotesque-500-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/ibm-plex-sans-400-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- cambio pagina col filo (motion.css): la richiesta al browser sta in cima, prima di ogni script,
+       altrimenti la pagina nuova può controllarla prima che arrivino i fogli di stile e annullare il passaggio -->
+  <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; types: p-filo; } }</style>
+  <script>
+    (function (r) {
+      r.classList.add("js");
+      // cambio pagina col filo (motion.css): «pagereveal» dice, prima del primo disegno, se la pagina arriva con la transizione
+      addEventListener("pagereveal", function (e) { r.classList.add(e.viewTransition ? "p-filo-arrivo" : "p-rivelata"); });
+      // tema chiaro salvato: subito, prima del primo disegno (niente passaggio dal buio al chiaro)
+      try { if (localStorage.getItem("telaio-theme") === "light") { r.setAttribute("data-theme", "light"); document.querySelector('meta[name="theme-color"]').content = "#F4F5F8"; } } catch (e) {}
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) r.classList.add("motion");
+      // Se gli script non partono, si torna alla pagina statica (tutto visibile).
+      setTimeout(function () {
+        if (!window.__telaio) r.classList.remove("js");
+        if (!window.__motion) r.classList.remove("motion");
+      }, 4000);
+    })(document.documentElement);
+  </script>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../motion.css">
+  <link rel="stylesheet" href="../site.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://telaioconsulting.com/ecommerce-automations/fornitori/#service",
+        "name": "Fornitori: segui gli ordini ai fornitori fino all'arrivo",
+        "url": "https://telaioconsulting.com/ecommerce-automations/fornitori/",
+        "serviceType": "Ordini ai fornitori per negozi Shopify",
+        "description": "Per i negozi su Shopify: gli ordini ai fornitori e la merce in arrivo in un posto solo, anche quando arriva a pezzi, con la lista per riordinare sempre pronta. Quando una persona registra l'arrivo, il magazzino si aggiorna. Su richiesta, l'ordine si registra da una foto del foglio: l'AI lo legge e una persona lo controlla prima che cambi qualcosa. Si può prendere da solo, senza gli altri servizi.",
+        "provider": { "@id": "https://telaioconsulting.com/#organization" },
+        "brand": { "@id": "https://telaioconsulting.com/#organization" },
+        "isRelatedTo": { "@id": "https://telaioconsulting.com/ecommerce-automations/#service" },
+        "areaServed": "IT",
+        "availableLanguage": "it"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://telaioconsulting.com/ecommerce-automations/" },
+          { "@type": "ListItem", "position": 2, "name": "Fornitori", "item": "https://telaioconsulting.com/ecommerce-automations/fornitori/" }
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://telaioconsulting.com/#organization",
+        "name": "Telaio",
+        "alternateName": "Telaio Consulting",
+        "url": "https://telaioconsulting.com/",
+        "logo": "https://telaioconsulting.com/ecommerce-automations/assets/telaio-logo-512.png",
+        "email": "info@telaioconsulting.com"
+      }
+    ]
+  }
+  </script>
+</head>
+<body data-page-type="fornitori">
+  <a class="skip" href="#top">Vai al contenuto</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="mk" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round">
+        <path d="M24 10 V32 M24 48 V54"></path>
+        <path d="M40 10 V16 M40 32 V54"></path>
+        <path d="M10 24 H16 M32 24 H54"></path>
+        <path d="M10 40 H32 M48 40 H54"></path>
+      </g>
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="p-progress" aria-hidden="true"></div>
+
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="../" aria-label="Telaio Ecommerce Automations, home">
+        <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+        <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Navigazione principale">
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/">Spedizioni</a>
+        <a href="../fornitori/" aria-current="page">Fornitori</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/">Domande frequenti</a>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Passa al tema chiaro">◐</button>
+        <a class="btn btn-primary btn-sm" href="../check-up/" data-cta="checkup" data-placement="nav">Prenota il check-up del tuo negozio</a>
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="nav">≡</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <section class="p-hero is-page">
+      <canvas class="p-weave" id="weave" aria-hidden="true"></canvas>
+      <div class="p-hero-veil" aria-hidden="true"></div>
+      <div class="wrap p-hero-in">
+        <nav class="crumbs" aria-label="Percorso" data-hero-item><a href="../">Home</a> <span aria-hidden="true">›</span> <span aria-current="page">Fornitori</span></nav>
+        <h1 class="p-h1">Segui gli ordini ai fornitori fino all'arrivo.</h1>
+        <p class="p-hero-lede" data-hero-item>Per il tuo negozio Shopify: gli ordini ai fornitori e la merce in arrivo stanno in un posto solo, anche quando arriva a pezzi, con la lista per riordinare già pronta. È un servizio a sé: puoi partire da questo.</p>
+        <div class="p-hero-cta" data-hero-item>
+          <a class="btn btn-primary p-btn-xl" data-magnetic href="../check-up/" data-cta="checkup" data-placement="hero">Prenota il check-up del tuo negozio <span class="p-arr" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- I fornitori, oggi -->
+    <section class="p-sec p-ai" style="padding-top:clamp(48px,7vw,96px)">
+      <div class="wrap">
+        <header class="p-head" style="margin-bottom:clamp(24px,3vw,36px)">
+          <h2 class="p-h2" data-split>I fornitori, oggi</h2>
+        </header>
+        <p class="p-statement" data-scrub>Gli ordini ai fornitori li ricopi riga per riga? E per sapere cosa riordinare, rifai i conti da capo.</p>
+        <ul class="ticks" data-reveal>
+          <li>Il fornitore consegna metà dell'ordine, e il resto lo segui a memoria.</li>
+          <li>Per sapere cosa è in arrivo apri email, fogli e messaggi.</li>
+          <li>Il prodotto che vende di più finisce, e te ne accorgi quando un cliente lo chiede.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Cosa cambia -->
+    <section class="p-sec">
+      <div class="wrap p-split">
+        <div class="p-split-side">
+          <h2 class="p-h2" data-split>Cosa cambia</h2>
+          <p class="lede" data-reveal>Ordini, arrivi e lista per riordinare in un posto solo. Tu decidi cosa ordinare.</p>
+          <div class="p-case-art" aria-hidden="true" data-reveal style="margin-top:28px">
+            <svg class="ill" viewBox="0 0 160 100">
+              <rect x="8" y="14" width="34" height="48" rx="3"/>
+              <path class="soft" d="M14 24h22M14 32h16M14 40h22M14 48h12"/>
+              <path class="i1-flow" d="M46 38c12 0 12-12 24-12"/>
+              <path class="i1-flow" d="M46 38c12 0 12 22 24 22"/>
+              <rect x="74" y="14" width="26" height="24" rx="2"/>
+              <path d="M74 22h26M87 14v8"/>
+              <rect x="74" y="48" width="26" height="24" rx="2"/>
+              <path d="M74 56h26M87 48v8"/>
+              <rect class="soft" x="108" y="48" width="26" height="24" rx="2" stroke-dasharray="3 3"/>
+              <path class="soft" d="M108 56h26M121 48v8"/>
+              <g class="i1-ok"><circle class="fillb" cx="100" cy="38" r="7"/><path d="M96.8 38l2.2 2.2 4.2-4.2" stroke="#fff"/></g>
+              <path class="i1-l" d="M112 22h36"/>
+              <path class="i1-l b" d="M112 30h24"/>
+              <path class="soft" d="M8 88h144"/>
+            </svg>
+          </div>
+        </div>
+        <ul class="p-rows is-rich">
+          <li data-reveal><h3>Ordini e arrivi in un posto solo</h3><span class="d">Per ogni fornitore vedi cosa hai ordinato e cosa deve ancora arrivare, riga per riga. Se la merce arriva a pezzi, sai cosa manca.</span></li>
+          <li data-reveal><h3>Il magazzino si aggiorna all'arrivo</h3><span class="d">Con il servizio Magazzino, quando registri l'arrivo della merce le quantità si aggiornano, e con loro quelle su Shopify.</span><a class="arrow-link" href="../magazzino/">Il servizio Magazzino →</a></li>
+          <li data-reveal><h3>La lista per riordinare, già pronta</h3><span class="d">Per ogni prodotto vedi quanto si vende, quanto ne resta e cosa è già in arrivo. Non rifai i conti da capo: decidi tu cosa ordinare.</span></li>
+          <li data-reveal><h3>Il costo vero della merce</h3><span class="d">Con il servizio Conti, quello che paghi ai fornitori entra nel costo della merce che vendi.</span><a class="arrow-link" href="../conti/">Il servizio Conti →</a></li>
+          <li data-reveal><h3>Su richiesta, da una foto</h3><span class="d">Se vuoi, registri l'ordine da una foto del foglio: l'AI lo legge e tu controlli prima che cambi qualcosa.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Regole fisse. Tu controlli. -->
+    <section class="p-sec p-ai">
+      <div class="wrap">
+        <header class="p-head" style="margin-bottom:clamp(24px,3vw,36px)">
+          <h2 class="p-h2" data-split>Regole fisse. Tu controlli.</h2>
+        </header>
+        <p class="p-statement" data-scrub>Gli arrivi e la lista per riordinare seguono regole fisse, senza AI. L'AI entra solo se scegli di registrare gli ordini da una foto.</p>
+        <ul class="ticks" data-reveal>
+          <li>Un ordine letto dall'AI non cambia niente finché non lo controlli tu.</li>
+          <li>Non ordina niente al posto tuo: decidi tu cosa ordinare, e quando.</li>
+        </ul>
+        <p class="lede p-origin-note" data-reveal>Il servizio è nato nel negozio di moda di uno dei fondatori di Telaio, che vende su Shopify e in negozio.</p>
+        <p data-reveal style="margin-top:18px"><a class="arrow-link" href="../chi-siamo/">Chi c'è dietro →</a></p>
+      </div>
+    </section>
+
+    <!-- Cosa ti serve, cosa non fa -->
+    <section class="p-sec">
+      <div class="wrap p-lists">
+        <div class="p-list yes" data-reveal>
+          <h2>Cosa ti serve</h2>
+          <ul>
+            <li>un negozio su Shopify;</li>
+            <li>i tuoi fornitori e i prodotti che compri da loro, con il loro costo;</li>
+            <li>qualcuno che registri gli arrivi quando la merce entra.</li>
+          </ul>
+        </div>
+        <div class="p-list no" data-reveal>
+          <h2>Cosa non fa</h2>
+          <ul>
+            <li>non ordina niente ai fornitori al posto tuo;</li>
+            <li>non scrive ai fornitori per te.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Domande frequenti -->
+    <section id="faq" class="p-sec">
+      <div class="wrap p-split">
+        <div class="p-split-side">
+          <h2 class="p-h2" data-split>Domande frequenti</h2>
+          <p data-reveal><a class="arrow-link" href="../domande-frequenti/">Tutte le domande →</a></p>
+          <p data-reveal><a class="arrow-link" href="../come-funziona/">Come funziona →</a></p>
+        </div>
+        <div>
+          <details class="qa" data-reveal data-question-id="fornitori-standalone"><summary>Posso prendere solo questo servizio?</summary><div class="a"><p>Sì. Funziona da solo, e con gli altri servizi fa di più: con il Magazzino gli arrivi aggiornano le quantità, con i Conti quello che paghi entra nel costo della merce.</p></div></details>
+          <details class="qa" data-reveal data-question-id="fornitori-suppliers"><summary>I miei fornitori devono fare qualcosa?</summary><div class="a"><p>No. Lavori con loro come oggi: ordini e arrivi li registri tu.</p></div></details>
+          <details class="qa" data-reveal data-question-id="fornitori-ai-ordini"><summary>E se l'AI legge male un ordine da una foto?</summary><div class="a"><p>Può succedere, per esempio con una foto mossa. Per questo non cambia niente finché non controlli tu quello che ha letto. Correggi quello che non va, poi confermi.</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chiusura -->
+    <section class="p-final">
+      <div class="p-final-glow" aria-hidden="true"></div>
+      <div class="wrap">
+        <h2 class="p-final-h" data-split>Gli ordini li ricopi riga per riga? Guardiamo i tuoi fornitori nel check-up.</h2>
+        <a class="p-orb" data-magnetic href="../check-up/" data-cta="checkup" data-placement="final" aria-label="Prenota il check-up del tuo negozio">
+          <svg class="p-orb-ring" viewBox="0 0 200 200" aria-hidden="true">
+            <defs><path id="orbPath" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+            <text><textPath href="#orbPath">Prenota il check-up del tuo negozio · Gratuito · </textPath></text>
+          </svg>
+          <span class="p-orb-arr" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <div class="mobile-bar"><a class="btn btn-primary btn-block" href="../check-up/" data-cta="checkup" data-placement="mobile_bar">Prenota il check-up del tuo negozio</a></div>
+
+  <footer class="p-footer">
+    <div class="wrap foot-in foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">
+          <svg class="mk" viewBox="0 0 64 64" aria-hidden="true"><use href="#mk"></use></svg>
+          <span class="brand-lockup"><span class="wm">Telaio</span><span class="brand-sub">Ecommerce Automations</span></span>
+        </div>
+        <span class="foot-tag">Il sistema prepara. Tu decidi.</span>
+        <span>Automazioni per negozi Shopify: magazzino, clienti, spedizioni, fornitori e conti.</span>
+        <a class="foot-endorse" href="https://telaioconsulting.com/">Un servizio Telaio</a>
+      </div>
+      <nav class="foot-col" aria-label="Pagine">
+        <a href="../magazzino/">Magazzino</a>
+        <a href="../clienti/">Clienti</a>
+        <a href="../spedizioni/">Spedizioni</a>
+        <a href="../fornitori/">Fornitori</a>
+        <a href="../conti/">Conti</a>
+        <a href="../come-funziona/">Come funziona</a>
+        <a href="../domande-frequenti/">Domande frequenti</a>
+        <a href="../chi-siamo/">Chi c'è dietro</a>
+      </nav>
+      <div class="foot-col">
+        <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>
+        <a href="../privacy/">Informativa privacy</a>
+        <a href="../cookie/">Cookie</a>
+        <span>© 2026 Telaio</span>
+      </div>
+    </div>
+    <div class="p-bigword" aria-hidden="true"><span>T</span><span>e</span><span>l</span><span>a</span><span>i</span><span>o</span></div>
+  </footer>
+
+  <!-- Librerie di animazione, ospitate nel sito (vedi assets/vendor/README.md) -->
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <script src="../assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="../assets/vendor/SplitText.min.js"></script>
+  <script src="../assets/vendor/lenis.min.js"></script>
+  <script src="../script.js"></script>
+  <script src="../motion.js"></script>
+</body>
+</html>

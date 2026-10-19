@@ -1,6 +1,6 @@
 # Telaio - Ecommerce Automations
 
-Website of **Telaio - Ecommerce Automations**, a service by [Telaio](https://telaioconsulting.com/): four automations for Shopify shops (customer replies, courier labels and shipping notices, stock, monthly accounts), each available on its own. The site is in Italian.
+Website of **Telaio - Ecommerce Automations**, a service by [Telaio](https://telaioconsulting.com/): five automations for Shopify shops (stock, customer replies, courier labels and shipping notices, supplier orders, monthly accounts), each available on its own, plus services built on request. The site is in Italian.
 
 - **Live:** https://telaioconsulting.com/ecommerce-automations/ (the old https://telaioconsulting.github.io/ecommerce-automations/ addresses redirect there)
 - **Stack:** static HTML, CSS and JavaScript, no build step and no dependencies to install. Each page is a folder with an `index.html`.
@@ -15,6 +15,7 @@ Website of **Telaio - Ecommerce Automations**, a service by [Telaio](https://tel
 | Clienti | `/clienti/` |
 | Spedizioni | `/spedizioni/` |
 | Magazzino | `/magazzino/` |
+| Fornitori | `/fornitori/` |
 | Conti | `/conti/` |
 | Come funziona | `/come-funziona/` |
 | Domande frequenti | `/domande-frequenti/` |
