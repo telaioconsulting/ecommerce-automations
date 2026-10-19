@@ -9,11 +9,11 @@
   root.classList.add("js"); // se lo script è arrivato tardi, ripristina la classe
   var isEn = (root.lang || "it").toLowerCase().indexOf("en") === 0;
 
-  /* Indirizzi di incorporamento del calendario Google (Calendar › pagina di
-     prenotazione › Condividi › Incorpora › "Pagina di prenotazione in linea").
-     Finché restano vuoti, il riquadro (nella pagina check-up/ di questo sito) mostra l'email. */
-  var BOOKING_EMBED_URL_IT = "";
-  var BOOKING_EMBED_URL_EN = "";
+  /* Indirizzo che riceve il modulo del check-up: lo script Google dell'account info@,
+     pubblicato come App web. Finché è vuoto, i pulsanti portano alla pagina del check-up
+     e lì il riquadro mostra l'email. */
+  var MODULO_URL = "https://script.google.com/macros/s/AKfycbzJmiY4G_pbbwvgdwyeIiqgITCb_plU3cYFLQ9vrBKGVN-VcL90GIzHZD7A5dZu4g0r7g/exec";
+
 
   /* ---- Cambio tema (scuro predefinito ⇄ chiaro) ---- */
   var themeBtn = document.getElementById("themeBtn");
@@ -66,27 +66,192 @@
   // il menu a scomparsa si chiude quando le voci tornano in riga (il pulsante del menu sparisce)
   window.addEventListener("resize", function () { if (menuBtn && getComputedStyle(menuBtn).display === "none") closeMenu(); });
 
-  /* ---- Prenotazione: carica il calendario di Google solo al clic ---- */
+  /* ---- Richiesta del check-up: ogni pulsante «Prenota» apre una finestra col modulo;
+     nella pagina del check-up lo stesso modulo sta anche nel riquadro blu. L'invio va allo
+     script Google (MODULO_URL), che scrive a info@ e salva la richiesta. ---- */
   (function () {
+    var EMAIL = '<a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>';
+    // la cartella del sito (sotto /ecommerce-automations/ oppure alla radice di un dominio suo)
+    var base = "/";
+    try { base = new URL(".", document.currentScript.src).pathname; } catch (err) {}
+    // il sito è solo in italiano
+    var T = {
+      kicker: "Check-up del tuo negozio · Gratuito",
+      titolo: "Prenota il check-up del tuo negozio",
+      lede: "Lasciaci nome e contatti: ti scriviamo noi per fissare giorno e ora della videochiamata.",
+      nome: "Nome e cognome", email: "Email", telefono: "Telefono",
+      messaggio: "Di cosa vorresti parlare?", facoltativo: "facoltativo",
+      esempio: "Per esempio: il magazzino del sito e quello del negozio non tornano mai.",
+      invia: "Invia la richiesta", invio: "Invio in corso…", chiudi: "Chiudi",
+      privacy: 'Usiamo questi dati solo per organizzare e preparare la call. <a href="' + base + 'privacy/" target="_blank" rel="noopener">Leggi l’informativa privacy.</a>',
+      grazie: function (n, e) { return ["Grazie, " + n + ".", "La tua richiesta è arrivata. Ti scriviamo a " + e + " per fissare giorno e ora."]; },
+      errore: "La richiesta non è partita. Riprova tra poco, oppure scrivici a " + EMAIL + "."
+    };
+
     var box = document.querySelector("[data-booking]");
-    if (!box) return;
-    box.hidden = false; // visibile solo con JavaScript; senza JS vale il <noscript>
-    var url = isEn ? (BOOKING_EMBED_URL_EN || BOOKING_EMBED_URL_IT) : BOOKING_EMBED_URL_IT;
-    if (!url) {
-      box.innerHTML = isEn
-        ? '<p>Write to us at <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a> and we’ll suggest a day and time.</p>'
-        : '<p>Scrivici a <a href="mailto:info@telaioconsulting.com" data-email-link>info@telaioconsulting.com</a>: ti proponiamo noi giorno e ora.</p>';
+    if (!MODULO_URL || !window.fetch || !window.URLSearchParams) {
+      // senza modulo vale il paragrafo con l'email già scritto nella pagina (quello di chi non ha JavaScript)
+      var senza = box && box.parentNode.querySelector(".no-js-only");
+      if (senza) senza.classList.add("is-shown");
       return;
     }
-    var btn = box.querySelector("[data-booking-loader]");
-    if (!btn) return;
-    btn.addEventListener("click", function () {
-      var f = document.createElement("iframe");
-      f.src = url; f.className = "booking-frame"; f.loading = "lazy";
-      f.title = isEn ? "Booking calendar" : "Calendario di prenotazione";
+
+    // il modulo: id distinti per ogni copia (finestra e pagina), «punto» dice da quale pulsante si è partiti,
+    // «dopo» (solo la finestra) riceve il ringraziamento appena c'è
+    function modulo(id, punto, conNota, dopo) {
+      var opz = ' <span class="ck-opt">(' + T.facoltativo + ")</span>";
+      var f = document.createElement("form");
+      f.className = "ck-form";
+      f.innerHTML =
+        '<div class="ck-field"><label for="' + id + '-nome">' + T.nome + "</label>" +
+          '<input id="' + id + '-nome" name="nome" type="text" autocomplete="name" required maxlength="100"></div>' +
+        '<div class="ck-two">' +
+          '<div class="ck-field"><label for="' + id + '-email">' + T.email + "</label>" +
+            '<input id="' + id + '-email" name="email" type="email" autocomplete="email" required maxlength="200" spellcheck="false"></div>' +
+          '<div class="ck-field"><label for="' + id + '-tel">' + T.telefono + opz + "</label>" +
+            '<input id="' + id + '-tel" name="telefono" type="tel" autocomplete="tel" maxlength="40"></div>' +
+        "</div>" +
+        '<div class="ck-field"><label for="' + id + '-msg">' + T.messaggio + opz + "</label>" +
+          '<textarea id="' + id + '-msg" name="messaggio" rows="4" maxlength="3000" placeholder="' + T.esempio + '"></textarea></div>' +
+        // campo trappola: invisibile alle persone, lo riempiono solo i programmi che mandano spam
+        '<div class="ck-hp" aria-hidden="true"><label>Lascia vuoto <input name="sito_web" type="text" tabindex="-1" autocomplete="off"></label></div>' +
+        '<div class="ck-send"><button class="btn btn-primary btn-block" type="submit"><span class="ck-label">' + T.invia + "</span></button>" +
+          '<p class="ck-status" role="status" aria-live="polite"></p></div>' +
+        (conNota ? '<p class="ck-note">' + T.privacy + "</p>" : "");
+
+      var btn = f.querySelector("button"), label = f.querySelector(".ck-label"), stato = f.querySelector(".ck-status");
+      var inVolo = false;
+      // il browser controlla prima i campi obbligatori e l'email: «submit» arriva solo se sono a posto
+      f.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        if (inVolo) return;
+        var dati = new URLSearchParams(new FormData(f));
+        dati.set("lingua", isEn ? "en" : "it");
+        dati.set("pagina", location.pathname);
+        dati.set("pulsante", punto());
+        inVolo = true;
+        btn.disabled = true; label.textContent = T.invio;
+        stato.textContent = ""; stato.classList.remove("is-error");
+        var ctrl = window.AbortController ? new AbortController() : null;
+        var attesa = setTimeout(function () { if (ctrl) ctrl.abort(); }, 20000);
+        fetch(MODULO_URL, { method: "POST", body: dati, credentials: "omit", signal: ctrl ? ctrl.signal : undefined })
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            if (!res || !res.ok) throw new Error((res && res.errore) || "risposta");
+            var fatto = grazie(f, dati.get("nome"), dati.get("email"));
+            if (dopo) dopo(fatto);
+          })
+          .catch(function () { stato.innerHTML = T.errore; stato.classList.add("is-error"); })
+          .then(function () { clearTimeout(attesa); inVolo = false; btn.disabled = false; label.textContent = T.invia; });
+      });
+      return f;
+    }
+
+    // dopo l'invio il modulo lascia il posto al ringraziamento (i dati della persona solo come testo)
+    function grazie(f, nome, email) {
+      var t = T.grazie(nome, email);
+      var fatto = document.createElement("div");
+      fatto.className = "ck-done";
+      fatto.setAttribute("tabindex", "-1");
+      var h = document.createElement("p"), p = document.createElement("p");
+      h.className = "ck-done-h";
+      h.textContent = t[0]; p.textContent = t[1];
+      fatto.appendChild(h); fatto.appendChild(p);
+      f.parentNode.replaceChild(fatto, f);
+      fatto.focus();
+      return fatto;
+    }
+
+    // nella pagina del check-up il modulo prende il posto dell'email nel riquadro blu
+    if (box) {
       box.innerHTML = "";
-      box.appendChild(f);
+      box.appendChild(modulo("ck-p", function () { return "checkup_form"; }, false));
+      box.hidden = false;
+    }
+
+    // la finestra: si apre da ogni pulsante del check-up. Il link resta per chi lo apre in una
+    // scheda nuova (Ctrl, Cmd, rotella) e per i browser senza <dialog>
+    if (typeof HTMLDialogElement !== "function") return;
+    var dlg = document.createElement("dialog"), daPulsante = "", testoDato = "";
+    dlg.className = "ck-dialog";
+    dlg.setAttribute("aria-labelledby", "ck-titolo");
+    dlg.setAttribute("data-lenis-prevent", ""); // dentro la finestra scorre il browser, non Lenis (motion.js)
+    dlg.innerHTML = '<div class="ck-dialog-in">' +
+      '<button class="icon-btn ck-close" type="button" aria-label="' + T.chiudi + '"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+      '<p class="ck-kicker">' + T.kicker + "</p>" +
+      '<h2 class="ck-title" id="ck-titolo">' + T.titolo + "</h2>" +
+      '<p class="ck-lede">' + T.lede + "</p></div>";
+    function moduloFinestra() { return modulo("ck-d", function () { return daPulsante; }, true, avviaChiusura); }
+    dlg.firstChild.appendChild(moduloFinestra());
+    document.body.appendChild(dlg);
+
+    dlg.querySelector(".ck-close").addEventListener("click", function () { dlg.close(); });
+    // un clic sullo sfondo chiude; non se è partito dentro (selezionando il testo di un campo) e non
+    // sulla barra di scorrimento della finestra, che per il browser è la finestra stessa
+    function fuori(ev) {
+      var r = dlg.getBoundingClientRect();
+      return ev.target === dlg && (ev.clientX < r.left || ev.clientX > r.right || ev.clientY < r.top || ev.clientY > r.bottom);
+    }
+    var giuFuori = false;
+    dlg.addEventListener("pointerdown", function (ev) { giuFuori = fuori(ev); });
+    dlg.addEventListener("click", function (ev) { if (giuFuori && fuori(ev)) dlg.close(); });
+
+    // dopo il ringraziamento la finestra si chiude da sola: una barra sottile si svuota nel frattempo.
+    // Non parte a finestra chiusa (la risposta è arrivata dopo un Esc: parte quando si riapre), né a scheda
+    // nascosta, né con «riduci movimento». Chi tocca, scorre o usa la tastiera dentro la finestra la tiene
+    // aperta, e anche chi passa a un'altra scheda: tornando, trova ancora il ringraziamento
+    var CHIUDI_DOPO = 8000, timerChiudi = 0, barra = null;
+    var fermo = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function fermaChiusura() {
+      clearTimeout(timerChiudi); timerChiudi = 0;
+      if (barra && barra.parentNode) barra.parentNode.removeChild(barra);
+      barra = null;
+    }
+    function avviaChiusura(fatto) {
+      fermaChiusura();
+      if (!dlg.open || document.hidden || fermo) return;
+      barra = document.createElement("i");
+      barra.className = "ck-done-bar"; barra.setAttribute("aria-hidden", "true");
+      barra.style.animationDuration = CHIUDI_DOPO + "ms";
+      fatto.appendChild(barra);
+      timerChiudi = setTimeout(function () { dlg.close(); }, CHIUDI_DOPO); // la pulizia la fa «close»
+    }
+    ["pointerdown", "keydown", "wheel", "touchmove"].forEach(function (t) {
+      dlg.addEventListener(t, function () { if (timerChiudi) fermaChiusura(); }, { passive: true });
     });
+    document.addEventListener("visibilitychange", function () { if (document.hidden && timerChiudi) fermaChiusura(); });
+    // chiusa dopo un invio, alla prossima apertura la finestra ha un modulo nuovo e vuoto
+    dlg.addEventListener("close", function () {
+      fermaChiusura();
+      root.classList.remove("ck-open");
+      var fatto = dlg.querySelector(".ck-done");
+      if (fatto) fatto.parentNode.replaceChild(moduloFinestra(), fatto);
+    });
+
+    // in fase di cattura: così il clic risulta già gestito per lo scorrimento morbido di motion.js,
+    // qualunque sia l'ordine degli script
+    document.addEventListener("click", function (ev) {
+      var a = ev.target.closest ? ev.target.closest("a[data-cta='checkup']") : null;
+      if (!a || ev.defaultPrevented || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+      ev.preventDefault();
+      daPulsante = a.getAttribute("data-placement") || "";
+      closeMenu();
+      // la pagina sotto resta ferma; lo spazio della sua barra di scorrimento resta occupato, così nulla si sposta
+      root.style.setProperty("--ck-gutter", (window.innerWidth - root.clientWidth) + "px");
+      root.classList.add("ck-open");
+      if (!dlg.open) dlg.showModal();
+      // un ringraziamento arrivato a finestra chiusa: lo si vede ora, poi la finestra si chiude da sola
+      var giaFatto = dlg.querySelector(".ck-done");
+      if (giaFatto && !timerChiudi) avviaChiusura(giaFatto);
+      // un link che dice già di cosa parlare («Parliamone nel check-up» di un'area) scrive il messaggio;
+      // quello che la persona ha scritto da sé non si tocca
+      var msg = dlg.querySelector("textarea[name='messaggio']"), testo = a.getAttribute("data-messaggio") || "";
+      if (msg && (!msg.value || msg.value === testoDato)) msg.value = testo;
+      testoDato = testo;
+      // con mouse e tastiera si parte dal nome; sul telefono no, la tastiera coprirebbe la finestra
+      var nome = dlg.querySelector("input[name='nome']");
+      if (nome && window.matchMedia("(pointer: fine)").matches) nome.focus();
+    }, true);
   })();
 
   /* ---- Barra fissa su telefono col pulsante principale ---- */
