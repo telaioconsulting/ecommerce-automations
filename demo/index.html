@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Demo | Telaio - Ecommerce Automations</title>
+  <meta name="description" content="Demo di Telaio Ecommerce Automations con un negozio e dati di esempio: magazzino, clienti, spedizioni, fornitori e conto economico.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F6F6F4">
+  <link rel="icon" type="image/png" href="../assets/telaio-logo-512.png">
+  <style>
+/* Layout: the shop's own back-office app (deliberately not the Telaio look, so it reads as a demo).
+   An amber demo band on top; the shop and its services in a side column (a scrolling row on phones);
+   the working area on the right. One light look on purpose, in every theme: white surfaces on a soft
+   grey ground, a leather-brown accent (the shop sells bags), slate blue as the second data colour. */
+:root {
+  --bg: #F6F6F4; --surface: #FFFFFF; --panel: #F3F2EF; --line: #E5E3DE; --line-strong: #CFCCC5;
+  --muted: #6A6660; --ink: #1F1D1A; --brand: #9A5A2B; --brand-ink: #FFFFFF; --weft: #8A4E22; --brand-soft: #F5EBE2;
+  --c1: #C07A44; --c2: #6E8CA0; --info: #3F6178; --info-soft: #E7EEF3; --band-bg: #F2B33D; --band-ink: #1D1606;
+  --ok: #2E7D4F; --ok-soft: #E3F2E8; --warn: #A35A12; --warn-soft: #FBEEDD; --err: #B3362B; --err-soft: #F9E3E0;
+  --shadow: 0 1px 2px rgba(31,29,26,.05), 0 12px 30px -16px rgba(31,29,26,.22);
+  --f-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --f-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --r-sm: 4px; --r-md: 8px; --r-lg: 12px;
+  --toast-bg: #1F1D1A; --toast-ink: #FAF9F7;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+a { color: var(--weft); }
+:focus-visible { outline: 2px solid var(--weft); outline-offset: 2px; border-radius: 4px; }
+.mono { font-family: var(--f-mono); }
+.num { font-variant-numeric: tabular-nums; }
+.label { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* demo band */
+.band { background: var(--band-bg); color: var(--band-ink); background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,.06) 0 10px, transparent 10px 20px); }
+.band-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 18px;
+  padding-block: 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font-size: 13px; }
+.band b { font-family: var(--f-mono); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; font-size: 11px; margin-right: 8px; }
+.band a { color: var(--band-ink); font-weight: 700; }
+
+/* shell */
+.shell { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100%;
+  padding-left: max(0px, env(safe-area-inset-left, 0px)); }
+.side { border-right: 1px solid var(--line); background: var(--surface); padding: 22px 16px; position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; height: 100dvh; overflow: auto; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.mono-mark { width: 34px; height: 34px; border-radius: 50%; background: var(--brand); color: var(--brand-ink); display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; font-size: 13px; letter-spacing: .02em; flex: none; }
+.brand-name { font-family: var(--f-display); font-weight: 700; font-size: 17px; line-height: 1; }
+.brand-sub { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.shop { margin: 16px 0 18px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel); }
+.shop-name { font-family: var(--f-display); font-weight: 700; font-size: 16px; }
+.shop-meta { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.chip-demo { display: inline-block; margin-top: 6px; font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--warn); border: 1px solid currentColor; border-radius: 999px; padding: 2px 8px; }
+.nav { display: grid; gap: 2px; }
+.nav a { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--r-md); text-decoration: none; color: var(--ink); font-weight: 500; }
+.nav a svg { width: 18px; height: 18px; flex: none; color: var(--muted); }
+.nav a .count { margin-left: auto; font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); }
+.nav a:hover { background: var(--panel); }
+.nav a[aria-current="page"] { background: var(--brand-soft); }
+.nav a[aria-current="page"] svg, .nav a[aria-current="page"] .count { color: var(--weft); }
+.side-foot { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); display: grid; gap: 10px; }
+
+.main { min-width: 0; padding-block: 28px 64px; padding-left: max(16px, 3vw); padding-right: max(16px, env(safe-area-inset-right, 0px), 3vw); }
+.view { max-width: 1120px; margin: 0 auto; display: grid; gap: 22px; }
+.head { display: grid; gap: 6px; }
+.head h1 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+.head p { color: var(--muted); max-width: 70ch; }
+.why { display: inline-flex; gap: 8px; align-items: baseline; font-size: 13.5px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-md); padding: 8px 12px; max-width: 80ch; }
+.why .label { color: var(--weft); flex: none; }
+
+.grid { display: grid; gap: 14px; }
+.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.split { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px; min-width: 0; }
+.card h2 { font-size: 18px; }
+.card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; display: grid; gap: 4px; min-width: 0; }
+.tile .v { font-family: var(--f-display); font-weight: 700; font-size: 26px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.tile .s { font-size: 12.5px; color: var(--muted); }
+
+.todo { display: grid; grid-template-columns: 40px minmax(0,1fr) auto; gap: 12px; align-items: center; width: 100%; text-align: left;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; cursor: pointer; }
+.todo:hover { border-color: var(--line-strong); }
+.todo .ic { width: 40px; height: 40px; border-radius: 10px; background: var(--brand-soft); display: grid; place-items: center; color: var(--weft); }
+.todo .ic svg { width: 20px; height: 20px; }
+.todo b { display: block; font-weight: 600; }
+.todo span { font-size: 13.5px; color: var(--muted); }
+.todo .go { font-family: var(--f-mono); font-size: 12px; color: var(--weft); white-space: nowrap; }
+
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; border-radius: 999px; padding: 2px 9px; white-space: nowrap; border: 1px solid transparent; }
+.pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.p-ok { color: var(--ok); background: var(--ok-soft); }
+.p-warn { color: var(--warn); background: var(--warn-soft); }
+.p-err { color: var(--err); background: var(--err-soft); }
+.p-info { color: var(--info); background: var(--info-soft); }
+.p-mute { color: var(--muted); background: var(--panel); }
+.tag { display: inline-block; font-size: 12px; color: var(--muted); border: 1px solid var(--line-strong); border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 8px 14px; border-radius: var(--r-md);
+  border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink); font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: none; }
+.btn:hover { border-color: var(--muted); }
+.btn-primary { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
+.btn-primary:hover { border-color: var(--weft); }
+.btn-ghost { background: transparent; }
+.btn-sm { min-height: 32px; padding: 5px 10px; font-size: 13px; }
+.row-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line-strong); background: transparent; border-radius: 999px; padding: 5px 12px; font-size: 13px; cursor: pointer; color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--brand-soft); border-color: var(--weft); color: var(--ink); }
+.chip .n { font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); margin-left: 4px; }
+
+.alert { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; border-radius: var(--r-lg); padding: 12px 14px; border: 1px solid; }
+.alert.warn { background: var(--warn-soft); border-color: var(--warn); }
+.alert.err { background: var(--err-soft); border-color: var(--err); }
+.alert.ok { background: var(--ok-soft); border-color: var(--ok); }
+.alert .dot { width: 10px; height: 10px; border-radius: 50%; }
+.alert.warn .dot { background: var(--warn); } .alert.err .dot { background: var(--err); } .alert.ok .dot { background: var(--ok); }
+
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; }
+tbody tr.click { cursor: pointer; }
+tbody tr.click:hover td { background: var(--panel); }
+.prod b { font-weight: 600; } .prod span { color: var(--muted); }
+.neg { color: var(--err); font-weight: 600; }
+
+/* chart */
+.chart svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; gap: 14px; font-size: 12.5px; color: var(--muted); flex-wrap: wrap; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+.fresh { display: grid; gap: 8px; }
+.fresh div { display: grid; grid-template-columns: 10px minmax(0,1fr) auto; gap: 10px; align-items: center; font-size: 14px; }
+.fresh i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+.fresh i.w { background: var(--warn); }
+.fresh small { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+
+/* clienti */
+.inbox { display: grid; grid-template-columns: minmax(280px, 380px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.queue { display: grid; gap: 8px; }
+.msg { display: grid; gap: 6px; width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 12px 14px; cursor: pointer; }
+.msg:hover { border-color: var(--line-strong); }
+.msg[aria-current="true"] { border-color: var(--weft); box-shadow: inset 3px 0 0 var(--weft); }
+.msg .top { display: flex; justify-content: space-between; gap: 10px; }
+.msg .top b { font-weight: 600; }
+.msg .top small { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.msg .prev { font-size: 13.5px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.msg .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.noise { font-size: 13.5px; color: var(--muted); border: 1px dashed var(--line-strong); border-radius: var(--r-lg); padding: 10px 14px; }
+.noise button { background: none; border: 0; color: var(--weft); cursor: pointer; padding: 0; font-weight: 600; }
+.convo { display: grid; gap: 14px; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+.fact { background: var(--panel); border-radius: var(--r-md); padding: 10px 12px; min-width: 0; }
+.fact .label { font-size: 10px; }
+.fact b { display: block; font-weight: 600; font-size: 14px; margin-top: 2px; }
+.fact span { font-size: 12.5px; color: var(--muted); }
+.brief { font-size: 14px; border-left: 2px solid var(--weft); padding-left: 12px; }
+.bubble { background: var(--panel); border-radius: var(--r-md); padding: 12px 14px; font-size: 14px; white-space: pre-line; }
+.bubble small { display: block; font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); margin-bottom: 6px; white-space: normal; }
+.draft { border: 1px solid var(--weft); border-radius: var(--r-lg); background: var(--surface); }
+.draft-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.draft-body { padding: 14px; font-size: 14.5px; white-space: pre-line; }
+.verify { background: var(--warn-soft); color: var(--warn); border-radius: 3px; padding: 0 4px; font-weight: 600; }
+.checks { display: grid; gap: 4px; padding: 10px 14px; border-top: 1px solid var(--line); font-size: 13px; }
+.checks div::before { content: "✓"; color: var(--ok); font-weight: 700; margin-right: 8px; }
+.checks div.w::before { content: "!"; color: var(--warn); }
+.draft-foot { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; padding: 12px 14px; border-top: 1px solid var(--line); }
+.confirm { display: grid; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--line); background: var(--brand-soft); border-radius: 0 0 var(--r-lg) var(--r-lg); }
+.back { display: none; }
+
+/* spedizioni */
+.flow { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 8px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 12px; min-width: 0; }
+.step .n { font-family: var(--f-display); font-weight: 700; font-size: 22px; font-variant-numeric: tabular-nums; }
+.step .t { font-size: 12.5px; color: var(--muted); }
+.step.on { border-color: var(--ok); }
+
+/* fornitori */
+.sup { display: grid; gap: 10px; text-align: left; width: 100%; cursor: pointer; }
+.sup:hover { border-color: var(--line-strong); }
+.sup .pill { justify-self: start; }
+.bar { height: 6px; background: var(--panel); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--ok); }
+.photo { display: grid; grid-template-columns: 160px minmax(0,1fr); gap: 16px; align-items: start; }
+.sheet { aspect-ratio: 3 / 4; max-width: 100%; border-radius: var(--r-md); background: var(--panel); border: 1px solid var(--line-strong); padding: 12px; display: grid; align-content: start; gap: 8px; transform: rotate(-1.5deg); }
+.sheet i { display: block; height: 2px; background: var(--muted); opacity: .45; border-radius: 2px; }
+
+/* conto economico */
+.cascade { display: grid; gap: 10px; }
+.cas { display: grid; grid-template-columns: 170px minmax(0,1fr) 110px; gap: 12px; align-items: center; font-size: 14px; }
+.cas .bar { height: 14px; border-radius: 4px; }
+.cas .bar i { background: var(--weft); }
+.cas.m .bar i { background: var(--ok); }
+.cas .r { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+td.cell { cursor: pointer; }
+td.cell:hover { background: var(--panel); text-decoration: underline; text-decoration-color: var(--weft); }
+tr.tot td { font-weight: 700; background: var(--panel); }
+tr.sec td { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-top: 14px; }
+th .lock { font-size: 10px; }
+
+/* drawer and toast */
+.scrim { position: fixed; inset: 0; background: rgba(9,12,8,.55); z-index: 40; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(460px, 100%); background: var(--surface); border-left: 1px solid var(--line-strong); z-index: 41; overflow: auto; box-shadow: var(--shadow);
+  padding-top: calc(env(safe-area-inset-top, 0px) + 20px); padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); padding-left: 20px; padding-right: max(20px, env(safe-area-inset-right, 0px)); display: grid; align-content: start; gap: 14px; }
+.drawer .x { justify-self: end; }
+.list { display: grid; }
+.list div { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.list div:last-child { border-bottom: 0; }
+.list small { display: block; color: var(--muted); font-size: 12.5px; }
+.list .r { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); z-index: 60; width: min(560px, calc(100% - 32px));
+  background: var(--toast-bg); color: var(--toast-ink); border-radius: var(--r-lg); padding: 12px 16px; font-size: 14px; box-shadow: var(--shadow); }
+.toast b { color: var(--band-bg); display: block; font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2px; }
+
+.cta { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 16px; align-items: center; background: var(--brand); color: var(--brand-ink); border-radius: var(--r-lg); padding: 18px 20px; }
+.cta h2 { font-size: 20px; }
+.cta p { opacity: .88; font-size: 14px; margin-top: 4px; }
+.cta .btn { background: var(--surface); color: var(--brand); border-color: var(--surface); }
+
+@media (max-width: 1080px) {
+  .g4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .facts { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .flow { grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0,1fr); padding-left: 0; }
+  .side { position: sticky; top: env(safe-area-inset-top, 0px); height: auto; z-index: 20; border-right: 0; border-bottom: 1px solid var(--line); padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); overflow: visible; }
+  .side-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .shop { margin: 0; padding: 6px 10px; text-align: right; }
+  .shop-meta, .side-foot { display: none; }
+  .chip-demo { margin-top: 2px; }
+  .nav { display: flex; overflow-x: auto; gap: 4px; margin-top: 10px; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { flex: none; padding: 7px 10px; font-size: 14px; }
+  .nav a .count { margin-left: 4px; }
+  .main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
+  .g3, .split { grid-template-columns: minmax(0,1fr); }
+  .inbox { grid-template-columns: minmax(0,1fr); }
+  .inbox.open .queue-col { display: none; }
+  .inbox:not(.open) .convo-col { display: none; }
+  .back { display: inline-flex; }
+  .cas { grid-template-columns: 120px minmax(0,1fr) 90px; }
+  .photo { grid-template-columns: minmax(0,1fr); }
+  .sheet { max-width: 180px; }
+}
+@media (max-width: 560px) {
+  .g2, .g4, .facts { grid-template-columns: minmax(0,1fr); }
+  .flow { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .cta { grid-template-columns: minmax(0,1fr); }
+  .tile .v { font-size: 22px; }
+  .brand-sub { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .toast { animation: rise .25s ease-out; }
+  .drawer { animation: slide .22s ease-out; }
+  @keyframes rise { from { opacity: 0; transform: translate(-50%, 8px); } }
+  @keyframes slide { from { transform: translateX(24px); opacity: .6; } }
+}
+</style>
+</head>
+<body>
+
+<div class="band"><div class="band-in"><span><b>Demo</b>Negozio, persone e numeri di esempio. Niente di quello che premi esce da questa pagina.</span><a href="../check-up/#prenota">Prenota il check-up del tuo negozio →</a></div></div>
+
+<div class="shell">
+  <aside class="side" aria-label="Negozio e servizi">
+    <div class="side-top">
+      <div class="brand">
+        <span class="mono-mark" aria-hidden="true">BL</span>
+        <div><span class="brand-name">Bottega Lumen</span><span class="brand-sub">Gestionale del negozio</span></div>
+      </div>
+      <div class="shop">
+        <div class="shop-meta">Borse e accessori · negozio con cassa e sito Shopify</div>
+        <span class="chip-demo">Negozio di esempio</span>
+      </div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Servizi"></nav>
+    <div class="side-foot">
+      <span>Ogni servizio si prende anche da solo.</span>
+      <span>Il sistema prepara. Tu decidi.</span>
+      <span>Demo di <b>Telaio Ecommerce Automations</b>.</span>
+    </div>
+  </aside>
+  <main class="main" id="main"><div class="view" id="view"></div></main>
+</div>
+<div id="layer"></div>
+<div id="toast" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- formatting ---------- */
+  var nf = new Intl.NumberFormat("it-IT");
+  var nf2 = new Intl.NumberFormat("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  function eur(v) { return (v < 0 ? "−€ " : "€ ") + nf.format(Math.abs(Math.round(v))); }
+  function eur2(v) { return "€ " + nf2.format(v); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  /* ---------- icons ---------- */
+  var I = {
+    oggi: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+    magazzino: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M3 8v8l9 4 9-4V8"/><path d="M12 12v8"/></svg>',
+    clienti: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+    spedizioni: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17.5" cy="17.5" r="1.6"/></svg>',
+    fornitori: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v4H4z"/><path d="M6 9v10h12V9"/><path d="M10 13h4"/></svg>',
+    conto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>'
+  };
+
+  /* ---------- the shop (all invented) ---------- */
+  var OGGI = "lunedì 19 ottobre";
+  var P = [
+    { id: "vela-cuo", n: "Borsa Vela", v: "Cuoio", mag: 3, sito: 3, v30: 11, costo: 38, prezzo: 145, arrivo: 8, sup: "Pelletteria Ardesia" },
+    { id: "vela-ner", n: "Borsa Vela", v: "Nero", mag: 9, sito: 9, v30: 7, costo: 38, prezzo: 145, arrivo: 0, sup: "Pelletteria Ardesia" },
+    { id: "velamaxi-sal", n: "Borsa Vela Maxi", v: "Salvia", mag: 2, sito: 2, v30: 6, costo: 46, prezzo: 175, arrivo: 0, sup: "Pelletteria Ardesia" },
+    { id: "gemma-rug", n: "Tracolla Gemma", v: "Ruggine", mag: 0, sito: 0, v30: 4, costo: 29, prezzo: 110, arrivo: 6, sup: "Pelletteria Ardesia" },
+    { id: "gemma-pan", n: "Tracolla Gemma", v: "Panna", mag: 5, sito: 5, v30: 3, costo: 29, prezzo: 110, arrivo: 0, sup: "Pelletteria Ardesia" },
+    { id: "giard-sal", n: "Foulard Giardino", v: "Salvia", mag: 12, sito: 12, v30: 9, costo: 9, prezzo: 45, arrivo: 0, sup: "Tessiture Corte" },
+    { id: "giard-rug", n: "Foulard Giardino", v: "Ruggine", mag: 0, sito: 0, v30: 5, costo: 9, prezzo: 45, arrivo: 6, sup: "Tessiture Corte" },
+    { id: "riva-ner", n: "Cintura Riva", v: "Nero", mag: -1, sito: 0, v30: 4, costo: 14, prezzo: 59, arrivo: 0, sup: "Pelletteria Ardesia" },
+    { id: "riva-cuo", n: "Cintura Riva", v: "Cuoio", mag: 7, sito: 7, v30: 2, costo: 14, prezzo: 59, arrivo: 0, sup: "Pelletteria Ardesia" },
+    { id: "arco-ner", n: "Portafoglio Arco", v: "Nero", mag: 6, sito: 0, v30: 0, costo: 17, prezzo: 69, arrivo: 0, sup: "Pelletteria Ardesia" },
+    { id: "luna-pan", n: "Pochette Luna", v: "Panna", mag: 4, sito: 4, v30: 3, costo: null, prezzo: 89, arrivo: 0, sup: "Tessiture Corte" },
+    { id: "brera-ner", n: "Zaino Brera", v: "Nero", mag: 3, sito: 3, v30: 1, costo: 52, prezzo: 189, arrivo: 0, sup: "Pelletteria Ardesia" }
+  ];
+  function stato(p) {
+    if (p.mag < 0) return { k: "err", t: "Numero da controllare", f: "check" };
+    if (p.mag > 0 && p.sito === 0) return { k: "info", t: "Da mettere online", f: "online" };
+    if (p.mag === 0) return { k: "warn", t: p.arrivo ? "Esaurito · in arrivo " + p.arrivo : "Esaurito", f: "esauriti" };
+    if (p.v30 && p.mag / (p.v30 / 30) < 15) return { k: "warn", t: "Da riordinare", f: "riordino" };
+    return { k: "ok", t: "In vendita", f: "" };
+  }
+  function giorni(p) { return p.v30 ? Math.max(0, Math.round(p.mag / (p.v30 / 30))) : null; }
+  function movimenti(p) {
+    var m = [];
+    if (p.id === "riva-ner") return [
+      { q: "oggi 10:42", t: "Vendita in negozio", d: -1, s: "scontrino della cassa" },
+      { q: "12 ott", t: "Vendita dal sito", d: -1, s: "ordine #1031" },
+      { q: "3 ott", t: "Vendita in negozio", d: -1, s: "scontrino della cassa" },
+      { q: "1 ott", t: "Conta fisica", d: null, s: "contati 2 pezzi", set: 2 },
+      { q: "", t: "Manca un carico", d: null, s: "il sistema trova 3 vendite e 2 pezzi contati: probabilmente un arrivo non registrato" }
+    ];
+    var base = Math.max(p.mag, 0) + Math.min(p.v30, 3);
+    if (p.v30 > 0) m.push({ q: "oggi 09:15", t: "Vendita dal sito", d: -1, s: "ordine #1056" });
+    if (p.v30 > 1) m.push({ q: "ieri 17:30", t: "Vendita in negozio", d: -1, s: "scontrino della cassa" });
+    if (p.v30 > 2) m.push({ q: "16 ott", t: "Vendita dal sito", d: -1, s: "ordine #1044" });
+    if (p.id === "giard-sal") m.push({ q: "14 ott", t: "Arrivo dal fornitore", d: 6, s: "Tessiture Corte, ordine del 2 ott" });
+    m.push({ q: "1 ott", t: "Conta fisica", d: null, s: "contati " + base + " pezzi", set: base });
+    return m;
+  }
+
+  var CONV = [
+    { id: "c1", st: "nuove", who: "Giulia Ferri", mail: "giulia.ferri@example.com", ch: "email", when: "09:12", tema: "Spedizione e stato ordine", urg: "sollecito", txt: "Buongiorno, ho ordinato la borsa Vela cuoio il 14 ottobre (ordine 1047) e non mi è ancora arrivata. Mi sapete dire dove si trova? Vi avevo già scritto venerdì.",
+      facts: [["Ordine", "#1047 · 14 ott", "Borsa Vela Cuoio · € 145"], ["Spedizione", "In viaggio", "consegna prevista mer 21 ott"], ["Prodotto", "Disponibile", "3 in magazzino"], ["Cliente", "2 ordini", "dal 2025"]],
+      brief: "Giulia chiede dove si trova l'ordine #1047 del 14 ottobre; ha già scritto una volta.",
+      drafts: [{ t: "Bozza", body: "Ciao Giulia,\ngrazie per averci riscritto, e scusa l'attesa.\n\nIl tuo ordine #1047 è partito venerdì 16 ottobre ed è in viaggio: il corriere prevede la consegna mercoledì 21 ottobre.\nPuoi seguire il pacco da qui: [link di tracciamento del pacco]\n\nSe ti serve altro, scrivici pure.\nUn saluto,\nBottega Lumen",
+        checks: ["Numero d'ordine #1047 trovato su Shopify", "Data di consegna presa dal corriere", "Link di tracciamento del pacco, non della pagina generica", "Destinatario preso dall'ordine: giulia.ferri@example.com"] }] },
+    { id: "c2", st: "nuove", who: "Marco Bassi", mail: "marco.bassi@example.com", ch: "modulo del sito", when: "08:47", tema: "Reso e rimborso", urg: "", txt: "Salve, vorrei restituire la cintura Riva cuoio che ho ricevuto a inizio mese: è troppo lunga per me. Come devo fare?",
+      facts: [["Ordine", "#1022 · 30 set", "Cintura Riva Cuoio · € 59"], ["Spedizione", "Consegnato", "il 2 ottobre"], ["Reso", "Fuori di 3 giorni", "regola del negozio: 14 giorni"], ["Cliente", "1 ordine", "nuovo"]],
+      brief: "Marco vuole restituire la cintura dell'ordine #1022, consegnata il 2 ottobre: il reso è fuori dai 14 giorni del negozio.",
+      drafts: [
+        { t: "Fuori tempo: proponi il cambio", body: "Ciao Marco,\ngrazie per averci scritto.\n\nLa cintura dell'ordine #1022 ti è arrivata il 2 ottobre, quindi il reso è fuori dai 14 giorni previsti. Possiamo però cambiartela con una misura più corta: la Cintura Riva Cuoio è disponibile.\nSe ti va bene, rispondi a questa email con la misura che preferisci.\n\nUn saluto,\nBottega Lumen",
+          checks: ["Data di consegna presa dal corriere: 2 ottobre", "Regola del negozio sui resi: 14 giorni", "Disponibilità per il cambio: 7 pezzi"] },
+        { t: "Accetta comunque il reso", body: "Ciao Marco,\ngrazie per averci scritto.\n\nIl reso della cintura dell'ordine #1022 è un po' oltre i 14 giorni, ma lo accettiamo volentieri. Ti mandiamo l'etichetta per la spedizione entro [DA VERIFICARE: quando la prepari]; il rimborso parte quando il pacco ci arriva.\n\nUn saluto,\nBottega Lumen",
+          checks: ["Data di consegna presa dal corriere: 2 ottobre", "Importo del rimborso: € 59, dall'ordine"], warn: "Una data manca nei dati: la bozza la segna «da verificare»" }] },
+    { id: "c3", st: "nuove", who: "Sara Leoni", mail: "sara.leoni@example.com", ch: "email", when: "ieri", tema: "Disponibilità", urg: "", txt: "Ciao! La tracolla Gemma color ruggine tornerà disponibile? Sul sito risulta esaurita.",
+      facts: [["Prodotto", "Esaurito", "Tracolla Gemma Ruggine"], ["In arrivo", "6 pezzi", "Pelletteria Ardesia"], ["Ordine", "Nessuno", "è una domanda prima dell'acquisto"], ["Cliente", "Nuova", ""]],
+      brief: "Sara chiede quando torna la Tracolla Gemma Ruggine, oggi esaurita.",
+      drafts: [{ t: "Bozza", body: "Ciao Sara,\ngrazie per il messaggio!\n\nLa Tracolla Gemma Ruggine è esaurita, ma è già in arrivo dal nostro laboratorio: aspettiamo 6 pezzi per [DA VERIFICARE: data di arrivo]. Appena arriva la trovi di nuovo sul sito.\n\nUn saluto,\nBottega Lumen",
+        checks: ["Prodotto esaurito, con 6 pezzi in un ordine al fornitore", "Link del prodotto sul sito"], warn: "La data di arrivo non è nei dati: la bozza la segna «da verificare»" }] },
+    { id: "c4", st: "nuove", who: "Chiara Moretti", mail: "chiara.moretti@example.com", ch: "email", when: "ieri", tema: "Ritiro in negozio", urg: "serve entro sabato", txt: "Buonasera, ho fatto l'ordine 1053 con ritiro in negozio. Posso passare sabato mattina?",
+      facts: [["Ordine", "#1053 · 18 ott", "Foulard Giardino Salvia · € 45"], ["Ritiro", "In negozio", "pronto"], ["Orari", "Sabato 10–19", "dalle regole del negozio"], ["Cliente", "3 ordini", ""]],
+      brief: "Chiara chiede di ritirare l'ordine #1053 sabato mattina.",
+      drafts: [{ t: "Bozza", body: "Ciao Chiara,\ncerto: il tuo ordine #1053 è pronto. Sabato siamo aperti dalle 10 alle 19, passa quando ti è comodo e chiedi alla cassa.\n\nA sabato!\nBottega Lumen",
+        checks: ["Ordine #1053 con ritiro in negozio, pronto", "Orari del sabato dalle regole del negozio"] }] },
+    { id: "c5", st: "nuove", who: "Luca Gentile", mail: "luca.gentile@example.com", ch: "chat del sito", when: "ieri", tema: "Info prodotto", urg: "", chat: true, txt: "Che misure ha la borsa Vela Maxi? Ci sta un portatile da 14 pollici?",
+      facts: [["Prodotto", "Borsa Vela Maxi", "2 in magazzino"], ["Canale", "Chat del sito", "si risponde dalla chat"], ["Ordine", "Nessuno", ""], ["Cliente", "Nuovo", ""]],
+      brief: "Luca chiede le misure della Borsa Vela Maxi e se ci sta un portatile da 14 pollici.", drafts: [] },
+    { id: "c6", st: "corso", who: "Anna Rizzi", mail: "anna.rizzi@example.com", ch: "email", when: "ven", tema: "Cambio", urg: "", txt: "Posso cambiare il colore del foulard che ho ordinato?", facts: [["Ordine", "#1049", "Foulard Giardino Salvia"], ["Spedizione", "Non ancora affidata", "etichetta pronta"], ["Prodotto", "Ruggine esaurito", "6 in arrivo"], ["Cliente", "1 ordine", ""]],
+      brief: "Anna vuole cambiare colore al foulard dell'ordine #1049, non ancora spedito.", drafts: [{ t: "Bozza (ripresa)", body: "Ciao Anna,\nil tuo ordine non è ancora partito, quindi possiamo cambiarlo. Il Foulard Giardino Ruggine è in arrivo: vuoi aspettarlo, o preferisci un altro colore?\n\nUn saluto,\nBottega Lumen", checks: ["Ordine #1049 non ancora affidato al corriere", "Colore Ruggine esaurito, in arrivo"] }], seguita: "Elisa" },
+    { id: "c7", st: "chiuse", who: "Paolo Riva", mail: "paolo@example.com", ch: "email", when: "gio", tema: "Spedizione e stato ordine", urg: "", txt: "Grazie, il pacco è arrivato!", facts: [["Ordine", "#1038", "consegnato"], ["", "", ""], ["", "", ""], ["", "", ""]], brief: "Conversazione chiusa: la cliente ha confermato l'arrivo.", drafts: [] }
+  ];
+
+  var SHIP = [
+    { o: "#1056", who: "Federica Neri", city: "Padova", s: "pronta" },
+    { o: "#1055", who: "Tommaso Gallo", city: "Bari", s: "pronta" },
+    { o: "#1054", who: "Davide Sala", city: "Roma", s: "pronta" },
+    { o: "#1052", who: "Irene Costa", city: "Firenze", s: "pronta" },
+    { o: "#1050", who: "Matteo Ferrara", city: "Torino", s: "attesa" },
+    { o: "#1049", who: "Anna Rizzi", city: "Milano", s: "attesa" },
+    { o: "#1047", who: "Giulia Ferri", city: "Bologna", s: "spedito" },
+    { o: "#1051", who: "Noemi Villa", city: "Genova", s: "guarda" },
+    { o: "#1053", who: "Chiara Moretti", city: "—", s: "negozio" }
+  ];
+  var SHIPST = {
+    pronta: ["info", "Etichetta pronta"], attesa: ["warn", "In attesa di ritiro"], spedito: ["ok", "Ritirato · spedito, cliente avvisato"],
+    guarda: ["err", "Da guardare: indirizzo incompleto"], negozio: ["mute", "Ritiro in negozio · lo gestisci tu"]
+  };
+
+  var SUP = [
+    { n: "Pelletteria Ardesia", k: "pelle", orders: [{ d: "9 ott", lines: [{ p: "Borsa Vela · Cuoio", q: 8, a: 0, c: 38 }, { p: "Tracolla Gemma · Ruggine", q: 6, a: 0, c: 29 }] }] },
+    { n: "Tessiture Corte", k: "tessuto", orders: [{ d: "2 ott", lines: [{ p: "Foulard Giardino · Salvia", q: 6, a: 6, c: 9 }, { p: "Foulard Giardino · Ruggine", q: 6, a: 0, c: 9 }] }] },
+    { n: "Minuterie Faro", k: "accessori metallici", orders: [], last: "ultimo arrivo il 28 settembre" }
+  ];
+
+  var MESI = ["Luglio", "Agosto", "Settembre", "Ottobre"];
+  var CE = {
+    sito: [14820, 9640, 17350, 10210], negozio: [6940, 4110, 8260, 4980],
+    merce: [-6350, -3980, -7520, -4410], commissioni: [-520, -340, -610, -360], spedizioni: [-890, -610, -1040, -640], imballi: [-310, -200, -380, -230], resi: [-420, -280, -510, -190],
+    affitto: [-2600, -2600, -2600, -2600], persone: [-5200, -3900, -5200, null], pubblicita: [-1400, -900, -1800, -1100], altre: [-780, -640, -910, -420]
+  };
+  var ROWS = [
+    { sec: "Vendite (senza IVA)" }, { k: "sito", t: "Vendite dal sito" }, { k: "negozio", t: "Vendite in negozio" }, { tot: "netto", t: "Venduto netto" },
+    { sec: "Costi variabili" }, { k: "merce", t: "Costo della merce" }, { k: "commissioni", t: "Commissioni dei pagamenti" }, { k: "spedizioni", t: "Spedizioni" }, { k: "imballi", t: "Imballi" }, { k: "resi", t: "Resi" }, { tot: "margine", t: "Margine" },
+    { sec: "Costi fissi" }, { k: "affitto", t: "Affitto e utenze" }, { k: "persone", t: "Persone" }, { k: "pubblicita", t: "Pubblicità" }, { k: "altre", t: "Altre spese" }, { tot: "utile", t: "Utile" }
+  ];
+  function sum(keys, i) { var s = 0; for (var j = 0; j < keys.length; j++) { var v = CE[keys[j]][i]; if (v == null) return null; s += v; } return s; }
+  function tot(name, i) {
+    var netto = sum(["sito", "negozio"], i);
+    if (name === "netto") return netto;
+    var margine = netto + sum(["merce", "commissioni", "spedizioni", "imballi", "resi"], i);
+    if (name === "margine") return margine;
+    var fissi = sum(["affitto", "persone", "pubblicita", "altre"], i);
+    return fissi == null ? null : margine + fissi;
+  }
+
+  var SPESE = [
+    { id: "s1", chi: "Tipografia Segno", cosa: "sacchetti stampati", v: 186, cat: "Imballi", ok: false },
+    { id: "s2", chi: "Pubblicità sui social", cosa: "campagna di ottobre", v: 240, cat: "Pubblicità", ok: false },
+    { id: "s3", chi: "Ferramenta Duomo", cosa: "ganci per la vetrina", v: 23.5, cat: "Altre spese", ok: false },
+    { id: "s4", chi: "Fattura del corriere", cosa: "spedizioni di settembre", v: 412, cat: "Spedizioni", ok: false }
+  ];
+
+  /* ---------- state ---------- */
+  var S = { route: "oggi", magFilter: "", convTab: "nuove", conv: "c1", draft: 0, asking: false, sent: {}, noise: false, mese: 2, photo: false };
+  var ROUTES = [
+    { id: "oggi", t: "Oggi" }, { id: "magazzino", t: "Magazzino" }, { id: "clienti", t: "Clienti" },
+    { id: "spedizioni", t: "Spedizioni" }, { id: "fornitori", t: "Fornitori" }, { id: "conto", t: "Conto economico" }
+  ];
+  function counts() {
+    return {
+      clienti: CONV.filter(function (c) { return c.st === "nuove" && !S.sent[c.id]; }).length,
+      spedizioni: SHIP.filter(function (s) { return s.s === "pronta"; }).length,
+      magazzino: P.filter(function (p) { return stato(p).f === "riordino" || stato(p).f === "check"; }).length,
+      fornitori: 1,
+      conto: SPESE.filter(function (s) { return !s.ok; }).length
+    };
+  }
+
+  /* ---------- views ---------- */
+  function why(t) { return '<p class="why"><span class="label">Cosa fa per te</span><span>' + t + "</span></p>"; }
+
+  function vOggi() {
+    var c = counts();
+    var todo = [
+      ["clienti", c.clienti + " risposte pronte da controllare", "Le bozze sono già scritte con i dati degli ordini. Le mandi tu."],
+      ["spedizioni", c.spedizioni + " ordini con l'etichetta pronta", "Sono già sul portale del corriere. Prepari i pacchi."],
+      ["fornitori", "1 consegna arrivata a metà", "Tessiture Corte: mancano 6 foulard su 12."],
+      ["magazzino", c.magazzino + " prodotti da guardare", "2 da riordinare, 1 numero che non torna."],
+      ["conto", c.conto + " spese da verificare", "Caricate dall'estratto conto, con la categoria proposta."]
+    ];
+    var netto = tot("netto", 3);
+    var h = '<div class="head"><span class="label">' + OGGI + '</span><h1>Buongiorno, Bottega Lumen</h1><p>Cosa c\'è da fare oggi. Il resto lo ha già preparato il sistema.</p></div>';
+    h += '<div class="grid">' + todo.map(function (x) {
+      return '<button class="todo" type="button" data-act="go" data-to="' + x[0] + '"><span class="ic">' + I[x[0]] + "</span><span><b>" + x[1] + "</b><span>" + x[2] + '</span></span><span class="go">Apri →</span></button>';
+    }).join("") + "</div>";
+    h += '<div class="grid g4">' +
+      tile("Venduto a ottobre", eur(netto), "senza IVA, fino a oggi") +
+      tile("Dal sito", eur(CE.sito[3]), "78 ordini") +
+      tile("In negozio", eur(CE.negozio[3]), "41 scontrini") +
+      tile("Margine di ottobre", eur(tot("margine", 3)), "provvisorio: 1 costo mancante") + "</div>";
+    h += '<div class="grid split">' +
+      '<div class="card chart"><div class="card-head"><h2>Ottobre, giorno per giorno</h2><div class="legend"><span><i style="background:var(--c1)"></i>Sito</span><span><i style="background:var(--c2)"></i>Negozio</span></div></div>' + chart() + "</div>" +
+      '<div class="card"><div class="card-head"><h2>Tutto aggiornato</h2><span class="label">Prima di fidarti di un numero</span></div><div class="fresh">' +
+      fresh("Ordini del sito", "3 min fa") + fresh("Vendite in negozio", "adesso") + fresh("Quantità sul sito", "12 min fa") + fresh("Stato dei pacchi", "25 min fa") + fresh("Controllo dei conti", "1 h fa") + fresh("Spese dalla banca", "si caricano a mese chiuso", true) +
+      "</div></div></div>";
+    h += cta();
+    return h;
+  }
+  function tile(l, v, s) { return '<div class="tile"><span class="label">' + l + '</span><span class="v">' + v + '</span><span class="s">' + s + "</span></div>"; }
+  function fresh(t, w, warn) { return "<div><i" + (warn ? ' class="w"' : "") + "></i><span>" + t + "</span><small>" + w + "</small></div>"; }
+  function chart() {
+    var days = 19, on = [], neg = [], so = 0, sn = 0;
+    for (var d = 1; d <= days; d++) {
+      var wd = new Date(2026, 9, d).getDay();
+      var a = 0.75 + 0.5 * Math.abs(Math.sin(d * 1.7)) + (wd === 1 ? 0.3 : 0);
+      var b = wd === 0 ? 0 : (wd === 6 ? 2.2 : 0.6 + 0.6 * Math.abs(Math.cos(d * 2.3)));
+      on.push(a); neg.push(b); so += a; sn += b;
+    }
+    on = on.map(function (x) { return x / so * CE.sito[3]; });
+    neg = neg.map(function (x) { return x / sn * CE.negozio[3]; });
+    var W = 640, H = 220, L = 60, B = 26, T = 10, max = 1500, bw = (W - L - 10) / days;
+    var y = function (v) { return H - B - (v / max) * (H - B - T); };
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Venduto di ottobre per giorno, sito e negozio">';
+    [0, 500, 1000, 1500].forEach(function (g) {
+      s += '<line x1="' + L + '" x2="' + (W - 6) + '" y1="' + y(g) + '" y2="' + y(g) + '" stroke="var(--line)" stroke-width="1"/>';
+      s += '<text x="' + (L - 8) + '" y="' + (y(g) + 4) + '" text-anchor="end" font-size="11" fill="var(--muted)" font-family="ui-monospace, Menlo, Consolas, monospace">' + (g ? "€ " + nf.format(g) : "0") + "</text>";
+    });
+    for (var i = 0; i < days; i++) {
+      var x = L + 4 + i * bw, w = bw - 6;
+      var h1 = (on[i] / max) * (H - B - T), h2 = (neg[i] / max) * (H - B - T);
+      s += '<rect x="' + x.toFixed(1) + '" y="' + (H - B - h1).toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + h1.toFixed(1) + '" rx="2" fill="var(--c1)"><title>' + (i + 1) + " ott · sito " + eur(on[i]) + "</title></rect>";
+      if (h2 > 0) s += '<rect x="' + x.toFixed(1) + '" y="' + (H - B - h1 - h2).toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + h2.toFixed(1) + '" rx="2" fill="var(--c2)"><title>' + (i + 1) + " ott · negozio " + eur(neg[i]) + "</title></rect>";
+      if ([0, 4, 9, 14, 18].indexOf(i) >= 0) s += '<text x="' + (x + w / 2).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="ui-monospace, Menlo, Consolas, monospace">' + (i + 1) + "</text>";
+    }
+    return s + "</svg>";
+  }
+
+  function vMagazzino() {
+    var pezzi = P.reduce(function (a, p) { return a + Math.max(p.mag, 0); }, 0);
+    var valore = P.reduce(function (a, p) { return a + Math.max(p.mag, 0) * (p.costo || 0); }, 0);
+    var f = { "": 0, riordino: 0, esauriti: 0, online: 0, check: 0 };
+    P.forEach(function (p) { f[""]++; var k = stato(p).f; if (k) f[k]++; });
+    var h = '<div class="head"><span class="label">Magazzino</span><h1>Un magazzino solo, per sito e negozio</h1>' + why("Ogni vendita, sul sito o alla cassa, scala la merce dallo stesso magazzino, e il sito mostra solo quello che hai. Le quantità le calcola il sistema, con regole fisse.") + "</div>";
+    h += '<div class="grid g4">' + tile("Pezzi in magazzino", nf.format(pezzi), "12 varianti") + tile("Valore della merce", eur(valore), "al costo d'acquisto") + tile("In vendita online", P.filter(function (p) { return p.sito > 0; }).length, "quantità sul sito aggiornate 12 min fa") + tile("Da mettere online", f.online, "in magazzino ma non sul sito") + "</div>";
+    h += '<div class="alert err"><span class="dot"></span><span><b>Un numero non torna.</b> Cintura Riva Nero risulta −1: una vendita in negozio senza un arrivo registrato. Il sito non la mette in vendita finché non lo sistemi.</span><button class="btn btn-sm" type="button" data-act="prod" data-id="riva-ner">Vedi</button></div>';
+    var chips = [["", "Tutti"], ["riordino", "Da riordinare"], ["esauriti", "Esauriti"], ["online", "Da mettere online"], ["check", "Da controllare"]];
+    h += '<div class="chips" role="group" aria-label="Filtra">' + chips.map(function (c) {
+      return '<button class="chip" type="button" data-act="magf" data-f="' + c[0] + '" aria-pressed="' + (S.magFilter === c[0]) + '">' + c[1] + '<span class="n">' + f[c[0]] + "</span></button>";
+    }).join("") + "</div>";
+    var rows = P.filter(function (p) { return !S.magFilter || stato(p).f === S.magFilter; });
+    h += '<div class="tbl-wrap"><table><thead><tr><th>Prodotto</th><th class="r">In magazzino</th><th class="r">Sul sito</th><th class="r">Venduti in 30 gg</th><th class="r">Giorni di merce</th><th>Stato</th></tr></thead><tbody>' +
+      rows.map(function (p) {
+        var s = stato(p), g = giorni(p);
+        return '<tr class="click" data-act="prod" data-id="' + p.id + '" tabindex="0"><td class="prod"><b>' + p.n + "</b> <span>· " + p.v + '</span></td><td class="r' + (p.mag < 0 ? " neg" : "") + '">' + p.mag + '</td><td class="r">' + p.sito + '</td><td class="r">' + p.v30 + '</td><td class="r">' + (g == null ? "—" : g) + '</td><td><span class="pill p-' + s.k + '">' + s.t + "</span></td></tr>";
+      }).join("") + "</tbody></table></div>";
+    h += '<p class="label" style="text-transform:none;letter-spacing:0;font-family:var(--f-body);font-size:13px">Tocca un prodotto per vedere da dove viene il suo numero.</p>';
+    return h;
+  }
+
+  function vClienti() {
+    var tabs = [["nuove", "Da iniziare"], ["corso", "In corso"], ["chiuse", "Concluse"]];
+    function inTab(c, t) { var st = S.sent[c.id] ? "chiuse" : c.st; return st === t; }
+    var list = CONV.filter(function (c) { return inTab(c, S.convTab); });
+    if (!list.some(function (c) { return c.id === S.conv; }) && list.length) S.conv = list[0].id;
+    var c = CONV.filter(function (x) { return x.id === S.conv; })[0];
+    var h = '<div class="head"><span class="label">Clienti</span><h1>Le risposte ai clienti, con la bozza già pronta</h1>' + why("Email e moduli del sito arrivano in un posto solo, con l'ordine accanto. La bozza parte dai dati veri; prima che tu la legga, il sistema controlla numeri, date e link. La mandi tu.") + "</div>";
+    h += '<div class="inbox' + (S.open ? " open" : "") + '"><div class="queue-col"><div class="chips" role="group" aria-label="Stato">' + tabs.map(function (t) {
+      var n = CONV.filter(function (x) { return inTab(x, t[0]); }).length;
+      return '<button class="chip" type="button" data-act="ctab" data-t="' + t[0] + '" aria-pressed="' + (S.convTab === t[0]) + '">' + t[1] + '<span class="n">' + n + "</span></button>";
+    }).join("") + '</div><div class="queue" style="margin-top:12px">' + list.map(function (x) {
+      var b = '<span class="pill p-info">' + x.tema + "</span>";
+      if (x.urg) b += '<span class="pill p-warn">' + x.urg + "</span>";
+      b += '<span class="tag">' + x.ch + "</span>";
+      if (x.seguita) b += '<span class="tag">la segue ' + x.seguita + "</span>";
+      return '<button class="msg" type="button" data-act="conv" data-id="' + x.id + '" aria-current="' + (x.id === S.conv) + '"><span class="top"><b>' + x.who + "</b><small>" + x.when + '</small></span><span class="prev">' + esc(x.txt) + '</span><span class="badges">' + b + "</span></button>";
+    }).join("") + (S.convTab === "nuove" ? '<div class="noise">14 messaggi messi da parte: notifiche di Shopify, newsletter, offerte commerciali. <button type="button" data-act="noise">' + (S.noise ? "Nascondi" : "Vedi") + "</button>" +
+      (S.noise ? '<div class="list" style="margin-top:8px"><div><span>Notifiche di Shopify<small>ordini, pagamenti, recensioni</small></span><span class="r">8</span></div><div><span>Newsletter<small>fornitori e piattaforme</small></span><span class="r">4</span></div><div><span>Offerte commerciali<small>agenzie, servizi</small></span><span class="r">2</span></div></div><p style="margin-top:6px">Un messaggio che il sistema non capisce resta comunque in coda.</p>' : "") + "</div>" : "") + "</div></div>";
+    h += '<div class="convo-col">' + (c ? convo(c) : '<div class="card">Niente qui.</div>') + "</div></div>";
+    return h;
+  }
+  function convo(c) {
+    var h = '<div class="convo"><button class="btn btn-ghost btn-sm back" type="button" data-act="cback">‹ Coda</button>';
+    h += '<div class="card-head" style="margin:0"><div><h2 style="font-size:20px">' + c.who + '</h2><span class="label" style="text-transform:none;letter-spacing:0;font-family:var(--f-body);font-size:13px">' + c.mail + " · " + c.ch + '</span></div><span class="pill p-info">' + c.tema + "</span></div>";
+    h += '<div class="facts">' + c.facts.filter(function (f) { return f[0]; }).map(function (f) { return '<div class="fact"><span class="label">' + f[0] + "</span><b>" + f[1] + "</b><span>" + f[2] + "</span></div>"; }).join("") + "</div>";
+    h += '<p class="brief"><span class="label">In breve</span><br>' + c.brief + "</p>";
+    h += '<div class="bubble"><small>' + c.who + " · " + c.when + "</small>" + esc(c.txt) + "</div>";
+    if (S.sent[c.id]) return h + '<div class="alert ok"><span class="dot"></span><span>Risposta mandata. La conversazione è tra le concluse; se il cliente riscrive, torna in coda.</span><span></span></div></div>';
+    if (c.chat) return h + '<div class="alert warn"><span class="dot"></span><span>È un messaggio della chat del sito: a questi si risponde dalla chat di Shopify, come oggi. Qui lo vedi insieme agli altri, con il prodotto accanto.</span><button class="btn btn-sm" type="button" data-act="toast" data-msg="Nel tuo negozio questo pulsante apre la conversazione giusta nella chat di Shopify.">Apri la chat</button></div></div>';
+    if (!c.drafts.length) return h + "</div>";
+    var di = Math.min(S.draft, c.drafts.length - 1), d = c.drafts[di];
+    h += '<div class="draft"><div class="draft-head"><span class="label" style="color:var(--weft)">Bozza preparata con i dati veri</span>';
+    if (c.drafts.length > 1) h += '<div class="chips" role="group" aria-label="Esiti">' + c.drafts.map(function (x, i) { return '<button class="chip" type="button" data-act="dpick" data-i="' + i + '" aria-pressed="' + (i === di) + '">' + x.t + "</button>"; }).join("") + "</div>";
+    h += "</div>";
+    if (c.drafts.length > 1) h += '<p style="padding:10px 14px 0;font-size:13px;color:var(--muted)">Questo caso ha più esiti possibili: scegli tu quale mandare.</p>';
+    h += '<div class="draft-body">' + esc(d.body).replace(/\[DA VERIFICARE: ([^\]]+)\]/g, '<span class="verify">da verificare: $1</span>').replace(/\[link di tracciamento del pacco\]/g, '<a href="#clienti" data-act="toast" data-msg="Nella bozza vera qui c\'è il link al pacco di Giulia sul sito del corriere.">link di tracciamento del pacco</a>') + "</div>";
+    h += '<div class="checks"><span class="label">Controllato prima di te, senza AI</span>' + d.checks.map(function (x) { return "<div>" + x + "</div>"; }).join("") + (d.warn ? '<div class="w">' + d.warn + "</div>" : "") + "</div>";
+    if (S.asking) {
+      h += '<div class="confirm"><b>Mandare la risposta a ' + c.mail + "?</b><span style=\"font-size:13.5px\">Parte dalla casella del negozio. Il destinatario viene dall'ordine, non si scrive a mano.</span>" +
+        '<div class="row-btns"><button class="btn btn-primary" type="button" data-act="sendok">Sì, manda</button><button class="btn" type="button" data-act="sendno">Annulla</button></div></div>';
+    } else {
+      h += '<div class="draft-foot"><div class="row-btns"><button class="btn" type="button" data-act="toast" data-msg="Nel tuo negozio correggi la bozza qui, o chiedi una modifica a parole.">Modifica</button><button class="btn" type="button" data-act="toast" data-msg="Nel tuo negozio questo riscrive la bozza con l\'AI, sempre dai dati veri.">Riscrivi</button></div>' +
+        '<button class="btn btn-primary" type="button" data-act="ask">Manda…</button></div>';
+    }
+    return h + "</div></div>";
+  }
+
+  function vSpedizioni() {
+    var n = function (s) { return SHIP.filter(function (x) { return x.s === s; }).length; };
+    var h = '<div class="head"><span class="label">Spedizioni</span><h1>Le bolle del corriere, già pronte</h1>' + why("Gli ordini da spedire arrivano sul portale del corriere senza copiare indirizzi, e le etichette sono pronte da stampare. L'ordine risulta spedito, e il cliente riceve l'avviso, solo quando il corriere ha davvero ritirato il pacco.") + "</div>";
+    h += '<div class="flow">' +
+      step(SHIP.length - n("negozio"), "ordini da spedire, presi da Shopify") + step(SHIP.length - n("negozio"), "caricati sul portale del corriere", true) + step(n("pronta"), "etichette pronte da stampare") + step(n("attesa"), "in attesa del ritiro") + step(n("spedito"), "ritirati: spediti e clienti avvisati", true) + "</div>";
+    h += '<div class="row-btns"><button class="btn btn-primary" type="button" data-act="toast" data-msg="Nel tuo negozio scarichi le ' + n("pronta") + ' etichette di oggi in un file solo, pronte da stampare.">Scarica le etichette di oggi (' + n("pronta") + ')</button><button class="btn" type="button" data-act="toast" data-msg="Il controllo confronta corriere e Shopify ogni ora: oggi nessun pacco ritirato risulta ancora da spedire.">Controllo incrociato: tutto torna</button></div>';
+    h += '<div class="tbl-wrap"><table><thead><tr><th>Ordine</th><th>Cliente</th><th>Città</th><th>Stato</th><th></th></tr></thead><tbody>' + SHIP.map(function (s) {
+      var st = SHIPST[s.s];
+      var act = s.s === "guarda" ? '<button class="btn btn-sm" type="button" data-act="shipissue">Guarda</button>' : "";
+      return '<tr><td class="mono">' + s.o + "</td><td>" + s.who + "</td><td>" + s.city + '</td><td><span class="pill p-' + st[0] + '">' + st[1] + "</span></td><td>" + act + "</td></tr>";
+    }).join("") + "</tbody></table></div>";
+    h += '<div class="grid g2"><div class="card"><h2>Spedito, quando è vero</h2><p style="margin-top:8px;color:var(--muted)">Creare l\'etichetta non basta: «spedito» arriva solo con il ritiro del corriere. Così nessun cliente apre un tracciamento vuoto.</p></div>' +
+      '<div class="card"><h2>Quando non è sicuro, si ferma</h2><p style="margin-top:8px;color:var(--muted)">Un aggiornamento del corriere che il sistema non conosce non fa partire niente: lo guarda una persona. Gli ordini da ritirare in negozio restano fuori.</p></div></div>';
+    return h;
+  }
+  function step(n, t, ok) { return '<div class="step' + (ok ? " on" : "") + '"><div class="n">' + n + '</div><div class="t">' + t + "</div></div>"; }
+
+  function vFornitori() {
+    var h = '<div class="head"><span class="label">Fornitori</span><h1>Gli ordini ai fornitori, fino all\'arrivo</h1>' + why("Ordini e merce in arrivo in un posto solo, anche quando arriva a pezzi. Quando registri l'arrivo, il magazzino si aggiorna. La lista di cosa riordinare è già pronta; decidi tu cosa ordinare.") + "</div>";
+    h += '<div class="grid g3">' + SUP.map(function (s, i) {
+      var q = 0, a = 0; s.orders.forEach(function (o) { o.lines.forEach(function (l) { q += l.q; a += l.a; }); });
+      var st = !s.orders.length ? '<span class="pill p-mute">Nessun ordine aperto</span>' : a > 0 && a < q ? '<span class="pill p-warn">Arrivato a metà</span>' : '<span class="pill p-info">In arrivo</span>';
+      return '<button class="card sup" type="button" data-act="sup" data-i="' + i + '"><span class="label">' + s.k + '</span><h2>' + s.n + "</h2>" + st +
+        (s.orders.length ? '<span class="bar" aria-hidden="true"><i style="width:' + Math.round(a / q * 100) + '%"></i></span><span style="font-size:13.5px;color:var(--muted)">' + a + " arrivati su " + q + " · ordine del " + s.orders[0].d + "</span>" : '<span style="font-size:13.5px;color:var(--muted)">' + s.last + "</span>") + "</button>";
+    }).join("") + "</div>";
+    var ro = P.filter(function (p) { return stato(p).f === "riordino" || (p.mag === 0 && p.v30 > 0); });
+    h += '<div class="card"><div class="card-head"><h2>Da riordinare</h2><span class="label">venduti, rimasti, in arrivo</span></div><div class="tbl-wrap" style="border:0"><table><thead><tr><th>Prodotto</th><th class="r">Venduti in 30 gg</th><th class="r">In magazzino</th><th class="r">In arrivo</th><th class="r">Giorni di merce</th><th></th></tr></thead><tbody>' +
+      ro.map(function (p) { var g = giorni(p); return '<tr><td class="prod"><b>' + p.n + "</b> <span>· " + p.v + '</span></td><td class="r">' + p.v30 + '</td><td class="r">' + p.mag + '</td><td class="r">' + (p.arrivo || "—") + '</td><td class="r">' + (g == null ? "—" : g) + '</td><td><button class="btn btn-sm" type="button" data-act="toast" data-msg="Nel tuo negozio si apre un ordine per ' + p.sup + ' già compilato con ' + p.n + " " + p.v + '. Lo controlli e lo mandi tu.">Prepara l\'ordine</button></td></tr>'; }).join("") +
+      "</tbody></table></div></div>";
+    h += '<div class="card"><div class="card-head"><h2>L\'ordine da una foto</h2><span class="pill p-info">Su richiesta</span></div><div class="photo"><div class="sheet" aria-hidden="true"><i style="width:60%"></i><i></i><i style="width:80%"></i><i style="width:70%"></i><i></i><i style="width:50%"></i><i style="width:75%"></i></div><div style="display:grid;gap:10px">' +
+      '<p style="color:var(--muted)">Se vuoi, registri un ordine fotografando il foglio scritto a mano. L\'AI lo legge, tu controlli: il magazzino non cambia finché non confermi.</p>' +
+      (S.photo ? '<div class="list"><div><span>Borsa Vela Maxi · Salvia<small>Pelletteria Ardesia</small></span><span class="r">6 × € 46</span></div><div><span>Zaino Brera · Nero<small>Pelletteria Ardesia</small></span><span class="r">4 × <span class="verify">da verificare</span></span></div></div><p style="font-size:13px;color:var(--muted)">Il prezzo della seconda riga non si legge bene: lo segna, non lo inventa.</p><div class="row-btns"><button class="btn btn-primary" type="button" data-act="toast" data-msg="Nel tuo negozio l\'ordine entra tra quelli in arrivo solo adesso, dopo il tuo controllo.">Controlla e conferma</button><button class="btn" type="button" data-act="photo">Chiudi</button></div>'
+        : '<div class="row-btns"><button class="btn" type="button" data-act="photo">Prova con un foglio di esempio</button></div>') + "</div></div></div>";
+    return h;
+  }
+
+  function vConto() {
+    var i = S.mese;
+    var netto = tot("netto", i), marg = tot("margine", i), utile = tot("utile", i);
+    var h = '<div class="head"><span class="label">Conto economico</span><h1>Quanto guadagni, mese per mese</h1>' + why("Quanto vendi, quanto spendi e quanto ti resta, da vendite e costi veri, negozio e sito insieme. Lo calcola il sistema, con regole fisse. Tocchi un numero e vedi da dove viene.") + "</div>";
+    h += '<div class="chips" role="group" aria-label="Mese">' + MESI.map(function (m, j) { return '<button class="chip" type="button" data-act="mese" data-i="' + j + '" aria-pressed="' + (j === i) + '">' + m + (j < 3 ? " · chiuso" : " · in corso") + "</button>"; }).join("") + "</div>";
+    var cas = function (t, v, base, cls) { var w = v == null ? 0 : Math.max(0, Math.round(v / base * 100)); return '<div class="cas ' + (cls || "") + '"><span>' + t + '</span><span class="bar"><i style="width:' + w + '%"></i></span><span class="r">' + (v == null ? "—" : eur(v)) + "</span></div>"; };
+    h += '<div class="grid split"><div class="card"><div class="card-head"><h2>' + MESI[i] + ", dal venduto all'utile</h2></div><div class=\"cascade\">" +
+      cas("Venduto netto", netto, netto) + cas("Margine", marg, netto, "m") + cas("Utile", utile, netto, "m") + "</div>" +
+      (utile == null ? '<p style="margin-top:12px;font-size:13.5px;color:var(--muted)">Mese in corso: alcune spese si caricano a mese chiuso, l\'utile arriva allora.</p>' : '<p style="margin-top:12px;font-size:13.5px;color:var(--muted)">Mese chiuso: questi numeri cambiano solo con un motivo scritto.</p>') + "</div>" +
+      '<div class="card"><div class="card-head"><h2>Controllo dei conti</h2><span class="label">ogni ora</span></div><div class="alert warn" style="grid-template-columns:auto minmax(0,1fr)"><span class="dot"></span><span>Pochette Luna Panna venduta 3 volte senza costo d\'acquisto: il margine di ottobre è provvisorio.</span></div>' +
+      '<div class="fresh" style="margin-top:12px">' + fresh("Vendite senza prodotto", "nessuna") + fresh("Ordini contati due volte", "nessuno") + fresh("Mesi chiusi che cambiano", "nessuno") + "</div></div></div>";
+    h += '<div class="tbl-wrap"><table><thead><tr><th></th>' + MESI.map(function (m, j) { return '<th class="r">' + m + (j < 3 ? ' <span class="lock" title="mese chiuso">· chiuso</span>' : " · in corso") + "</th>"; }).join("") + "</tr></thead><tbody>" +
+      ROWS.map(function (r) {
+        if (r.sec) return '<tr class="sec"><td colspan="5">' + r.sec + "</td></tr>";
+        if (r.tot) return '<tr class="tot"><td>' + r.t + "</td>" + MESI.map(function (m, j) { var v = tot(r.tot, j); return '<td class="r">' + (v == null ? "—" : eur(v)) + "</td>"; }).join("") + "</tr>";
+        return "<tr><td>" + r.t + "</td>" + MESI.map(function (m, j) { var v = CE[r.k][j]; return v == null ? '<td class="r" title="si carica a mese chiuso">—</td>' : '<td class="r cell" data-act="cell" data-k="' + r.k + '" data-i="' + j + '" tabindex="0">' + eur(v) + "</td>"; }).join("") + "</tr>";
+      }).join("") + "</tbody></table></div>";
+    var aperte = SPESE.filter(function (s) { return !s.ok; });
+    h += '<div class="grid g2"><div class="card"><div class="card-head"><h2>Spese da verificare</h2><span class="label">dall\'estratto conto</span></div>' + (aperte.length ? '<div class="list">' + aperte.map(function (s) {
+      return "<div><span>" + s.chi + "<small>" + s.cosa + " · proposta: " + s.cat + '</small><span class="row-btns" style="margin-top:6px"><button class="btn btn-sm" type="button" data-act="spesa" data-id="' + s.id + '">Conferma</button><button class="btn btn-sm btn-ghost" type="button" data-act="toast" data-msg="Nel tuo negozio scegli un\'altra categoria; la regola si ricorda per le prossime spese uguali.">Cambia categoria</button></span></span><span class="r">' + eur2(s.v) + "</span></div>";
+    }).join("") + "</div>" : '<p style="color:var(--muted)">Tutte verificate.</p>') + "</div>" +
+      '<div class="card"><div class="card-head"><h2>Per il commercialista</h2><span class="label">settembre</span></div><div class="list">' +
+      "<div><span>Corrispettivi del negozio<small>dalla cassa</small></span><span class=\"r\">" + eur(CE.negozio[2] * 1.22) + "</span></div>" +
+      "<div><span>Vendite online<small>da Shopify, IVA inclusa</small></span><span class=\"r\">" + eur(CE.sito[2] * 1.22) + "</span></div>" +
+      "<div><span>Spese con giustificativo<small>verificate</small></span><span class=\"r\">" + eur(-(sum(["affitto", "persone", "pubblicita", "altre"], 2) + CE.spedizioni[2] + CE.imballi[2])) + "</span></div>" +
+      '</div><p style="margin-top:10px;font-size:13.5px;color:var(--muted)">Il mese lo chiudi con il tuo commercialista, con i totali già pronti.</p></div></div>';
+    h += cta();
+    return h;
+  }
+
+  function cta() {
+    return '<div class="cta"><div><h2>Lo vorresti nel tuo negozio?</h2><p>Partiamo dal lavoro che ti fa perdere più tempo. Il check-up è gratuito.</p></div><a class="btn" href="../check-up/#prenota">Prenota il check-up del tuo negozio</a></div>';
+  }
+
+  /* ---------- drawers ---------- */
+  function drawer(html) {
+    document.getElementById("layer").innerHTML = '<div class="scrim" data-act="close"></div><div class="drawer" role="dialog" aria-modal="true" aria-label="Dettaglio"><button class="btn btn-sm x" type="button" data-act="close">Chiudi</button>' + html + "</div>";
+    var b = document.querySelector(".drawer .x"); if (b) b.focus();
+  }
+  function closeDrawer() { document.getElementById("layer").innerHTML = ""; }
+  function prodDrawer(id) {
+    var p = P.filter(function (x) { return x.id === id; })[0], s = stato(p);
+    var h = '<span class="label">Magazzino</span><h2 style="font-size:22px">' + p.n + " · " + p.v + '</h2><span class="pill p-' + s.k + '">' + s.t + "</span>";
+    h += '<div class="facts" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="fact"><span class="label">In magazzino</span><b class="' + (p.mag < 0 ? "neg" : "") + '">' + p.mag + '</b><span>sito e negozio insieme</span></div><div class="fact"><span class="label">Sul sito</span><b>' + p.sito + "</b><span>" + (p.mag > 0 && p.sito === 0 ? "non pubblicato" : "aggiornato 12 min fa") + '</span></div><div class="fact"><span class="label">Prezzo</span><b>' + eur(p.prezzo) + '</b><span>IVA inclusa</span></div><div class="fact"><span class="label">Costo</span><b>' + (p.costo ? eur(p.costo) : "manca") + "</b><span>" + (p.costo ? "da quanto l'hai pagato" : "il margine è provvisorio") + "</span></div></div>";
+    h += '<h3 style="font-size:16px">Da dove viene il numero</h3><div class="list">' + movimenti(p).map(function (m) {
+      var v = m.d == null ? (m.set != null ? "= " + m.set : "") : (m.d > 0 ? "+" + m.d : String(m.d));
+      return "<div><span>" + m.t + "<small>" + (m.q ? m.q + " · " : "") + m.s + '</small></span><span class="r' + (m.d < 0 ? "" : "") + '">' + v + "</span></div>";
+    }).join("") + "</div>";
+    h += '<div class="row-btns"><button class="btn" type="button" data-act="toast" data-msg="Nel tuo negozio registri qui una conta: il magazzino riparte da quel numero.">Registra una conta</button>' + (p.mag > 0 && p.sito === 0 ? '<button class="btn btn-primary" type="button" data-act="toast" data-msg="Nel tuo negozio il prodotto va online quando confermi; le quantità le prende dal magazzino.">Metti online</button>' : "") + "</div>";
+    drawer(h);
+  }
+  function supDrawer(i) {
+    var s = SUP[i];
+    var h = '<span class="label">Fornitori · ' + s.k + '</span><h2 style="font-size:22px">' + s.n + "</h2>";
+    if (!s.orders.length) h += '<p style="color:var(--muted)">Nessun ordine aperto: ' + s.last + ".</p>";
+    s.orders.forEach(function (o) {
+      h += '<h3 style="font-size:16px">Ordine del ' + o.d + '</h3><div class="list">' + o.lines.map(function (l) {
+        var st = l.a >= l.q ? '<span class="pill p-ok">arrivati</span>' : l.a > 0 ? '<span class="pill p-warn">mancano ' + (l.q - l.a) + "</span>" : '<span class="pill p-info">in arrivo</span>';
+        return "<div><span>" + l.p + "<small>" + l.a + " su " + l.q + " · " + eur(l.c) + ' l\'uno</small></span><span class="r">' + st + "</span></div>";
+      }).join("") + "</div>";
+    });
+    if (s.orders.length) h += '<div class="row-btns"><button class="btn btn-primary" type="button" data-act="toast" data-msg="Nel tuo negozio registri quanti pezzi sono arrivati: il magazzino e le quantità sul sito si aggiornano, e il costo entra nel conto economico.">Registra un arrivo</button></div>';
+    drawer(h);
+  }
+  function cellDrawer(k, i) {
+    var v = CE[k][i], row = ROWS.filter(function (r) { return r.k === k; })[0], lines = [];
+    var prods = P.filter(function (p) { return p.costo; });
+    if (k === "merce") {
+      var left = -v;
+      prods.slice(0, 5).forEach(function (p, j) { var q = [24, 18, 11, 30, 9][j]; var a = q * p.costo; if (a < left) { lines.push([p.n + " · " + p.v, q + " pezzi × " + eur(p.costo), a]); left -= a; } });
+      lines.push(["Altri prodotti", "17 righe", left]);
+      lines = lines.map(function (l) { return [l[0], l[1], -l[2]]; });
+    } else if (k === "sito" || k === "negozio") {
+      var tot0 = v, parts = [0.31, 0.22, 0.14, 0.11];
+      parts.forEach(function (f, j) { var p = prods[j]; var q = Math.max(1, Math.round(tot0 * f / (p.prezzo / 1.22))); var a = Math.round(q * p.prezzo / 1.22); lines.push([p.n + " · " + p.v, q + (k === "sito" ? " pezzi venduti online" : " pezzi venduti in negozio"), a]); });
+      var used = lines.reduce(function (a, l) { return a + l[2]; }, 0);
+      lines.push(["Altri prodotti", k === "sito" ? "ordini dal sito" : "scontrini della cassa", tot0 - used]);
+    } else {
+      var lab = { commissioni: ["Accrediti dei pagamenti", "Pagamenti con carta in negozio"], spedizioni: ["Fattura del corriere", "Spedizioni di cambi e resi"], imballi: ["Scatole e carta velina", "Sacchetti stampati"], resi: ["Rimborsi da Shopify", "Note di credito in negozio"],
+        affitto: ["Affitto del negozio", "Luce e telefono"], persone: ["Stipendi", "Contributi"], pubblicita: ["Pubblicità sui social", "Stampa e volantini"], altre: ["Commercialista", "Piccole spese"] }[k];
+      var a1 = Math.round(v * 0.7);
+      lines = [[lab[0], "dall'estratto conto", a1], [lab[1], "dall'estratto conto", v - a1]];
+    }
+    var h = '<span class="label">Conto economico · ' + MESI[i] + '</span><h2 style="font-size:22px">' + row.t + '</h2><p class="v" style="font-family:var(--f-display);font-weight:700;font-size:28px">' + eur(v) + "</p>";
+    h += '<h3 style="font-size:16px">Le righe che compongono il numero</h3><div class="list">' + lines.map(function (l) { return "<div><span>" + l[0] + "<small>" + l[1] + '</small></span><span class="r">' + eur(l[2]) + "</span></div>"; }).join("") +
+      '<div><span><b>Totale</b></span><span class="r">' + eur(lines.reduce(function (a, l) { return a + l[2]; }, 0)) + "</span></div></div>";
+    h += '<p style="font-size:13.5px;color:var(--muted)">' + (i < 3 ? "Mese chiuso: il numero cambia solo con un motivo scritto." : "Mese in corso: il numero si aggiorna da solo.") + "</p>";
+    drawer(h);
+  }
+  function shipDrawer() {
+    drawer('<span class="label">Spedizioni</span><h2 style="font-size:22px">Ordine #1051 · Noemi Villa</h2><span class="pill p-err">Indirizzo incompleto</span>' +
+      '<p style="color:var(--muted)">Il corriere ha mandato un aggiornamento che chiede di completare l\'indirizzo. Il sistema non ha avvisato la cliente e non ha cambiato niente: aspetta te.</p>' +
+      '<div class="list"><div><span>Indirizzo sull\'ordine<small>Via dei Giustiniani, Genova</small></span><span class="r">manca il civico</span></div><div><span>Ultimo stato del corriere<small>oggi 08:40</small></span><span class="r">in sosta</span></div></div>' +
+      '<div class="row-btns"><button class="btn btn-primary" type="button" data-act="toast" data-msg="Nel tuo negozio si apre una bozza per Noemi che chiede il civico, da controllare e mandare.">Chiedi il civico alla cliente</button></div>');
+  }
+
+  /* ---------- toast ---------- */
+  var tTimer = 0;
+  function toast(msg) {
+    var el = document.getElementById("toast");
+    el.innerHTML = '<div class="toast"><b>Demo · non parte niente</b>' + esc(msg) + "</div>";
+    clearTimeout(tTimer); tTimer = setTimeout(function () { el.innerHTML = ""; }, 5200);
+  }
+
+  /* ---------- render ---------- */
+  function renderNav() {
+    var c = counts();
+    document.getElementById("nav").innerHTML = ROUTES.map(function (r) {
+      var n = c[r.id];
+      return '<a href="#' + r.id + '"' + (S.route === r.id ? ' aria-current="page"' : "") + ">" + I[r.id] + "<span>" + r.t + "</span>" + (n ? '<span class="count">' + n + "</span>" : "") + "</a>";
+    }).join("");
+  }
+  function render() {
+    var v = { oggi: vOggi, magazzino: vMagazzino, clienti: vClienti, spedizioni: vSpedizioni, fornitori: vFornitori, conto: vConto }[S.route] || vOggi;
+    document.getElementById("view").innerHTML = v();
+    renderNav();
+  }
+  function route() {
+    var h = (location.hash || "").replace("#", "");
+    S.route = ROUTES.some(function (r) { return r.id === h; }) ? h : "oggi";
+    S.asking = false;
+    closeDrawer();
+    render();
+  }
+
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-act]");
+    if (!t) return;
+    var a = t.getAttribute("data-act");
+    if (a !== "toast" || t.tagName === "A") e.preventDefault();
+    switch (a) {
+      case "go": location.hash = t.getAttribute("data-to"); window.scrollTo(0, 0); break;
+      case "toast": toast(t.getAttribute("data-msg")); break;
+      case "magf": S.magFilter = t.getAttribute("data-f"); render(); break;
+      case "prod": prodDrawer(t.getAttribute("data-id")); break;
+      case "ctab": S.convTab = t.getAttribute("data-t"); S.draft = 0; S.asking = false; S.open = false; render(); break;
+      case "conv": S.conv = t.getAttribute("data-id"); S.draft = 0; S.asking = false; S.open = true; render(); break;
+      case "cback": S.open = false; render(); break;
+      case "dpick": S.draft = +t.getAttribute("data-i"); S.asking = false; render(); break;
+      case "ask": S.asking = true; render(); break;
+      case "sendno": S.asking = false; render(); break;
+      case "sendok": S.sent[S.conv] = true; S.asking = false; render(); toast("Nel tuo negozio la risposta parte ora dalla casella del negozio, e la conversazione passa tra le concluse."); break;
+      case "noise": S.noise = !S.noise; render(); break;
+      case "shipissue": shipDrawer(); break;
+      case "sup": supDrawer(+t.getAttribute("data-i")); break;
+      case "photo": S.photo = !S.photo; render(); break;
+      case "mese": S.mese = +t.getAttribute("data-i"); render(); break;
+      case "cell": cellDrawer(t.getAttribute("data-k"), +t.getAttribute("data-i")); break;
+      case "spesa": SPESE.forEach(function (s) { if (s.id === t.getAttribute("data-id")) s.ok = true; }); render(); toast("Nel tuo negozio la spesa entra nel conto economico con questa categoria."); break;
+      case "close": closeDrawer(); break;
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeDrawer();
+    if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches("tr[data-act], td[data-act]")) { e.preventDefault(); e.target.click(); }
+  });
+  window.addEventListener("hashchange", route);
+  route();
+})();
+</script>
+</body>
+</html>

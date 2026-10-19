@@ -24,6 +24,7 @@ Website of **Telaio - Ecommerce Automations**, a service by [Telaio](https://tel
 | Privacy | `/privacy/` |
 | Cookie | `/cookie/` |
 | Not found | `404.html` |
+| Demo | `/demo/` (not linked from the other pages, `noindex`, not in the sitemap: a direct link to send to prospects) |
 
 ## Publishing
 
