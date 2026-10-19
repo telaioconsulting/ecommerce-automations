@@ -14,7 +14,7 @@
 /* ---- Testata: più voci e un pulsante più lungo di quelli di Telaio ----
    La testata è un poco più larga del contenuto, e il menu passa a scomparsa prima. */
 .top > .wrap { max-width: 1220px; }
-@media (max-width: 1280px) {
+@media (max-width: 1380px) {
   .menu-btn { display: inline-grid; }
   .top-actions { margin-left: auto; }
   .nav {
@@ -35,7 +35,7 @@
 /* ---- Hero ---- */
 .p-hero-in > .p-hero-cta { margin-top: clamp(28px, 4vh, 44px); }
 
-/* ---- I quattro servizi ---- */
+/* ---- I cinque servizi ---- */
 .p-pain {
   margin-top: 20px; max-width: 30ch; padding-left: 14px; border-left: 2px solid var(--brand);
   font-family: var(--f-display); font-weight: 500; color: var(--ink);
@@ -50,7 +50,7 @@
 .i9-late { animation-delay: .25s; }
 @media (prefers-reduced-motion: reduce) { .i-hand { animation: none; } }
 
-/* ---- L'AI prepara. Tu decidi. ---- */
+/* ---- Il sistema prepara. Tu decidi. ---- */
 .p-ai .ticks { margin-top: clamp(32px, 4vw, 48px); gap: 18px; max-width: 70ch; }
 .p-ai .ticks li { font-size: var(--step-1); color: var(--ink); }
 
