@@ -226,7 +226,11 @@ th .lock { font-size: 10px; }
 .kcard .pill { justify-self: start; white-space: normal; align-items: flex-start; }
 .kcard .pill::before { margin-top: 6px; flex: none; }
 .drawer > .pill { justify-self: start; }
-.nav a .sr { font-family: var(--f-mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-strong); border-radius: 999px; padding: 1px 6px; margin-left: 2px; white-space: nowrap; }
+.nav { grid-template-columns: minmax(0, 1fr); }
+.nav a { min-width: 0; }
+.nav a .lbl { min-width: 0; display: grid; line-height: 1.25; }
+.nav a .sr { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+.nav a[aria-current="page"] .sr { color: var(--weft); }
 
 /* drawer and toast */
 .scrim { position: fixed; inset: 0; background: rgba(9,12,8,.55); z-index: 40; }
@@ -912,7 +916,7 @@ th .lock { font-size: 10px; }
     var c = counts();
     document.getElementById("nav").innerHTML = ROUTES.map(function (r) {
       var n = c[r.id];
-      return '<a href="#' + r.id + '"' + (S.route === r.id ? ' aria-current="page"' : "") + ">" + I[r.id] + "<span>" + r.t + "</span>" + (r.sr ? '<span class="sr">su richiesta</span>' : "") + (n ? '<span class="count">' + n + "</span>" : "") + "</a>";
+      return '<a href="#' + r.id + '"' + (S.route === r.id ? ' aria-current="page"' : "") + ">" + I[r.id] + '<span class="lbl">' + r.t + (r.sr ? '<small class="sr">su richiesta</small>' : "") + "</span>" + (n ? '<span class="count">' + n + "</span>" : "") + "</a>";
     }).join("");
   }
   function render() {
