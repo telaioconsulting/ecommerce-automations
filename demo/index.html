@@ -105,6 +105,10 @@ a { color: var(--weft); }
 .p-err { color: var(--err); background: var(--err-soft); }
 .p-info { color: var(--info); background: var(--info-soft); }
 .p-mute { color: var(--muted); background: var(--panel); }
+.tier { display: inline-grid; place-items: center; min-width: 28px; height: 24px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+.t-A { color: var(--ok); background: var(--ok-soft); }
+.t-B { color: var(--info); background: var(--info-soft); }
+.t-C { color: var(--muted); background: var(--panel); }
 .tag { display: inline-block; font-size: 12px; color: var(--muted); border: 1px solid var(--line-strong); border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 8px 14px; border-radius: var(--r-md);
@@ -543,10 +547,10 @@ th .lock { font-size: 10px; }
     var rows = SHOPS.filter(function (s) { return !S.b2bF || (S.b2bF === "rev" ? verdOf(s) === "" : verdOf(s) === S.b2bF); }).sort(function (a, b) { return score(b) - score(a); });
     h += '<div class="tbl-wrap"><table><thead><tr><th>Negozio</th><th>Città</th><th>Tipo</th><th class="r">Punteggio</th><th>Fascia proposta</th><th>Verdetto</th></tr></thead><tbody>' + rows.map(function (s) {
       var sc = score(s), vd = VERD[verdOf(s)];
-      return '<tr class="click" data-act="shop" data-id="' + s.id + '" tabindex="0"><td class="prod"><b>' + s.n + "</b></td><td>" + s.city + "</td><td>" + s.tipo + '</td><td class="r"><b>' + sc + '</b><span style="color:var(--muted)">/100</span></td><td><span class="tag">' + tier(sc) + "?</span></td>" +
+      return '<tr class="click" data-act="shop" data-id="' + s.id + '" tabindex="0"><td class="prod"><b>' + s.n + "</b></td><td>" + s.city + "</td><td>" + s.tipo + '</td><td class="r"><b>' + sc + '</b><span style="color:var(--muted)">/100</span></td><td><span class="tier t-' + tier(sc) + '">' + tier(sc) + "</span></td>" +
         '<td><span class="pill p-' + vd[0] + '">' + vd[1] + "</span></td></tr>";
     }).join("") + "</tbody></table></div>";
-    h += '<p style="font-size:13px;color:var(--muted)">La fascia con il «?» è una proposta del sistema: la conferma una persona. Tocca un negozio per vedere il punteggio voce per voce.</p>';
+    h += '<p style="font-size:13px;color:var(--muted)">La fascia la propone il sistema dal punteggio; la conferma una persona. Tocca un negozio per vedere il punteggio voce per voce.</p>';
     return h;
   }
   function b2bPipeline() {
@@ -556,7 +560,7 @@ th .lock { font-size: 10px; }
       var cs = cards.filter(function (c) { return c.st === i; });
       return '<div class="kcol"><div class="khead"><span>' + st + '</span><span class="n">' + cs.length + "</span></div>" + cs.map(function (c) {
         var sc = c.shop ? score(shopById(c.shop)) : c.sc;
-        return '<button class="kcard" type="button" data-act="pipe" data-id="' + c.id + '"><b>' + c.n + "</b><span>" + c.city + " · " + tier(sc) + "? · " + sc + '</span><span class="pill p-' + c.next[0] + '">' + c.next[1] + "</span></button>";
+        return '<button class="kcard" type="button" data-act="pipe" data-id="' + c.id + '"><b>' + c.n + "</b><span>" + c.city + " · fascia " + tier(sc) + " · " + sc + "/100" + '</span><span class="pill p-' + c.next[0] + '">' + c.next[1] + "</span></button>";
       }).join("") + "</div>";
     }).join("") + "</div></div>";
     h += '<p style="font-size:13px;color:var(--muted)">Lo stadio cambia quando registri un contatto o quando arriva una risposta. «Primo ordine» e «Attivo» li sposti tu.</p>';
@@ -584,7 +588,7 @@ th .lock { font-size: 10px; }
   }
   function shopDrawer(id) {
     var s = shopById(id), sc = score(s), vd = VERD[verdOf(s)];
-    var h = '<span class="label">Rivenditori · ' + s.tipo + " · " + s.city + '</span><h2 style="font-size:22px">' + s.n + '</h2><div class="row-btns"><span class="pill p-' + vd[0] + '">' + vd[1] + (s.chi && S.verd[s.id] == null ? " · " + s.chi : "") + '</span><span class="tag">Fascia proposta ' + tier(sc) + "?</span></div>";
+    var h = '<span class="label">Rivenditori · ' + s.tipo + " · " + s.city + '</span><h2 style="font-size:22px">' + s.n + '</h2><div class="row-btns"><span class="pill p-' + vd[0] + '">' + vd[1] + (s.chi && S.verd[s.id] == null ? " · " + s.chi : "") + '</span><span class="tag">Fascia proposta: ' + tier(sc) + "</span></div>";
     h += '<p style="font-family:var(--f-display);font-weight:800;font-size:34px;line-height:1">' + sc + '<span style="font-size:16px;color:var(--muted);font-weight:600"> /100</span></p>';
     h += '<h3 style="font-size:16px">Il punteggio, voce per voce</h3><div class="list">' + CRIT.map(function (c, i) { return "<div><span>" + c[0] + " <small>peso " + c[1] + " · " + s.why[i] + '</small></span><span class="r">' + s.v[i] + "/10</span></div>"; }).join("") + "</div>";
     if (s.no) h += '<div class="alert warn" style="grid-template-columns:auto minmax(0,1fr)"><span class="dot"></span><span><b>Perché no:</b> ' + s.no + "</span></div>";
