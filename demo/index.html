@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Demo | Telaio - Ecommerce Automations</title>
-  <meta name="description" content="Demo di Telaio Ecommerce Automations con un negozio e dati di esempio: magazzino, clienti, spedizioni, fornitori e conto economico.">
+  <meta name="description" content="Demo di Telaio Ecommerce Automations con un negozio e dati di esempio: magazzino, clienti, spedizioni, fornitori, conto economico e rivenditori.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#F6F6F4">
   <link rel="icon" type="image/png" href="../assets/telaio-logo-512.png">
@@ -213,6 +213,21 @@ tr.tot td { font-weight: 700; background: var(--panel); }
 tr.sec td { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-top: 14px; }
 th .lock { font-size: 10px; }
 
+/* rivenditori: pipeline columns scroll sideways inside their own box */
+.kan-wrap { overflow-x: auto; padding-bottom: 6px; }
+.kan { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(190px, 1fr); gap: 10px; min-width: min-content; }
+.kcol { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 10px; display: grid; align-content: start; gap: 8px; min-width: 0; }
+.khead { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 600; }
+.khead .n { font-family: var(--f-mono); font-size: 12px; color: var(--muted); font-weight: 400; }
+.kcard { display: grid; gap: 6px; text-align: left; width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px; cursor: pointer; }
+.kcard:hover { border-color: var(--line-strong); }
+.kcard b { font-weight: 600; font-size: 14px; }
+.kcard > span:not(.pill) { font-size: 12.5px; color: var(--muted); }
+.kcard .pill { justify-self: start; white-space: normal; align-items: flex-start; }
+.kcard .pill::before { margin-top: 6px; flex: none; }
+.drawer > .pill { justify-self: start; }
+.nav a .sr { font-family: var(--f-mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-strong); border-radius: 999px; padding: 1px 6px; margin-left: 2px; white-space: nowrap; }
+
 /* drawer and toast */
 .scrim { position: fixed; inset: 0; background: rgba(9,12,8,.55); z-index: 40; }
 .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(460px, 100%); background: var(--surface); border-left: 1px solid var(--line-strong); z-index: 41; overflow: auto; box-shadow: var(--shadow);
@@ -319,7 +334,8 @@ th .lock { font-size: 10px; }
     clienti: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
     spedizioni: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17.5" cy="17.5" r="1.6"/></svg>',
     fornitori: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v4H4z"/><path d="M6 9v10h12V9"/><path d="M10 13h4"/></svg>',
-    conto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>'
+    conto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+    b2b: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l2-5h14l2 5"/><path d="M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"/><path d="M5 13v7h14v-7"/><path d="M10 20v-4h4v4"/></svg>'
   };
 
   /* ---------- the shop (all invented) ---------- */
@@ -446,11 +462,170 @@ th .lock { font-size: 10px; }
     { id: "s4", chi: "Fattura del corriere", cosa: "spedizioni di settembre", v: 412, cat: "Spedizioni", ok: false }
   ];
 
+  /* ---------- rivenditori (B2B, su richiesta): all invented ---------- */
+  var CRIT = [["Marchi a scaffale", 25], ["Stile e identità", 20], ["Posto e clienti", 20], ["Vitalità", 15], ["Raggiungibilità", 10], ["Presenza digitale", 10]];
+  var SHOPS = [
+    { id: "ninfea", n: "Ninfea & Co.", city: "Verona", tipo: "Concept store", v: [8, 9, 9, 8, 7, 8], verd: "",
+      why: ["Due marchi italiani di pelletteria e uno di foulard, nella nostra fascia", "Colori pieni e vetrine curate, vicine al nostro stile", "Centro storico: clientela del posto e turisti", "Post ogni due o tre giorni; secondo spazio aperto a settembre", "Email e telefono sul sito", "Sito curato; vendono online solo ai clienti abituali"],
+      no: "I prezzi a scaffale sono un po' più alti dei nostri: forse cercano una fascia più alta.",
+      gancio: "Avete appena aperto il secondo spazio: le nostre borse in cuoio starebbero bene accanto alla vostra selezione di ceramiche.",
+      ev: [["Instagram", "18.400 follower · ultimo post 3 giorni fa"], ["Sito", "pagine salvate da telefono e computer"], ["Google Maps", "4,7 su 212 recensioni · aperto 7 giorni su 7"], ["Marchi a scaffale", "3 affini ai nostri"], ["Prezzi delle borse", "da € 90 a € 220"]] },
+    { id: "corallo", n: "Spazio Corallo", city: "Lecce", tipo: "Boutique", v: [8, 8, 8, 7, 8, 7], verd: "contattare", chi: "Elisa · 16 ott",
+      why: ["Un marchio di borse in tessuto e due di bijoux, vicini ai nostri", "Vetrine che cambiano ogni mese, sui toni caldi", "Via dello shopping, tanta clientela estiva", "Post settimanali, eventi in negozio", "Telefono e email; risponde la titolare", "Profilo Instagram curato, niente vendita online"],
+      no: "Molto stagionale: d'inverno il passaggio cala.",
+      gancio: "La vostra vetrina di ottobre è tutta sui toni del rame: la nostra Borsa Vela in cuoio ci starebbe bene accanto.",
+      ev: [["Instagram", "9.800 follower · ultimo post 5 giorni fa"], ["Sito", "una pagina con orari e contatti"], ["Google Maps", "4,8 su 96 recensioni"], ["Marchi a scaffale", "3 affini ai nostri"], ["Prezzi delle borse", "da € 60 a € 160"]] },
+    { id: "pergola", n: "Atelier Pergola", city: "Bergamo", tipo: "Boutique", v: [7, 7, 8, 6, 7, 6], verd: "forse", chi: "Elisa · 15 ott",
+      why: ["Un marchio di pelletteria affine, molti marchi di abbigliamento", "Stile classico, qualche colore", "Città alta: clientela fedele", "Post ogni settimana o due", "Solo telefono", "Sito vecchio, Instagram attivo"],
+      no: "Vende soprattutto abbigliamento: le borse sono una parte piccola.",
+      gancio: "Le vostre clienti cercano pezzi che durano: le nostre borse in cuoio sono fatte a mano in Italia.",
+      ev: [["Instagram", "6.200 follower · ultimo post 9 giorni fa"], ["Google Maps", "4,6 su 140 recensioni"], ["Marchi a scaffale", "1 affine ai nostri"]] },
+    { id: "albatros", n: "Casa Albatros", city: "Trieste", tipo: "Concept store", v: [6, 8, 7, 7, 6, 7], verd: "",
+      why: ["Marchi di design per la casa, pochi accessori", "Stile pulito e colori naturali", "Zona di passaggio vicino al porto", "Post regolari, collaborazioni con artigiani", "Email sul sito", "Sito e Instagram ben tenuti"],
+      no: "Più casa che moda: da capire se vendono borse.", gancio: "Nel vostro spazio gli oggetti artigianali hanno una storia: anche le nostre borse.",
+      ev: [["Instagram", "11.300 follower · ultimo post 2 giorni fa"], ["Google Maps", "4,5 su 88 recensioni"], ["Marchi a scaffale", "nessuno di borse trovato"]] },
+    { id: "ortensia", n: "Villa Ortensia", city: "Bellagio", tipo: "Boutique hotel", v: [5, 8, 9, 6, 7, 6], verd: "",
+      why: ["Nessun marchio di borse: piccola vetrina di oggetti locali", "Stile elegante, colori tenui", "Clientela internazionale in vacanza", "Attivi d'estate, quasi fermi d'inverno", "Email della reception", "Sito dell'hotel, Instagram curato"],
+      no: "Il negozio dell'hotel è piccolo: ordini da pochi pezzi.", gancio: "I vostri ospiti cercano un ricordo fatto in Italia da portare a casa.",
+      ev: [["Instagram", "24.000 follower · ultimo post 1 giorno fa"], ["Google Maps", "4,8 su 1.200 recensioni"]] },
+    { id: "lavanda", n: "Bottega Lavanda", city: "Siena", tipo: "Negozio regalo", v: [6, 6, 7, 7, 6, 5], verd: "",
+      why: ["Foulard e piccola pelletteria di due marchi", "Stile romantico", "Vicino alla piazza principale", "Post costanti", "Telefono", "Niente sito, solo Instagram"],
+      no: "Vende soprattutto regali sotto i € 50.", gancio: "I nostri foulard Giardino sono un regalo che si ricorda.",
+      ev: [["Instagram", "4.100 follower · ultimo post 4 giorni fa"], ["Google Maps", "4,6 su 61 recensioni"]] },
+    { id: "merletto", n: "Studio Merletto", city: "Cagliari", tipo: "Boutique", v: [3, 5, 6, 4, 6, 4], verd: "no", chi: "Elisa · 14 ott", motivo: "Vende solo marchi di lusso: fascia di prezzo lontana dalla nostra.",
+      why: ["Solo marchi di lusso, lontani dalla nostra fascia", "Stile minimale, poco colore", "Zona centrale", "Post rari", "Telefono", "Instagram poco usato"],
+      no: "Fascia di prezzo lontana dalla nostra.", gancio: "",
+      ev: [["Instagram", "2.300 follower · ultimo post 5 settimane fa"], ["Prezzi delle borse", "oltre € 600"]] }
+  ];
+  function score(s) { var t = 0; for (var i = 0; i < CRIT.length; i++) t += s.v[i] * CRIT[i][1]; return Math.round(t / 10); }
+  function tier(sc) { return sc >= 75 ? "A" : sc >= 55 ? "B" : "C"; }
+  var VERD = { contattare: ["ok", "Da contattare"], forse: ["warn", "Forse"], no: ["err", "No"], "": ["mute", "Da rivedere"] };
+  var STAGES = ["Da contattare", "Contattato", "Risposto", "Interessato", "Materiale inviato", "Appuntamento", "Primo ordine", "Attivo", "Chiuso no"];
+  var PIPE = [
+    { id: "p-corallo", shop: "corallo", n: "Spazio Corallo", city: "Lecce", st: 0, next: ["info", "telefono prima"], draft: "first" },
+    { id: "p-fenice", n: "Emporio Fenice", city: "Ravenna", st: 0, sc: 76, next: ["info", "email 1 da scrivere"], draft: "first" },
+    { id: "p-fiore", n: "Fiore di Sale", city: "Rimini", st: 1, sc: 81, next: ["warn", "richiamo 2 di 4 · scaduto il 17 ott"], draft: "follow",
+      tl: [["12 ott · email 1", "Elisa · presentazione, gancio e listino"], ["17 ott", "richiamo 2 di 4 in scadenza: nessuna risposta"]] },
+    { id: "p-gelso", n: "Libreria Gelso", city: "Mantova", st: 2, sc: 77, next: ["info", "risposta di ieri da leggere"], draft: "reply",
+      tl: [["9 ott · email 1", "Elisa · presentazione e listino"], ["14 ott · email 2", "Elisa · richiamo"], ["ieri · risposta", "«Ci mandate il listino con i prezzi per i rivenditori e le condizioni del primo ordine?»"]] },
+    { id: "p-tamerici", n: "Emporio Tamerici", city: "Udine", st: 3, sc: 72, next: ["mute", "chiede un campione"], tl: [["6 ott · telefonata", "Elisa · interessati alle borse Vela"], ["8 ott · email 1", "listino inviato"]] },
+    { id: "p-mirto", n: "Casa Mirto", city: "Lucca", st: 4, sc: 74, next: ["mute", "listino inviato il 14 ott"], tl: [["14 ott · email", "listino e condizioni del primo ordine"]] },
+    { id: "p-ofelia", n: "Galleria Ofelia", city: "Torino", st: 5, sc: 80, next: ["ok", "showroom giovedì 22 ott"], tl: [["15 ott · risposta", "«Passiamo volentieri a vedere la collezione»"], ["16 ott · email", "appuntamento confermato"]] },
+    { id: "p-ginepro", n: "Bottega Ginepro", city: "Pesaro", st: 6, sc: 78, next: ["ok", "12 borse · consegna a novembre"], tl: [["30 set · appuntamento", "in negozio con la collezione"], ["7 ott · ordine", "12 borse Vela e 8 foulard"]] },
+    { id: "p-dalia", n: "Mercerie Dalia", city: "Asti", st: 8, sc: 61, next: ["mute", "non vuole altre email"], tl: [["10 ott · risposta", "«No grazie»: niente altre email, rispettato in automatico"]] }
+  ];
+  function shopById(id) { return SHOPS.filter(function (s) { return s.id === id; })[0]; }
+  function verdOf(s) { return S.verd[s.id] != null ? S.verd[s.id] : s.verd; }
+
+  function vB2B() {
+    var tabs = [["negozi", "Negozi"], ["pipeline", "Pipeline"], ["coda", "Coda"], ["sequenze", "Sequenze"]];
+    var h = '<div class="head"><span class="label">Rivenditori · su richiesta</span><h1>I negozi giusti per i tuoi prodotti, contattati al momento giusto</h1>' +
+      why("Il sistema raccoglie i profili dei negozi che potrebbero vendere i tuoi prodotti e dà a ognuno un punteggio, con le motivazioni. Decidi tu chi contattare. L'AI prepara le email e i richiami; le mandi tu, con un clic.") + "</div>";
+    h += '<div class="chips" role="group" aria-label="Viste">' + tabs.map(function (t) { return '<button class="chip" type="button" data-act="b2btab" data-t="' + t[0] + '" aria-pressed="' + (S.b2bTab === t[0]) + '">' + t[1] + "</button>"; }).join("") + "</div>";
+    if (S.b2bTab === "pipeline") return h + b2bPipeline();
+    if (S.b2bTab === "coda") return h + b2bCoda();
+    if (S.b2bTab === "sequenze") return h + b2bSequenze();
+    return h + b2bNegozi();
+  }
+  function b2bNegozi() {
+    var rev = SHOPS.filter(function (s) { return verdOf(s) === ""; }).length;
+    var h = '<div class="grid g4">' + tile("Profili raccolti", "240", "boutique, concept store, hotel") + tile("Valutati, da rivedere", nf.format(32 + rev), "punteggio pronto, manca la tua decisione") +
+      tile("Da contattare", nf.format(8 + SHOPS.filter(function (s) { return verdOf(s) === "contattare"; }).length), "entrano nella pipeline") + tile("Rivisti da una persona", "21", "verdetto con nome e data") + "</div>";
+    var f = [["", "Tutti"], ["rev", "Da rivedere"], ["contattare", "Da contattare"], ["forse", "Forse"], ["no", "No"]];
+    h += '<div class="chips" role="group" aria-label="Filtra">' + f.map(function (x) {
+      var n = SHOPS.filter(function (s) { return !x[0] || (x[0] === "rev" ? verdOf(s) === "" : verdOf(s) === x[0]); }).length;
+      return '<button class="chip" type="button" data-act="b2bf" data-f="' + x[0] + '" aria-pressed="' + (S.b2bF === x[0]) + '">' + x[1] + '<span class="n">' + n + "</span></button>";
+    }).join("") + "</div>";
+    var rows = SHOPS.filter(function (s) { return !S.b2bF || (S.b2bF === "rev" ? verdOf(s) === "" : verdOf(s) === S.b2bF); }).sort(function (a, b) { return score(b) - score(a); });
+    h += '<div class="tbl-wrap"><table><thead><tr><th>Negozio</th><th>Città</th><th>Tipo</th><th class="r">Punteggio</th><th>Fascia proposta</th><th>Verdetto</th></tr></thead><tbody>' + rows.map(function (s) {
+      var sc = score(s), vd = VERD[verdOf(s)];
+      return '<tr class="click" data-act="shop" data-id="' + s.id + '" tabindex="0"><td class="prod"><b>' + s.n + "</b></td><td>" + s.city + "</td><td>" + s.tipo + '</td><td class="r"><b>' + sc + '</b><span style="color:var(--muted)">/100</span></td><td><span class="tag">' + tier(sc) + "?</span></td>" +
+        '<td><span class="pill p-' + vd[0] + '">' + vd[1] + "</span></td></tr>";
+    }).join("") + "</tbody></table></div>";
+    h += '<p style="font-size:13px;color:var(--muted)">La fascia con il «?» è una proposta del sistema: la conferma una persona. Tocca un negozio per vedere il punteggio voce per voce.</p>';
+    return h;
+  }
+  function b2bPipeline() {
+    var cards = PIPE.slice();
+    SHOPS.forEach(function (s) { if (S.verd[s.id] === "contattare" && s.verd !== "contattare") cards.unshift({ id: "p-" + s.id, shop: s.id, n: s.n, city: s.city, st: 0, next: ["info", "email 1 da scrivere"], draft: "first" }); });
+    var h = '<div class="kan-wrap"><div class="kan">' + STAGES.map(function (st, i) {
+      var cs = cards.filter(function (c) { return c.st === i; });
+      return '<div class="kcol"><div class="khead"><span>' + st + '</span><span class="n">' + cs.length + "</span></div>" + cs.map(function (c) {
+        var sc = c.shop ? score(shopById(c.shop)) : c.sc;
+        return '<button class="kcard" type="button" data-act="pipe" data-id="' + c.id + '"><b>' + c.n + "</b><span>" + c.city + " · " + tier(sc) + "? · " + sc + '</span><span class="pill p-' + c.next[0] + '">' + c.next[1] + "</span></button>";
+      }).join("") + "</div>";
+    }).join("") + "</div></div>";
+    h += '<p style="font-size:13px;color:var(--muted)">Lo stadio cambia quando registri un contatto o quando arriva una risposta. «Primo ordine» e «Attivo» li sposti tu.</p>';
+    return h;
+  }
+  function b2bCoda() {
+    var h = '<div class="grid g3">';
+    h += '<div class="card"><div class="card-head"><h2>Messaggi da collegare</h2><span class="label">2</span></div><div class="list">' +
+      '<div><span>Erboristeria Cedro · Ancona<small>dal modulo «Rivenditori» del sito: «Vendete anche all\'ingrosso?»</small><span class="row-btns" style="margin-top:6px"><button class="btn btn-sm" type="button" data-act="toast" data-msg="Nel tuo negozio si crea il profilo del negozio, che entra in coda per la raccolta e il punteggio.">Crea il negozio</button><button class="btn btn-sm btn-ghost" type="button" data-act="toast" data-msg="Nel tuo negozio il messaggio esce dalla coda dei rivenditori e resta nell\'assistenza.">Non è un negozio</button></span></span><span></span></div>' +
+      '<div><span>Email a rivenditori@<small>da un indirizzo già noto: Galleria Ofelia</small><span class="row-btns" style="margin-top:6px"><button class="btn btn-sm" type="button" data-act="toast" data-msg="Nel tuo negozio il messaggio si aggancia alla conversazione di Galleria Ofelia.">Collega</button></span></span><span></span></div></div></div>';
+    h += '<div class="card"><div class="card-head"><h2>Azioni scadute</h2><span class="label">1</span></div><div class="list"><div><span>Fiore di Sale · Rimini<small>richiamo 2 di 4, scaduto il 17 ott</small></span><span class="r"><button class="btn btn-sm" type="button" data-act="pipe" data-id="p-fiore">Apri</button></span></div></div>' +
+      '<p style="margin-top:10px;font-size:13px;color:var(--muted)">Ogni 30 minuti il sistema legge le risposte e, alla scadenza, prepara il richiamo da rivedere.</p></div>';
+    h += '<div class="card"><div class="card-head"><h2>Da contattare, mai toccati</h2><span class="label">2</span></div><div class="list">' +
+      '<div><span>Spazio Corallo · Lecce<small>telefonata di qualifica, poi email 1</small></span><span class="r"><button class="btn btn-sm" type="button" data-act="pipe" data-id="p-corallo">Apri</button></span></div>' +
+      '<div><span>Emporio Fenice · Ravenna<small>email 1 da scrivere</small></span><span class="r"><button class="btn btn-sm" type="button" data-act="pipe" data-id="p-fenice">Apri</button></span></div></div></div>';
+    return h + "</div>";
+  }
+  function b2bSequenze() {
+    var steps = [["0", "prima dell'email, se c'è un numero", "telefonata di qualifica"], ["1", "subito", "email: presentazione, gancio personale, listino"], ["2", "5 giorni dopo", "email: richiamo"], ["3", "7 giorni dopo", "email: richiamo con una novità"], ["4", "10 giorni dopo", "email: ultimo richiamo, poi stop"]];
+    var h = '<div class="tbl-wrap"><table><thead><tr><th>Contatto</th><th>Quando</th><th>Cosa</th></tr></thead><tbody>' + steps.map(function (s) { return '<tr><td class="mono">' + s[0] + "</td><td>" + s[1] + "</td><td>" + s[2] + "</td></tr>"; }).join("") + "</tbody></table></div>";
+    h += '<div class="grid g2"><div class="card"><h2>Le regole</h2><div class="fresh" style="margin-top:12px">' + fresh("Al massimo 4 email per negozio", "poi stop") + fresh("Chi risponde «no grazie» non riceve più niente", "in automatico") +
+      fresh("Al massimo 20 invii al giorno", "tetto") + fresh("Ogni email parte solo dopo un clic", "sempre") + "</div></div>" +
+      '<div class="card"><h2>Le impostazioni</h2><div class="list" style="margin-top:6px"><div><span>Casella<small>le email partono dall\'indirizzo per i rivenditori del negozio</small></span><span class="r">rivenditori@</span></div><div><span>Firma<small>chi segue i rivenditori</small></span><span class="r">Elisa</span></div><div><span>Testi<small>uno per l\'Italia, uno in inglese</small></span><span class="r">2 sequenze</span></div></div></div></div>';
+    return h;
+  }
+  function shopDrawer(id) {
+    var s = shopById(id), sc = score(s), vd = VERD[verdOf(s)];
+    var h = '<span class="label">Rivenditori · ' + s.tipo + " · " + s.city + '</span><h2 style="font-size:22px">' + s.n + '</h2><div class="row-btns"><span class="pill p-' + vd[0] + '">' + vd[1] + (s.chi && S.verd[s.id] == null ? " · " + s.chi : "") + '</span><span class="tag">Fascia proposta ' + tier(sc) + "?</span></div>";
+    h += '<p style="font-family:var(--f-display);font-weight:800;font-size:34px;line-height:1">' + sc + '<span style="font-size:16px;color:var(--muted);font-weight:600"> /100</span></p>';
+    h += '<h3 style="font-size:16px">Il punteggio, voce per voce</h3><div class="list">' + CRIT.map(function (c, i) { return "<div><span>" + c[0] + " <small>peso " + c[1] + " · " + s.why[i] + '</small></span><span class="r">' + s.v[i] + "/10</span></div>"; }).join("") + "</div>";
+    if (s.no) h += '<div class="alert warn" style="grid-template-columns:auto minmax(0,1fr)"><span class="dot"></span><span><b>Perché no:</b> ' + s.no + "</span></div>";
+    if (s.gancio) h += '<p class="brief"><span class="label">Gancio per la prima email</span><br>' + s.gancio + "</p>";
+    if (s.motivo) h += '<p class="brief"><span class="label">Motivo del no</span><br>' + s.motivo + "</p>";
+    h += '<h3 style="font-size:16px">Da dove viene</h3><div class="list">' + s.ev.map(function (e) { return "<div><span>" + e[0] + '</span><span class="r" style="font-weight:500">' + e[1] + "</span></div>"; }).join("") + "</div>";
+    h += '<h3 style="font-size:16px">Il tuo verdetto</h3><div class="row-btns"><button class="btn btn-primary" type="button" data-act="verd" data-id="' + s.id + '" data-v="contattare">Da contattare</button><button class="btn" type="button" data-act="verd" data-id="' + s.id + '" data-v="forse">Forse</button><button class="btn" type="button" data-act="verd" data-id="' + s.id + '" data-v="no">No</button></div>';
+    drawer(h);
+  }
+  var B2BDRAFT = {
+    first: function (c) {
+      var s = c.shop ? shopById(c.shop) : null, g = s && s.gancio ? s.gancio : "Il vostro negozio ha la selezione di accessori che cerchiamo per le nostre borse.";
+      return { t: "Email 1 · presentazione", subj: "Bottega Lumen per " + c.n,
+        body: "Buongiorno,\nsono Elisa di Bottega Lumen: facciamo borse e accessori in cuoio e tessuto, con prezzi al pubblico da € 45 a € 189.\n\n" + g + "\n\nQui trova il listino per i rivenditori: [listino]\nSe le fa piacere, passiamo in negozio con qualche pezzo, oppure ci vediamo nel nostro showroom.\n\nUn saluto,\nElisa · Bottega Lumen\n\nSe preferisce non ricevere altre email, mi risponda «no grazie»." };
+    },
+    follow: function (c) {
+      return { t: "Richiamo 2 di 4", subj: "Re: Bottega Lumen per " + c.n,
+        body: "Buongiorno,\nle riscrivo dopo la mia email del 12 ottobre: ha avuto modo di guardare il listino?\nA novembre arrivano i nuovi colori della Borsa Vela: se vuole, gliene porto un paio da vedere.\n\nUn saluto,\nElisa · Bottega Lumen\n\nSe preferisce non ricevere altre email, mi risponda «no grazie»." };
+    },
+    reply: function (c) {
+      return { t: "Risposta", subj: "Re: Bottega Lumen per " + c.n,
+        body: "Buongiorno,\ngrazie per la risposta! Ecco il listino con i prezzi per i rivenditori: [listino]\nPer il primo ordine il minimo è [DA VERIFICARE: minimo del primo ordine]; la consegna è in due settimane dall'ordine.\nSe le va, la chiamo questa settimana per raccontarle la collezione.\n\nUn saluto,\nElisa · Bottega Lumen" };
+    }
+  };
+  function pipeDrawer(id) {
+    var c = PIPE.filter(function (x) { return x.id === id; })[0];
+    if (!c) { var s0 = shopById(id.replace("p-", "")); c = { id: id, shop: s0.id, n: s0.n, city: s0.city, st: 0, next: ["info", "email 1 da scrivere"], draft: "first" }; }
+    var h = '<span class="label">Rivenditori · ' + STAGES[c.st] + '</span><h2 style="font-size:22px">' + c.n + '</h2><span class="pill p-' + c.next[0] + '">' + c.next[1] + "</span>";
+    if (c.shop) h += '<p><button class="btn btn-sm" type="button" data-act="shop" data-id="' + c.shop + '">Apri il profilo</button></p>';
+    if (c.tl) h += '<h3 style="font-size:16px">La conversazione</h3><div class="list">' + c.tl.map(function (t) { return "<div><span>" + t[0] + "<small>" + t[1] + "</small></span><span></span></div>"; }).join("") + "</div>";
+    if (c.draft) {
+      var d = B2BDRAFT[c.draft](c);
+      h += '<div class="draft"><div class="draft-head"><span class="label" style="color:var(--weft)">' + d.t + ' · preparata dall\'AI</span></div><div class="draft-body"><b>Oggetto:</b> ' + esc(d.subj) + "\n\n" +
+        esc(d.body).replace(/\[DA VERIFICARE: ([^\]]+)\]/g, '<span class="verify">da verificare: $1</span>').replace(/\[listino\]/g, '<a href="#b2b" data-act="toast" data-msg="Nella email vera qui c\'è il link al listino per i rivenditori.">listino per i rivenditori</a>') + "</div>" +
+        '<div class="draft-foot"><div class="row-btns"><button class="btn" type="button" data-act="toast" data-msg="Nel tuo negozio la email arriva prima a te, per vederla come la vedrà il negozio.">Prova a me</button></div><button class="btn btn-primary" type="button" data-act="toast" data-msg="Nel tuo negozio la email parte dalla casella per i rivenditori solo dopo la tua conferma, e conta nel tetto di 20 al giorno.">Manda…</button></div></div>';
+    }
+    h += '<div class="row-btns"><button class="btn" type="button" data-act="toast" data-msg="Nel tuo negozio registri una telefonata, una visita o un messaggio: lo stadio e il prossimo passo si aggiornano.">Registra un contatto</button><button class="btn" type="button" data-act="toast" data-msg="Nel tuo negozio scegli lo stadio dal menu e lo sposti tu.">Sposta a…</button></div>';
+    drawer(h);
+  }
+
   /* ---------- state ---------- */
-  var S = { route: "oggi", magFilter: "", convTab: "nuove", conv: "c1", draft: 0, asking: false, sent: {}, noise: false, mese: 2, photo: false };
+  var S = { route: "oggi", magFilter: "", convTab: "nuove", conv: "c1", draft: 0, asking: false, sent: {}, noise: false, mese: 2, photo: false, b2bTab: "negozi", b2bF: "", verd: {} };
   var ROUTES = [
     { id: "oggi", t: "Oggi" }, { id: "magazzino", t: "Magazzino" }, { id: "clienti", t: "Clienti" },
-    { id: "spedizioni", t: "Spedizioni" }, { id: "fornitori", t: "Fornitori" }, { id: "conto", t: "Conto economico" }
+    { id: "spedizioni", t: "Spedizioni" }, { id: "fornitori", t: "Fornitori" }, { id: "conto", t: "Conto economico" }, { id: "b2b", t: "Rivenditori", sr: true }
   ];
   function counts() {
     return {
@@ -458,7 +633,8 @@ th .lock { font-size: 10px; }
       spedizioni: SHIP.filter(function (s) { return s.s === "pronta"; }).length,
       magazzino: P.filter(function (p) { return stato(p).f === "riordino" || stato(p).f === "check"; }).length,
       fornitori: 1,
-      conto: SPESE.filter(function (s) { return !s.ok; }).length
+      conto: SPESE.filter(function (s) { return !s.ok; }).length,
+      b2b: 3
     };
   }
 
@@ -472,7 +648,8 @@ th .lock { font-size: 10px; }
       ["spedizioni", c.spedizioni + " ordini con l'etichetta pronta", "Sono già sul portale del corriere. Prepari i pacchi."],
       ["fornitori", "1 consegna arrivata a metà", "Tessiture Corte: mancano 6 foulard su 12."],
       ["magazzino", c.magazzino + " prodotti da guardare", "2 da riordinare, 1 numero che non torna."],
-      ["conto", c.conto + " spese da verificare", "Caricate dall'estratto conto, con la categoria proposta."]
+      ["conto", c.conto + " spese da verificare", "Caricate dall'estratto conto, con la categoria proposta."],
+      ["b2b", "1 negozio ha risposto, 1 richiamo scaduto", "Rivenditori: le email sono già pronte da controllare."]
     ];
     var netto = tot("netto", 3);
     var h = '<div class="head"><span class="label">' + OGGI + '</span><h1>Buongiorno, Bottega Lumen</h1><p>Cosa c\'è da fare oggi. Il resto lo ha già preparato il sistema.</p></div>';
@@ -735,11 +912,11 @@ th .lock { font-size: 10px; }
     var c = counts();
     document.getElementById("nav").innerHTML = ROUTES.map(function (r) {
       var n = c[r.id];
-      return '<a href="#' + r.id + '"' + (S.route === r.id ? ' aria-current="page"' : "") + ">" + I[r.id] + "<span>" + r.t + "</span>" + (n ? '<span class="count">' + n + "</span>" : "") + "</a>";
+      return '<a href="#' + r.id + '"' + (S.route === r.id ? ' aria-current="page"' : "") + ">" + I[r.id] + "<span>" + r.t + "</span>" + (r.sr ? '<span class="sr">su richiesta</span>' : "") + (n ? '<span class="count">' + n + "</span>" : "") + "</a>";
     }).join("");
   }
   function render() {
-    var v = { oggi: vOggi, magazzino: vMagazzino, clienti: vClienti, spedizioni: vSpedizioni, fornitori: vFornitori, conto: vConto }[S.route] || vOggi;
+    var v = { oggi: vOggi, magazzino: vMagazzino, clienti: vClienti, spedizioni: vSpedizioni, fornitori: vFornitori, conto: vConto, b2b: vB2B }[S.route] || vOggi;
     document.getElementById("view").innerHTML = v();
     renderNav();
   }
@@ -775,6 +952,11 @@ th .lock { font-size: 10px; }
       case "mese": S.mese = +t.getAttribute("data-i"); render(); break;
       case "cell": cellDrawer(t.getAttribute("data-k"), +t.getAttribute("data-i")); break;
       case "spesa": SPESE.forEach(function (s) { if (s.id === t.getAttribute("data-id")) s.ok = true; }); render(); toast("Nel tuo negozio la spesa entra nel conto economico con questa categoria."); break;
+      case "b2btab": S.b2bTab = t.getAttribute("data-t"); render(); break;
+      case "b2bf": S.b2bF = t.getAttribute("data-f"); render(); break;
+      case "shop": shopDrawer(t.getAttribute("data-id")); break;
+      case "pipe": pipeDrawer(t.getAttribute("data-id")); break;
+      case "verd": S.verd[t.getAttribute("data-id")] = t.getAttribute("data-v"); closeDrawer(); render(); toast(t.getAttribute("data-v") === "contattare" ? "Nel tuo negozio il verdetto si salva con il tuo nome e la data, e il negozio entra nella pipeline con la prima email da preparare." : "Nel tuo negozio il verdetto si salva con il tuo nome e la data" + (t.getAttribute("data-v") === "no" ? ", con il motivo (obbligatorio per il no)." : ".")); break;
       case "close": closeDrawer(); break;
     }
   });
